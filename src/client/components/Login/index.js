@@ -6,6 +6,7 @@ import { getField } from '../../forms/login';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
 
 const LoginFormStyled = styled.form`
@@ -31,43 +32,69 @@ const ButtonContainer = styled.div`
     margin: 20px;
 `;
 
+const LinkStyled = styled(Link)`
+  padding: 12px 12px;
+  max-width:140px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 60ms ease-in-out;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none !important;
+  text-transform: none;
+  text-transform: capitalize;
+
+  color: #fff;
+  border: 0 none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 160px;
+  box-shadow: 2px 5px 10px rgba($dark, .1);
+  &:hover {
+    transition: all 60ms ease;
+    opacity: .85;
+  }
+    color: #FFFFFF;
+    background: #EA5555;
+`;
+
 const Button = styled.input`
-padding: 12px 12px;
-max-width:140px;
-cursor: pointer;
-user-select: none;
-transition: all 60ms ease-in-out;
-text-align: center;
-white-space: nowrap;
-text-decoration: none !important;
-text-transform: none;
-text-transform: capitalize;
-
-color: #fff;
-border: 0 none;
-border-radius: 4px;
-
-font-size: 13px;
-font-weight: 500;
-line-height: 1.3;
-
--webkit-appearance: none;
--moz-appearance:    none;
-appearance:         none;
-
-justify-content: center;
-align-items: center;
-flex: 0 0 160px;
-
-box-shadow: 2px 5px 10px rgba($dark, .1);
-
-&:hover {
-  transition: all 60ms ease;
-
-  opacity: .85;
-}
-  color: #FFFFFF;
-  background: #EA5555;
+  padding: 12px 12px;
+  max-width:140px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 60ms ease-in-out;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none !important;
+  text-transform: none;
+  text-transform: capitalize;
+  color: #fff;
+  border: 0 none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 160px;
+  box-shadow: 2px 5px 10px rgba($dark, .1);
+  &:hover {
+    transition: all 60ms ease;
+    opacity: .85;
+  }
+    color: #FFFFFF;
+    background: #EA5555;
 `;
 
 const LoginForm = ({
@@ -137,10 +164,9 @@ const Login = ({
             {...props}
         />
         <ButtonContainer>
-            <Button
-                type="button"
-                value="Register"
-            />
+          <LinkStyled to={`/register`}>
+            Register
+          </LinkStyled>
             <Button
                 type="button"
                 value="Login"

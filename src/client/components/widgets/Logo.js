@@ -9,13 +9,13 @@ const LogoStyled = styled.img`
 
 const LogoContainer = styled.div`
     display:flex;
-    justify-content: center;
+    justify-content: ${({ justifycontent }) => justifycontent};
     align-items: center;
     width:100%;
 `;
 
-const Logo = ({ width = 50 }) => (
-    <LogoContainer>
+const Logo = ({ width = 50, justifycontent = 'center' }) => (
+    <LogoContainer justifycontent={justifycontent}>
         <LogoStyled src={logo} className="App-logo" alt="logo" width={width}/>
     </LogoContainer>
 );

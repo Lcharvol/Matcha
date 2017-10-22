@@ -34,40 +34,7 @@ const ButtonContainer = styled.div`
 
 const LinkStyled = styled(Link)`
   padding: 12px 12px;
-  max-width:140px;
-  cursor: pointer;
-  user-select: none;
-  transition: all 60ms ease-in-out;
-  text-align: center;
-  white-space: nowrap;
-  text-decoration: none !important;
-  text-transform: none;
-  text-transform: capitalize;
-
-  color: #fff;
-  border: 0 none;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.3;
-  -webkit-appearance: none;
-  -moz-appearance:    none;
-  appearance:         none;
-  justify-content: center;
-  align-items: center;
-  flex: 0 0 160px;
-  box-shadow: 2px 5px 10px rgba($dark, .1);
-  &:hover {
-    transition: all 60ms ease;
-    opacity: .85;
-  }
-    color: #FFFFFF;
-    background: #EA5555;
-`;
-
-const Button = styled.input`
-  padding: 12px 12px;
-  max-width:140px;
+  max-width:120px;
   cursor: pointer;
   user-select: none;
   transition: all 60ms ease-in-out;
@@ -167,10 +134,9 @@ const Login = ({
           <LinkStyled to={`/register`}>
             Register
           </LinkStyled>
-            <Button
-                type="button"
-                value="Login"
-            />
+          <LinkStyled to={`/home`}>
+            Login
+          </LinkStyled>
         </ButtonContainer>
     </Container>
 );

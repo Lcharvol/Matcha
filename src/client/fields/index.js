@@ -56,10 +56,21 @@ const StyledLabel = styled.label`
   margin-bottom:15px;
 `;
 
+const StyledRequiredTag = styled.span`
+  margin-left: 5px;
+  color: #EA5555;
+`;
+
+export const RequiredTag = ({ required }) => {
+  if (!required) return null;
+  return <StyledRequiredTag>*</StyledRequiredTag>;
+};
+
 export const Field = ({ label, error, required, className, children }) => (
   <StyledFormField className={className}>
     <StyledLabel>
       {label}
+      <RequiredTag required={required} />
     </StyledLabel>
     {children}
     <Error>{error && `Error: ${error}`}</Error>

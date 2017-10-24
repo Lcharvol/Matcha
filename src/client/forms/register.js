@@ -14,6 +14,18 @@ const fields = {
     validate: Yup.string(),
     required: true,
   },
+  firstName: {
+    label: 'First Name',
+    component: InputField,
+    validate: Yup.string(),
+    required: true,
+  },
+  lastName: {
+    label: 'Last Name',
+    component: InputField,
+    validate: Yup.string(),
+    required: true,
+  },
   password: {
     label: 'Password',
     component: InputField,

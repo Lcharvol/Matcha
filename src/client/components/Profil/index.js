@@ -41,7 +41,19 @@ const Icon = styled.i`
 const InlineBlock = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    margin-bottom:25px;
+`;
+
+const Text = styled.p`
+    margin: 0;
+    margin-bottom: 15px;
+`;
+
+const Title = styled.p`
+    margin: 0;
+    margin-bottom: 15px;
+    color:#EA5555;
 `;
 
 const Profil = ({ user = {} }) => (
@@ -50,12 +62,12 @@ const Profil = ({ user = {} }) => (
         <Spacer size={20}/>
         <ProfilInfo>
             <InlineBlock>
-                <p>{user.firstName} {user.lastName}</p>
+                <Text>{user.firstName} {user.lastName}</Text>
                 {user.sexe === 'homme' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
             </InlineBlock>
-            <p>Ma bio: </p>
+            <Title>Ma bio</Title>
             <InlineBlock>
-                <p>{user.bio}</p>
+                <Text>{user.bio}</Text>
             </InlineBlock>
         </ProfilInfo>
     </ProfilContainer>

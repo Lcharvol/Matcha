@@ -18,23 +18,42 @@ const RegisterFormStyled = styled.form`
     grid-gap: 20px;
     grid-auto-columns: minmax(70px, auto);
     grid-auto-rows: minmax(70px, auto);
-    grid-template-areas: 'login' 'email' 'password' 'repeatPassword';
+    grid-template-areas: 'login' 'email' 'firstName' 'lastName' 'password' 'repeatPassword';
+    @media (min-width: 700px) {
+      grid-template-areas: 'login email' 'firstName lastName'
+        'password repeatPassword';
+    }
 `;
 
 const StyledFormField = styled(FormField)`
 grid-area: ${({ field }) => field.name};
 `;
 
+const ContainerStyled = styled(Container)`
+  width:350px;
+  @media (min-width: 700px) {
+    width:550px;
+  }
+`;
+
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
+    @media (min-width: 700px) {
+      margin: 25px;
+    }
+    margin: 18px;
 `;
 
 const LinkStyled = styled(Link)`
   padding: 12px 12px;
   max-width:120px;
+  min-width:120px;
+  @media (min-width: 700px) {
+    max-width:215px;
+    min-width:215px;
+  }
   cursor: pointer;
   user-select: none;
   transition: all 60ms ease-in-out;
@@ -77,6 +96,22 @@ const RegisterForm = ({
       <RegisterFormStyled id="register" onSubmit={handleSubmit}>
         <StyledFormField
           field={getField('login')}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setFieldTouched={setFieldTouched}
+          setFieldValue={setFieldValue}
+        />
+        <StyledFormField
+          field={getField('firstName')}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setFieldTouched={setFieldTouched}
+          setFieldValue={setFieldValue}
+        />
+        <StyledFormField
+          field={getField('lastName')}
           values={values}
           errors={errors}
           touched={touched}
@@ -136,7 +171,7 @@ const Register= ({
     requestCancel,
     ...props
   }) => (
-    <Container top='25vh' width='350px'>
+    <ContainerStyled top='25vh' width='350px'>
         <Logo width={200} />
         <RegisterForm
             type="add"
@@ -154,7 +189,7 @@ const Register= ({
             Register
           </LinkStyled>
         </ButtonContainer>
-    </Container>
+    </ContainerStyled>
 );
 
 export default compose(

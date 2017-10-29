@@ -19,6 +19,7 @@ coverage
 dist
 build
 stats.json
+yarn.lock
 *.lock
 *.tmp
 .nyc_output

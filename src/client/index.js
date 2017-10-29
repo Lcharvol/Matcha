@@ -10,16 +10,24 @@ const initialState = {
     login: 'lcharvol',
     firstName: 'Lucas',
     lastName: 'Charvolin',
-    sexe: 'homme',
+    sexe: 'man',
+    sexualOrientation: 'women',
+    interest: ['bio', 'geek', 'piercing'],
     bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
     avatar: 'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
+    pictures: [
+      'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
+      'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
+      'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
+    ],
   },
   users: [
     {
       login: 'lcharvol',
       firstName: 'Lucas',
       lastName: 'Charvolin',
-      sexe: 'homme',
+      sexe: 'man',
+      
       bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
       avatar: 'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
     },

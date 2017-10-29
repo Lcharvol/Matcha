@@ -9,7 +9,6 @@ import Profil from './Profil';
 
 const ContainerStyled = styled(Container)`
     display: flex;
-    width:100%;
     flex-direction:column;
     justify-content: center;
     align-items: center;

@@ -4,17 +4,23 @@ import PropTypes from 'prop-types';
 
 const TagStyled = styled.div`
     display:flex;
-    min-height:30px;
+    justify-content: center;
+    align-items: center;
     min-width:100px;
-    padding:10px;
-    background-color:rgb(200,200,200),
-    
+    padding:5px;
+    margin: 10px;
+    border-radius:100px;
+    background-color:rgb(240,240,240);
 `;
 
 const Tag = ({ name }) => (
-    <TagStyled>
-        {name}
-    </TagStyled>
+  <TagStyled>
+    # {name}
+  </TagStyled>
 );
+
+Tag.PropTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default Tag;

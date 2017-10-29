@@ -45,6 +45,7 @@ const Icon = styled.i`
 
 const InlineBlock = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction:row;
     width:100%;
     justify-content: flex-start;
@@ -91,6 +92,7 @@ const Profil = ({ user = {} }) => (
                     <Text>{user.bio}</Text>
                 </InlineBlock>
                 <InlineBlock>
+                    <Title>Interêts: </Title>
                     {map(tag => <Tag name={tag}/> , user.interest)}
                 </InlineBlock>
             </ProfilInfo>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 const AppStyled = styled.div`
   background-color: rgb(250,250,250);
@@ -8,11 +8,9 @@ const AppStyled = styled.div`
 `;
 
 const App = props => (
-  <MuiThemeProvider>
     <AppStyled>
       {props.children}
     </AppStyled>
-  </MuiThemeProvider>
 )
 
 

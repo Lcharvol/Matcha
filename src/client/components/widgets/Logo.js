@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
+
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -16,7 +16,7 @@ const LogoContainer = styled.div`
 
 const Logo = ({ width = 50, justifycontent = 'center' }) => (
     <LogoContainer justifycontent={justifycontent}>
-        <LogoStyled src={logo} className="App-logo" alt="logo" width={width}/>
+        <LogoStyled src="logo.svg" className="App-logo" alt="logo" width={width}/>
     </LogoContainer>
 );
 

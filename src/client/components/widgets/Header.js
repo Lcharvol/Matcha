@@ -39,19 +39,19 @@ const Icon = styled.i`
 `;
 
 const Header = () => (
-    <HeaderStyled>
-        <HeaderLeft>
-            <Spacer size={20}/>
-            <Logo width={70} justifycontent='flex-start'/>
-        </HeaderLeft>
-        <HeaderRight>
-            <Icon className="fa fa-cog" aria-hidden="true"/>
-            <Link to={`/login`}>
-                <Icon className="fa fa-sign-out" aria-hidden="true"/>
-            </Link>
-            <Spacer size={10}/>
-        </HeaderRight>
-    </HeaderStyled>
+  <HeaderStyled>
+    <HeaderLeft>
+      <Spacer size={20}/>
+      <Logo width={70} justifycontent='flex-start'/>
+    </HeaderLeft>
+    <HeaderRight>
+      <Icon className="fa fa-cog" aria-hidden="true"/>
+      <Link to={`/login`}>
+        <Icon className="fa fa-sign-out" aria-hidden="true"/>
+      </Link>
+      <Spacer size={10}/>
+    </HeaderRight>
+  </HeaderStyled>
 );
 
 export default Header;

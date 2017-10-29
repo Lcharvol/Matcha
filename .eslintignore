@@ -1,0 +1,6 @@
+node_modules
+__test__
+dist
+*.lock
+*.tmp
+etc

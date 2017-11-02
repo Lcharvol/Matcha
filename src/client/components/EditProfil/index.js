@@ -1,9 +1,11 @@
 import React from 'react';
-import { Header } from '../widgets';
+import { Header, Container } from '../widgets';
 
 const EditProfil = () => (
   <div>
     <Header />
+    <Container>
+    </Container>
   </div>
 );
 

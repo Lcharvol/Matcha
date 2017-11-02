@@ -61,7 +61,7 @@ const initialState = {
         id: 2,
       },
     ],
-    score: 70,
+    score: 10,
   },
   users: [
     {

@@ -11,6 +11,7 @@ const AvatarStyled = styled.div`
     border-radius:200px;
     background-image: ${({ avatar  }) => `url(${avatar})`};
     background-position:center center;
+    background-size: 100%;
 `;
 
 const Avatar = ({ avatar }) => (

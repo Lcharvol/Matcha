@@ -7,14 +7,12 @@ import { withHandlers, compose, withStateHandlers } from 'recompose';
 import { Container, Avatar } from '../widgets';
 import Profil from './Profil';
 
-const ContainerStyled = styled(Container)`
+const ContainerStyled = styled.div`
     display: flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
-    min-height:500px;
-    padding: 20px;
+    flex-direction: column;
+    margin: 25px;
+    justify-content: 'flex-start';
+    padding: 25px;
     min-height:${({ height = '0px' }) => height};
     border-radius: 4px;
     background-color:white;
@@ -28,18 +26,6 @@ const ProfilContainer = styled.div`
     justify-content: center;
     align-items: center;
 `;
-
-const ArrowStyled = styled.i`
-    cursor:pointer;
-    color:#EA5555;
-    font-size:2em;
-    max-width:50px;
-    &:hover {
-        transition: all 60ms ease;
-        opacity: .85;
-    }
-`;
-
 
 const Content = styled.div`
     display:flex;
@@ -72,11 +58,9 @@ const IconStyled = styled.i`
 const Suggestion = ({ user }) => (
     <ContainerStyled>
         <ProfilContainer>
-            <ArrowStyled className="fa fa-chevron-left" aria-hidden="true"/>
             <Content>
                 <Profil />
             </Content>
-            <ArrowStyled className="fa fa-chevron-right" aria-hidden="true"/>
         </ProfilContainer>
         <VoteContainer>
             <IconStyled color="#EA5555" className="fa fa-check" aria-hidden="true"/>

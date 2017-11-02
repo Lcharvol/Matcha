@@ -4,6 +4,10 @@ import Header from './Header';
 import Spacer from './Spacer';
 import Avatar from './Avatar';
 import Tag from './Tag';
+import Score from './Score';
+import Picture from './Picture';
+import Separator  from './Separator';
+import Throphy from './Throphy';
 
 export {
   Logo,
@@ -12,4 +16,8 @@ export {
   Header,
   Avatar,
   Tag,
+  Score,
+  Picture,
+  Separator,
+  Throphy,
 };

@@ -10,7 +10,8 @@ const TagStyled = styled.div`
     padding:5px;
     margin: 10px;
     border-radius:100px;
-    background-color:rgb(240,240,240);
+    background-color:rgb(250,250,250);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.07);
 `;
 
 const Tag = ({ name }) => (

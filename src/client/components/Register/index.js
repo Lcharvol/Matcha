@@ -2,12 +2,11 @@ import React from 'react';
 import { Logo, Container } from '../widgets';
 import styled from 'styled-components';
 import { FormField } from '../../fields';
-import { getField } from '../../forms/register';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
-import { getValidationSchema, defaultValues } from '../../forms/register';
+import { getValidationSchema, defaultValues, getField } from '../../forms/register';
 
 const RegisterFormStyled = styled.form`
     display: grid;

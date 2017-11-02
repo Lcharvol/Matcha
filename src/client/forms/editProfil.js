@@ -1,6 +1,7 @@
 import Yup from 'yup';
 import { InputField } from '../fields';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
+
 const fields = {
   lookingFor: {
     label: 'Je recherche',
@@ -10,12 +11,6 @@ const fields = {
   },
   bio: {
     label: 'Ma bio',
-    component: InputField,
-    validate: Yup.string(),
-    required: true,
-  },
-  lookingFor: {
-    label: 'Je recherche',
     component: InputField,
     validate: Yup.string(),
     required: true,

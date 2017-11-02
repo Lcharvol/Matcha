@@ -110,7 +110,7 @@ const Profil = ({ user = {} }) => (
             <Header>
                 <Avatar avatar={user.avatar}/>
                 <Spacer size={20}/>
-                <Name>{user.firstName} {user.lastName}</Name>
+                <Name>{`${user.firstName} ${user.lastName}`}</Name>
                  {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
                 <Separator />
             </Header>

@@ -14,12 +14,12 @@ const AvatarStyled = styled.div`
     background-size: 100%;
 `;
 
-const Avatar = ({ avatar }) => (
-    <AvatarStyled avatar={avatar}/>
+const Avatar = ({ user }) => (
+    <AvatarStyled avatar={user.avatar}/>
 );
 
 Avatar.propTypes = {
-    avatar: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
 }
 
 export default Avatar;

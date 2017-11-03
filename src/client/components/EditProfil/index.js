@@ -176,7 +176,7 @@ const EditProfil= ({
     <Header />
     <ContainerStyled>
       <FormHeader>
-        <Avatar avatar={user.avatar}/>
+        <Avatar user={user}/>
         <Title>{`${user.firstName} ${user.lastName}`}</Title>
       </FormHeader>
       <EditProfilForm

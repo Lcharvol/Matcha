@@ -3,6 +3,7 @@ import { InputField, TextAreaField  } from '../fields';
 import {
   SelectField,
 } from '../fields/SelectField';
+import { MarkDownField } from '../fields/MarkDownField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 const fields = {
@@ -28,7 +29,7 @@ const fields = {
   },
   bio: {
     label: 'Ma bio',
-    component: TextAreaField,
+    component: MarkDownField,
     validate: Yup.string(),
     required: true,
   },

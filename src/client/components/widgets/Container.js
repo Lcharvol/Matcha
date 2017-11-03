@@ -12,8 +12,8 @@ const Container = styled.div`
   padding: 20px;
   min-height:${({ height = '0px' }) => height};
   border-radius: 4px;
-  background-color:white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+  background-color:rgb(250,250,250);
+  box-shadow: 10px 10px 30px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
 `;
 
 export default Container;

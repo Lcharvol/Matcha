@@ -90,8 +90,10 @@ const InputStyled = styled.input`
   border-radius: 3px;
   background-color:rgb(250,250,250);
   box-shadow: inset 7px 6px 15px rgba(25, 25, 25, 0.05);
-  border: 0;
+  border-width: thin;
+  border: 1px solid rgb(235,235,235);
   padding-left:20px;
+  font-size:1em;
 `;
 
 export const InputField = ({

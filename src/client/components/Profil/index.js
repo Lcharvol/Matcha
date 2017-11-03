@@ -28,8 +28,8 @@ const ProfilInfo = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
     color:rgb(25,25,25);
 `;
 

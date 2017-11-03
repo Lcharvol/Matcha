@@ -10,26 +10,26 @@ import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
 
 const LoginFormStyled = styled.form`
-    display: grid;
-    margin: auto;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    width: 90%;
-    grid-gap: 20px;
-    grid-auto-columns: minmax(70px, auto);
-    grid-auto-rows: minmax(70px, auto);
-    grid-template-areas: 'login' 'password';
+  display: grid;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 90%;
+  grid-gap: 20px;
+  grid-auto-columns: minmax(70px, auto);
+  grid-auto-rows: minmax(70px, auto);
+  grid-template-areas: 'login' 'password';
 `;
 
 const StyledFormField = styled(FormField)`
-grid-area: ${({ field }) => field.name};
+  grid-area: ${({ field }) => field.name};
 `;
 
 const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
 `;
 
 const LinkStyled = styled(Link)`
@@ -55,13 +55,15 @@ const LinkStyled = styled(Link)`
   justify-content: center;
   align-items: center;
   flex: 0 0 160px;
-  box-shadow: 2px 5px 10px rgba($dark, .1);
+  box-shadow: inset 10px 10px 2px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
+  opacity: .95;
   &:hover {
     transition: all 60ms ease;
-    opacity: .85;
+    opacity: .90;
+    box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
-    color: #FFFFFF;
-    background: #EA5555;
 `;
 
 const LoginForm = ({
@@ -120,7 +122,7 @@ const Login = ({
     requestCancel,
     ...props
   }) => (
-    <Container top='25vh' width='350px'>
+    <Container top='50px' width='350px'>
         <Logo width={200} />
         <LoginForm
             type="add"

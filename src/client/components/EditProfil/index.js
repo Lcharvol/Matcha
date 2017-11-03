@@ -10,6 +10,15 @@ import { Link } from 'react-router';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import styled from 'styled-components';
 
+const Content = styled.div`
+  max-width:1000px;
+  margin:auto;
+  display: grid;
+  grid-auto-columns: minmax(70px, auto);
+  grid-auto-rows: minmax(70px, auto);
+  grid-template-areas: 'profil' 'suggestion';
+`;
+
 const EditProfilFormStyled  = styled.form`
   display: grid;
   margin: auto;
@@ -30,18 +39,13 @@ const FormHeader = styled.div`
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  padding:25px;
 `;
 
 const ContainerStyled = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top:25px;
-  color:rgb(25,25,25);
+width:100%;
+margin-top:10px;
+background-color:white;
+border-radius:0px;
 `;
 
 const Title = styled.p`
@@ -172,28 +176,30 @@ const EditProfil= ({
   user,
   ...props
 }) => (
-  <div>
-    <Header />
+<div>
+  <Header />
+  <Content>
     <ContainerStyled>
       <FormHeader>
         <Avatar user={user}/>
         <Title>{`${user.firstName} ${user.lastName}`}</Title>
       </FormHeader>
-      <EditProfilForm
-          type="add"
-          handleSubmit={handleSubmit}
-          values={values}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-          {...props}
+      < EditProfilForm
+        type="add"
+        handleSubmit={handleSubmit}
+        values={values}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+        {...props}
       />
       <ButtonContainer>
-          <LinkStyled to={'/'}>
-            Update
-          </LinkStyled>
-        </ButtonContainer>
+        <LinkStyled to={'/'}>
+          Update
+        </LinkStyled>
+      </ButtonContainer>
     </ContainerStyled>
-  </div>
+  </Content>
+</div>
 );
 
 const mapStateToProps = state => ({

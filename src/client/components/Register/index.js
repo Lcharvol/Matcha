@@ -73,13 +73,15 @@ const LinkStyled = styled(Link)`
   justify-content: center;
   align-items: center;
   flex: 0 0 160px;
-  box-shadow: 2px 5px 10px rgba($dark, .1);
+  box-shadow: inset 10px 10px 2px rgba(0, 0, 0, 0.15);
+  opacity: .95;
   &:hover {
     transition: all 60ms ease;
-    opacity: .85;
+    opacity: .90;
+    box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
-    color: #FFFFFF;
-    background: #EA5555;
+  color: #FFFFFF;
+  background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
 `;
 
 const RegisterForm = ({
@@ -170,7 +172,7 @@ const Register= ({
     requestCancel,
     ...props
   }) => (
-    <ContainerStyled top='25vh' width='350px'>
+    <ContainerStyled top='50px' width='350px'>
         <Logo width={200} />
         <RegisterForm
             type="add"

@@ -9,7 +9,7 @@ import { Link } from 'react-router'
 
 const ProfilContainer = styled.div`
     width:100%;
-    margin-top:15px;
+    margin-top:10px;
     background-color:white;
     border-radius:0px;
 `;
@@ -25,8 +25,8 @@ const ProfilInfo = styled.div`
 `;
 
 const Icon = styled.i`
-    color:#EA5555;
-    margin-left:15px;
+    color: rgba(244, 88, 65, 0.8);
+    margin-top:15px;
     margin-right:15px;
     font-size: 1.5em;
     cursor: pointer;

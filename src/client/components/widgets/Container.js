@@ -7,7 +7,7 @@ const Container = styled.div`
   margin-right: auto;
   flex-direction: column;
   position: relative;
-  width:${({ width = '500px' }) => width};
+  width:${({ width = '100px' }) => width};
   top: ${({ top = '0px' }) => top};
   padding: 20px;
   min-height:${({ height = '0px' }) => height};

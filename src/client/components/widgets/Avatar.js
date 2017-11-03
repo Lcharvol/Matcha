@@ -14,12 +14,27 @@ const AvatarStyled = styled.div`
     background-size: 100%;
 `;
 
-const Avatar = ({ user }) => (
-    <AvatarStyled avatar={user.avatar}/>
+const AvatarContainer = styled.div`
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:120px;
+    height:120px;
+    border-radius:500px;
+    background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) 0%, #EA5555  100%);
+`;
+
+const Avatar = ({ user, size = 'big' }) => (
+    <div>
+        <AvatarContainer>
+            <AvatarStyled avatar={user.avatar}/>
+        </AvatarContainer>
+    </div>
 );
 
 Avatar.propTypes = {
     user: PropTypes.string.isRequired,
+    size: PropTypes.string,
 }
 
 export default Avatar;

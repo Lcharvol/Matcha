@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { compose } from 'ramda';
+import { Link } from 'react-router';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import styled from 'styled-components';
 
@@ -18,9 +19,9 @@ const EditProfilFormStyled  = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
-  grid-template-areas: 'lookingFor' 'bio' 'interest' 'pictures';
+  grid-template-areas: 'sexe' 'lookingFor' 'bio' 'interest' 'pictures';
   @media (min-width: 700px) {
-    grid-template-areas: 'lookingFor' 'bio' 'interest' 'pictures';
+    grid-template-areas: 'sexe' 'lookingFor' 'bio' 'interest' 'pictures';
   }
 `;
 
@@ -47,6 +48,54 @@ const Title = styled.p`
   margin: 15px;
   color:#EA5555;
 `;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (min-width: 700px) {
+    margin: 25px;
+  }
+  margin: 18px;
+`;
+
+const LinkStyled = styled(Link)`
+  padding: 12px 12px;
+  max-width:120px;
+  min-width:120px;
+  @media (min-width: 700px) {
+  max-width:215px;
+  min-width:215px;
+  }
+  cursor: pointer;
+  user-select: none;
+  transition: all 60ms ease-in-out;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none !important;
+  text-transform: none;
+  text-transform: capitalize;
+  color: #fff;
+  border: 0 none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  appearance:         none;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 160px;
+  box-shadow: 2px 5px 10px rgba($dark, .1);
+  &:hover {
+  transition: all 60ms ease;
+  opacity: .85;
+  }
+  color: #FFFFFF;
+  background: #EA5555;
+`;
+
 const StyledFormField = styled(FormField)`
   grid-area: ${({ field }) => field.name};
 `;
@@ -63,6 +112,14 @@ const EditProfilForm = ({
 }) => {
   return (
     <EditProfilFormStyled  id="editProfil" onSubmit={handleSubmit}>
+        <StyledFormField
+          field={getField('sexe')}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setFieldTouched={setFieldTouched}
+          setFieldValue={setFieldValue}
+        />
        <StyledFormField
           field={getField('lookingFor')}
           values={values}
@@ -130,6 +187,11 @@ const EditProfil= ({
           setFieldValue={setFieldValue}
           {...props}
       />
+      <ButtonContainer>
+          <LinkStyled to={'/'}>
+            Update
+          </LinkStyled>
+        </ButtonContainer>
     </ContainerStyled>
   </div>
 );
@@ -155,8 +217,11 @@ export default compose(
       console.log('Edit Profil')
     },
     validationSchema: getValidationSchema(),
-    mapPropsToValues: () => ({
-      ...defaultValues,
+    mapPropsToValues: ({ user}) => ({
+      sexe: user.sexe,
+      lookingFor: user.sexualOrientation,
+      bio: user.bio,
+      interest: user.interest,
     }),
   }),
 )(EditProfil);

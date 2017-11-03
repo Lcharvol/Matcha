@@ -1,17 +1,34 @@
 import Yup from 'yup';
-import { InputField } from '../fields';
+import { InputField, TextAreaField  } from '../fields';
+import {
+  SelectField,
+} from '../fields/SelectField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 const fields = {
+  sexe: {
+    label: 'Je suis',
+    component: SelectField,
+    domainValues: [
+      { id: 'man', value: 'Un homme' },
+      { id: 'woman', value: 'Une femme' },
+    ],
+    validate: Yup.string(),
+    required: true,
+  },
   lookingFor: {
     label: 'Je recherche',
-    component: InputField,
+    component: SelectField,
+    domainValues: [
+      { id: 'man', value: 'Un homme' },
+      { id: 'woman', value: 'Une femme' },
+    ],
     validate: Yup.string(),
     required: true,
   },
   bio: {
     label: 'Ma bio',
-    component: InputField,
+    component: TextAreaField,
     validate: Yup.string(),
     required: true,
   },

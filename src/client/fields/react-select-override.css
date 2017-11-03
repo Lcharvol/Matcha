@@ -1,0 +1,41 @@
+.Select:not(.is-searchable):not(.Select--multi) > .Select-control {
+    height: 36px;
+  }
+  
+  .Select-input > input {
+    height: 36px;
+    color: white;
+  }
+  
+  .Select--multi > .Select-control {
+    height: 36px;
+  }
+  
+  .has-value:not(.Select--multi) .Select-value-label {
+    line-height: 38px;
+  }
+  
+  .Select--multi .Select-input {
+    height: 36px;
+  }
+  
+  .is-searchable .Select-placeholder,
+  .is-searchable.Select:not(.Select--multi) .Select-value {
+    line-height: 38px;
+  }
+  
+  .Select--multi .Select-value,
+  .Select--multi.is-disabled .Select-value {
+    font-size: 14px;
+    line-height: 23px;
+  }
+  
+  .Select--multi .Select-value-icon {
+    top: 4px;
+  }
+  
+  .Select .is-open .Select-arrow-zone {
+    position: absolute;
+    top: 0;
+  }
+  

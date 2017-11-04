@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUser } from '../../selectors/user';
 import { Header, Container, Avatar } from '../widgets';
+import { Link } from 'react-router';
 import Profil from '../Profil';
 import Suggestion from '../Suggestion';
 
@@ -13,7 +14,8 @@ const Content = styled.div`
     flex-wrap: wrap;
     width:100%;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    margin-bottom:20px;
 `;
 
 const Icon = styled.i`
@@ -25,16 +27,34 @@ const Icon = styled.i`
     margin:10px;
 `;
 
-const Link = styled.div`
+const LinkStyled = styled(Link)`
     display: flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    min-width:40%;
+    min-width:100px;
+    max-width:100px;
+    min-height:100px;
+    max-height:100px;
+    background-color:white;
+    border-radius:4px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.10);
+    margin:30px;
+    cursor:pointer;
+    &:hover {
+        transition: all 60ms ease;
+        opacity: .8;
+        margin-top:20px;
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.10);
+    };
+    text-decoration:none;
 `;
 
 const Name = styled.p`
     color:#EA5555;
+    margin:auto;
+    margin-top:10px;
+    font-size:1.5em;
 `;
 
 const Home = ({ user }) => (
@@ -42,23 +62,20 @@ const Home = ({ user }) => (
         <Header />
         <Container width='450px' top='20vh'>
             <Avatar user={user} top='-80px'/>
+            <Name>{`${user.firstName} ${user.lastName}`}</Name>
             <Content>
-                <Link>
+                <LinkStyled>
                     <Icon className="fa fa-user" aria-hidden="true" />
-                    <Name>Profil</Name>
-                </Link>
-                <Link>
+                </LinkStyled>
+                <LinkStyled>
                     <Icon className="fa fa-search" aria-hidden="true" />
-                    <Name>Search</Name>
-                </Link>
-                <Link>
-                    <Icon className="fa fa-edit" aria-hidden="true" />
-                    <Name>Profil</Name>
-                </Link>
-                <Link>
+                </LinkStyled>
+                <LinkStyled to='/profil'>
+                    <Icon className="fa fa-pencil" aria-hidden="true" />
+                </LinkStyled>
+                <LinkStyled>
                     <Icon className="fa fa-comments" aria-hidden="true" />
-                    <Name>Chat</Name>
-                </Link>
+                </LinkStyled>
             </Content>
         </Container>
     </div>

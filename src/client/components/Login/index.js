@@ -122,7 +122,7 @@ const Login = ({
     requestCancel,
     ...props
   }) => (
-    <Container top='50px' width='350px'>
+    <Container top='20vh' width='350px'>
         <Logo width={200} />
         <LoginForm
             type="add"

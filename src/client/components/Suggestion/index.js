@@ -8,15 +8,12 @@ import { Container, Avatar } from '../widgets';
 import Profil from './Profil';
 
 const ContainerStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 25px;
-    justify-content: 'flex-start';
-    padding: 25px;
-    min-height:${({ height = '0px' }) => height};
-    border-radius: 4px;
+    width:100%;
+    margin-top:10px;
     background-color:white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+    border-radius:0px;
+    margin-bottom:10px;
+    padding-bottom:25px;
 `;
 
 const ProfilContainer = styled.div`

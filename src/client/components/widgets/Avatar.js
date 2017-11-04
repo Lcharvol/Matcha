@@ -31,7 +31,7 @@ const AvatarContainer = styled.div`
     width:140px;
     height:140px;
     border-radius:500px;
-    background-color:rgb(250,250,250);
+    background-color:white;
 `;
 
 const ScoreIcon = styled.i`
@@ -50,7 +50,7 @@ const ScoreContainer = styled.div`
 const Score = styled.p`
     color:white;
     font-size:0.8em;
-    margin-top:-28px;
+    margin-top:-29px;
 `;
 
 const Avatar = ({ user, size = 'big', top = '0px' }) => (

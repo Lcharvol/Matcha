@@ -39,6 +39,9 @@ const Icon = styled.i`
 const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
+      <Link to={`/`}>
+        <Icon className="fa fa-home" aria-hidden="true"/>
+      </Link>
       <Link to={`/login`}>
         <Icon className="fa fa-cog" aria-hidden="true"/>
       </Link>

@@ -3,19 +3,29 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUser } from '../../selectors/user';
+import { getUser, getUsers } from '../../selectors/user';
 import { Header, Container, Avatar } from '../widgets';
 import { Link } from 'react-router';
-import Profil from '../Profil';
 import Suggestion from '../Suggestion';
+import Profil from '../Profil';
+
+const MainContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    min-height:100vh;
+`;
 
 const Content = styled.div`
     display:flex;
+    flex:1;
     flex-wrap: wrap;
     width:100%;
     justify-content: center;
     align-items: center;
-    margin-bottom:20px;
+    margin-top:15px;
+    margin-bottom:15px;
 `;
 
 const Icon = styled.i`
@@ -32,19 +42,18 @@ const LinkStyled = styled(Link)`
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    min-width:100px;
-    max-width:100px;
-    min-height:100px;
-    max-height:100px;
+    min-width:80px;
+    max-width:80px;
+    min-height:80px;
+    max-height:80px;
     background-color:white;
     border-radius:4px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.10);
-    margin:30px;
+    margin:15px;
     cursor:pointer;
     &:hover {
         transition: all 60ms ease;
         opacity: .8;
-        margin-top:20px;
         box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.10);
     };
     text-decoration:none;
@@ -57,10 +66,10 @@ const Name = styled.p`
     font-size:1.5em;
 `;
 
-const Home = ({ user }) => (
-    <div>
+const Home = ({ user, users }) => (
+    <MainContainer>
         <Header />
-        <Container width='450px' top='20vh'>
+        <Container width='450px' top='125px'>
             <Avatar user={user} top='-80px'/>
             <Name>{`${user.firstName} ${user.lastName}`}</Name>
             <Content>
@@ -78,17 +87,20 @@ const Home = ({ user }) => (
                 </LinkStyled>
             </Content>
         </Container>
-    </div>
+        <Suggestion users={users}/>
+    </MainContainer>
 );
 
 Home.propTypes = {
     user: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
 }
 
 const actions = {};
 
 const mapStateToProps = state => ({
   user: getUser(state),
+  users: getUsers(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

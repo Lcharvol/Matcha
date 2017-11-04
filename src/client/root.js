@@ -1,6 +1,7 @@
 import React from 'react';
 import App from '../client/components/App';
 import { Router, browserHistory } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import routes from './routes';
 import configureStore from './store';
@@ -61,7 +62,7 @@ const initialState = {
         id: 2,
       },
     ],
-    score: 10,
+    score: 70,
   },
   users: [
     {
@@ -88,12 +89,14 @@ const store = configureStore(initialState);
 
 const root = (
   <App>
-    <Provider store={store}>
-      <Router
-        history={browserHistory}
-        routes={routes}
-      />
-    </Provider>
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <Router
+          history={browserHistory}
+          routes={routes}
+        />
+      </Provider>
+    </MuiThemeProvider>
   </App>
 );
 

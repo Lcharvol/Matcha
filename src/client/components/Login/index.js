@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo, Container } from '../widgets';
+import { Logo, Container, FacebookLogin, GoogleLogin } from '../widgets';
 import styled from 'styled-components';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
@@ -8,6 +8,16 @@ import { compose } from 'ramda';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
+
+
+const Content = styled.div`
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100vh;
+`;
 
 const LoginFormStyled = styled.form`
   display: grid;
@@ -55,14 +65,13 @@ const LinkStyled = styled(Link)`
   justify-content: center;
   align-items: center;
   flex: 0 0 160px;
-  box-shadow: inset 10px 10px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
   color: #FFFFFF;
   background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
   opacity: .95;
   &:hover {
     transition: all 60ms ease;
-    opacity: .90;
-    box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
+    opacity: .8;
   }
 `;
 
@@ -122,25 +131,29 @@ const Login = ({
     requestCancel,
     ...props
   }) => (
-    <Container top='20vh' width='350px'>
-        <Logo width={200} />
-        <LoginForm
-            type="add"
-            handleSubmit={handleSubmit}
-            values={values}
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            {...props}
-        />
-        <ButtonContainer>
-          <LinkStyled to={`/register`}>
-            Register
-          </LinkStyled>
-          <LinkStyled to={`/home`}>
-            Login
-          </LinkStyled>
-        </ButtonContainer>
-    </Container>
+    <Content>
+      <Container top='' width='350px'>
+          <Logo width={200} />
+          <LoginForm
+              type="add"
+              handleSubmit={handleSubmit}
+              values={values}
+              setFieldTouched={setFieldTouched}
+              setFieldValue={setFieldValue}
+              {...props}
+          />
+          <ButtonContainer>
+            <LinkStyled to={`/register`}>
+              Register
+            </LinkStyled>
+            <LinkStyled to={`/home`}>
+              Login
+            </LinkStyled>
+          </ButtonContainer>
+      </Container>
+      <FacebookLogin />
+      <GoogleLogin />
+    </Content>
 );
 
 export default compose(

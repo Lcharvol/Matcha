@@ -8,6 +8,8 @@ import Score from './Score';
 import Picture from './Picture';
 import Separator  from './Separator';
 import Throphy from './Throphy';
+import FacebookLogin from './FacebookLogin';
+import GoogleLogin from './GoogleLogin';
 
 export {
   Logo,
@@ -20,4 +22,6 @@ export {
   Picture,
   Separator,
   Throphy,
+  FacebookLogin,
+  GoogleLogin,
 };

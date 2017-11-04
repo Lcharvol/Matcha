@@ -73,15 +73,15 @@ const LinkStyled = styled(Link)`
   justify-content: center;
   align-items: center;
   flex: 0 0 160px;
-  box-shadow: inset 10px 10px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
   opacity: .95;
   &:hover {
     transition: all 60ms ease;
     opacity: .90;
     box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
-  color: #FFFFFF;
-  background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
 `;
 
 const RegisterForm = ({

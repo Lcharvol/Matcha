@@ -82,8 +82,8 @@ const Home = ({ user, users }) => (
                 <LinkStyled to='/profil'>
                     <Icon className="fa fa-pencil" aria-hidden="true" />
                 </LinkStyled>
-                <LinkStyled>
-                    <Icon className="fa fa-comments" aria-hidden="true" />
+                <LinkStyled to='/chat'>
+                    <Icon className="fa fa-comment" aria-hidden="true" />
                 </LinkStyled>
             </Content>
         </Container>

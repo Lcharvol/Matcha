@@ -4,3 +4,5 @@ dist
 *.lock
 *.tmp
 etc
+config
+src/client

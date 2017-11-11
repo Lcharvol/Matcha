@@ -13,8 +13,13 @@ module.exports = {
   },
   expiresIn: '10h',
   server,
-  db: {
-    name: 'matcha',
+  postgres: {
+    host: 'baasu.db.elephantsql.com',
+    port: 5432,
+    database: 'matcha',
+    user: 'dwvmifqb',
+  },
+  configPgp: {
   },
   routes: {
     confirmEmail: '/confirm_email',

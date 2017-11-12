@@ -6,7 +6,7 @@ import {
 import { MarkDownField } from '../fields/MarkDownField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
-const fields = {
+export const fields = {
   sexe: {
     label: 'Je suis',
     component: SelectField,

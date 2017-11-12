@@ -3,6 +3,7 @@ const serverUrl = `http://${server.host}:${server.port}`;
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   server,
+  serverUrl,
   devServer: {
     contentBase: './public',
     historyApiFallback: true,

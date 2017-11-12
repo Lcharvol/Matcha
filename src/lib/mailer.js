@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { secretPasswordMail } from '../../../config/server';
+import { secretPasswordMail } from '../../config/server';
 
 const transport = nodemailer.createTransport({
   service: 'gmail',

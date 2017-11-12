@@ -28,10 +28,6 @@ export const getOneValidationSchema = (fields, extend) =>
   )(fields);
 
 export const getOneField = fields => name => ({ name, ...fields[name] });
-export const getAllFields = compose(
-  reduce((acc, [name, field]) => [...acc, { ...field, name }], []),
-  toPairs,
-);
 export const getDefaultValues = compose(
   reduce((acc, [name, field]) => ({ ...acc, [name]: field.defaultValue }), {}),
   toPairs,

@@ -16,7 +16,7 @@ module.exports = {
   postgres: {
     host: 'baasu.db.elephantsql.com',
     port: 5432,
-    database: 'matcha',
+    database: 'dwvmifqb',
     user: 'dwvmifqb',
   },
   configPgp: {

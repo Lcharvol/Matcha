@@ -1,13 +1,13 @@
 import pgp from 'pg-promise';
-import debug from 'debug';
+import UserSchema from './schemaUser';
 
-const logger = debug('matcha:server/mongoDB');
-
-const init = async ({ postgres: config, configPgp }) => {
+const init = async (ctx) => {
+  const { config: { postgres: config, configPgp } } = ctx;
   const pgConnector = pgp(configPgp);
   const db = pgConnector(config);
   const client = await db.connect();
-  return { db: client };
+  await UserSchema(client);
+  return { ...ctx, db: client };
 };
 
 export default init;

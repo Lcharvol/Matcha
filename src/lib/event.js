@@ -11,24 +11,25 @@ const init = (req, res) => {
   const finalRoutes = [];
   routes.push(user);
   routes.forEach(route => {
-    const pathUrl = `/${route.name}`;
     R.map((verb) => {
+      const nameSplit = R.split('$', verb.name);
+      const url = nameSplit[1] ? `/${route.name}/:${nameSplit[1]}` : `/${route.name}`;
       const routeDetails = {
           verb,
-          verbName: verb.name,
-          url: pathUrl,
+          verbName: nameSplit[0],
+          url,
           name: route.name,
-          before: route.before[verb.name],
+          before: route.before[nameSplit[0]],
       };
       finalRoutes.push(routeDetails);
     }, route.service);
   });
-
   finalRoutes.forEach(route => {
-    const { verbName, url, before, verb} = route;
+    let { verbName, url, before, verb} = route;
     const hooks = before ? Object.values(before) : [];
     hooks.push(verb);
-    router[route.verbName](route.url, hooks);
+    router[verbName](route.url, hooks);
+
   });
   return router;
 };

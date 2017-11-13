@@ -11,9 +11,11 @@ const User = {
     return this.db.one(`SELECT * FROM users WHERE id = ${id}`);
   },
   update(data, id) {
-    // if (data.id) { return (Promise.reject({ msg: 'id can\'t be change' })); }
     const query = `${pgp.helpers.update(data, null, 'users')} WHERE id=${id} RETURNING *`;
     return this.db.one(query);
+  },
+  getByLogin(login) {
+    return this.db.one('SELECT * FROM users WHERE login = $1', login);
   },
   EmailVerif(email) {
     return this.db.one('SELECT * FROM users WHERE email = $1', email);
@@ -24,6 +26,9 @@ const User = {
     const data = { ...imgs, photo_5: imgProfile };
     const query = `${pgp.helpers.update(data, null, 'users')} WHERE id=${id} RETURNING *`;
     return this.db.one(query);
+  },
+  delete(id) {
+    return this.db.one('DELETE FROM users WHERE id=$1 RETURNING *', id);
   },
 };
 

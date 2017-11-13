@@ -4,16 +4,16 @@ import User from '../../models/User';
 const addImg = async (req, res) => {
   const imgs = {};
   const { user: { id }, ctx: { db } } = req;
-  const { imgProfile } = req.files;
+  const { profilePicture } = req.files;
   let path = null;
 
-  if (req.files.imgs) {
-    req.files.imgs.forEach((img, index) => {
+  if (req.files.pictures) {
+    req.files.pictures.forEach((img, index) => {
       imgs[`photo_${index + 1}`] = `/uploads/${img.filename}`;
     });
   }
-  if (imgProfile) {
-    path = `/uploads/${req.files.imgProfile[0].filename}`;
+  if (profilePicture) {
+    path = `/uploads/${req.files.profilePicture[0].filename}`;
   }
   try {
     const imgsPath = await User.addImg.bind({ db })(imgs, path, id);

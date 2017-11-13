@@ -6,7 +6,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   firstname VARCHAR NOT NULL,
   lastname VARCHAR NOT NULL,
   sexe VARCHAR,
-  orientation VARCHAR DEFAULT 'bisexual',
+  sexualOrientation VARCHAR DEFAULT 'bisexual',
   bio TEXT,
   age NUMERIC,
   interest TEXT,

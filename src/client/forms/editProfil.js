@@ -1,36 +1,37 @@
 import Yup from 'yup';
 import { InputField, TextAreaField  } from '../fields';
-import {
-  SelectField,
-} from '../fields/SelectField';
+// import {
+//   SelectField,
+// } from '../fields/SelectField';
 import { MarkDownField } from '../fields/MarkDownField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 export const fields = {
   sexe: {
     label: 'Je suis',
-    component: SelectField,
+    // component: SelectField,
     domainValues: [
       { id: 'man', value: 'Un homme' },
       { id: 'woman', value: 'Une femme' },
     ],
-    validate: Yup.string(),
+    validate: Yup.string().matches(/^man|woman$/),
     required: true,
   },
-  lookingFor: {
-    label: 'Je recherche',
-    component: SelectField,
+  sexualOrientation: {
+    label: 'Je suis',
+    // component: SelectField,
     domainValues: [
-      { id: 'man', value: 'Un homme' },
-      { id: 'woman', value: 'Une femme' },
+      { id: 'bisexual', value: 'Un Bisexuel' },
+      { id: 'homosexual', value: 'Une Homosexuel' },
+      { id: 'heterosexual', value: 'Un Hétérosexuel' },
     ],
-    validate: Yup.string(),
+    validate: Yup.string().matches(/^bisexual|homosexual|heterosexual$/),
     required: true,
   },
   bio: {
     label: 'Ma bio',
     component: MarkDownField,
-    validate: Yup.string(),
+    validate: Yup.string().max(500),
     required: true,
   },
   interest: {
@@ -45,6 +46,48 @@ export const fields = {
     validate: Yup.string(),
     required: true,
   },
+  profilPicture: {
+    label: 'Ma photo de profil',
+    component: InputField,
+    validate: Yup.string(),
+    required: true,
+  },
+  login: {
+    label: 'Login',
+    component: InputField,
+    validate: Yup.string().min(3).max(30),
+    required: true,
+  },
+  email: {
+    label: 'Email',
+    component: InputField,
+    validate: Yup.string().email(),
+    required: true,
+  },
+  firstname: {
+    label: 'First Name',
+    component: InputField,
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/),
+    required: true,
+  },
+  lastname: {
+    label: 'Last Name',
+    component: InputField,
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/),
+    required: true,
+  },
+  password: {
+    label: 'Password',
+    component: InputField,
+    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/),
+    required: true,
+  },
+  age: {
+    label: 'Age',
+    component: InputField,
+    validate: Yup.number().integer().min(18).max(99),
+    required: true,
+  }
 };
 
 export const defaultValues = getDefaultValues(fields);

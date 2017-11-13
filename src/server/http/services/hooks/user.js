@@ -1,12 +1,31 @@
 import jwt from 'jsonwebtoken';
 import debug from 'debug';
 import geoip from 'geoip-lite';
-// import { schemaRegister, schemaLogin } from '../../../lib/validator';
+import _ from 'lodash';
 import mailer from '../../../../lib/mailer';
-import { schemaRegister, schemaLogin } from '../../../../lib/validators';
+import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../../lib/validators';
 import User from '../../../models/User'; // eslint-disable-line
 
 const logger = debug('matcha:server/hooks.js');
+
+export const getInfoToUpdate = async (req, res, next) => {
+  const inputUpdate = req.body;
+  try {
+    await schemaEditProfil.validate(inputUpdate);
+    const infoCleaned = _.pick(inputUpdate, schemaEditProfil._nodes);
+    if (_.isEmpty(infoCleaned)) {
+      logger('aucun valid champs');
+      res.status = 201;
+      return res.json({ details: 'no one valid champ' });
+    }
+    req.infoToUpdate = infoCleaned;
+    next();
+  } catch (err) {
+    logger(err);
+    res.status = 201;
+    res.json({ details: err.errors });
+  }
+};
 
 export const validateRegisterForm = async (req, res, next) => {
   try {
@@ -34,11 +53,13 @@ export const validateLoginForm = async (req, res, next) => {
   }
 };
 
+
 export const checkIfConfirmedAndReturnUser = async (req, res, next) => {
   const { login } = req.body;
   const { db } = req.ctx;
   try {
-    const user = await User.getByEmail.bind({ db })(login);
+    const user = await User.getByLogin.bind({ db })(login);
+    logger(user);
     if (!user.confirmed) {
       logger('Not confirmed!');
       res.status = 201;
@@ -86,3 +107,4 @@ export const getLocalisation = (req, res, next) => {
   req.user = userWithRange;
   next();
 };
+

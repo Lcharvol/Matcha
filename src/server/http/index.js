@@ -3,6 +3,7 @@ import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import debug from 'debug';
 import logger from 'morgan-debug';
 import multer from 'multer';
 import path from 'path';
@@ -22,6 +23,20 @@ const bindCtx = (ctx) => (req, res, next) => {
   next();
 };
 
+const bindError = (req, res, next) => {
+  req.Err = (msg) => {
+    const { stack } = new Error();
+    const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
+    const matches = regex.exec(stack.split('\n')[2]);
+    const [, file, line] = matches;
+    const log = debug(`matcha:${file}:${line}`);
+    log(msg);
+    res.status(201);
+    res.json({ details: msg });
+  };
+  next();
+};
+
 const upload = multer({
   dest: path.join(__dirname, '../../../public/uploads/'),
   limits: {
@@ -32,7 +47,7 @@ const upload = multer({
 
 const init = ctx => new Promise(resolve => {
   const app = express();
-  const { server: { host, port }, secretSentence } = ctx.config;
+  const { server: { host, port } } = ctx.config;
 
   app
     .use(compression())
@@ -41,18 +56,19 @@ const init = ctx => new Promise(resolve => {
     .use(bodyParser.urlencoded({ extended: true }))
     .use(logger('matcha:http', 'dev'))
     .use(cors())
-    .use(bindCtx(ctx));
+    .use(bindCtx(ctx))
+    .use(bindError);
 
   app
     .get('/ping', (req, res) => res.json({ ping: 'pong' }))
     .get('/confirm_email', getToken, getUserFromToken, confirmEmail)
     .post('/reset_password', getToken, checkToken, resetPassword)
     .get('/lost_password', sendTokenResetPassword)
-    // .get('/login', validateLoginForm, checkIfConfirmedAndReturnUser, login)
-    .use('/api', switchEvent)
+    .post('/login', validateLoginForm, checkIfConfirmedAndReturnUser, login)
+    .use('/api', getToken, switchEvent)
     .post(
-      '/add_img', upload.fields([{ name: 'imgs', maxCount: 4 }, { name: 'imgProfile', maxCount: 1 }]),
-      getToken, checkAuth(secretSentence), addImg,
+      '/add_img', upload.fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]),
+      getToken, checkAuth, addImg,
     );
 
   const httpServer = app.listen(port, host, () => {

@@ -1,12 +1,9 @@
 import jwt from 'jsonwebtoken';
-import debug from 'debug';
 import geoip from 'geoip-lite';
 import _ from 'lodash';
 import mailer from '../../../../lib/mailer';
 import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../../lib/validators';
 import User from '../../../models/User'; // eslint-disable-line
-
-const logger = debug('matcha:server/hooks.js');
 
 export const getInfoToUpdate = async (req, res, next) => {
   const inputUpdate = req.body;
@@ -14,16 +11,12 @@ export const getInfoToUpdate = async (req, res, next) => {
     await schemaEditProfil.validate(inputUpdate);
     const infoCleaned = _.pick(inputUpdate, schemaEditProfil._nodes);
     if (_.isEmpty(infoCleaned)) {
-      logger('aucun valid champs');
-      res.status = 201;
-      return res.json({ details: 'no one valid champ' });
+      return req.Err('no one valid champ');
     }
     req.infoToUpdate = infoCleaned;
     next();
   } catch (err) {
-    logger(err);
-    res.status = 201;
-    res.json({ details: err.errors });
+    req.Err(err.errors);
   }
 };
 
@@ -34,9 +27,7 @@ export const validateRegisterForm = async (req, res, next) => {
     req.registerInputName = schemaRegister._nodes;
     next();
   } catch (err) {
-    logger(err);
-    res.status = 201;
-    res.json({ details: err.errors });
+    req.Err(err.errors);
   }
 };
 
@@ -47,9 +38,7 @@ export const validateLoginForm = async (req, res, next) => {
     req.registerInputName = schemaRegister._nodes;
     next();
   } catch (err) {
-    logger(err);
-    res.status = 201;
-    res.json({ details: err.errors });
+    req.Err(err.errors);
   }
 };
 
@@ -61,16 +50,12 @@ export const checkIfConfirmedAndReturnUser = async (req, res, next) => {
     const user = await User.getByLogin.bind({ db })(login);
     logger(user);
     if (!user.confirmed) {
-      logger('Not confirmed!');
-      res.status = 201;
-      res.json({ details: 'Not confirmed!' });
+      return req.Err('Not Confirmed!');
     }
     req.user = user;
     next();
   } catch (err) {
-    logger('Not confirmed!');
-    res.status = 201;
-    res.json({ details: 'Not confirmed!' });
+    req.Err('Not Confirmed!');
   }
 };
 

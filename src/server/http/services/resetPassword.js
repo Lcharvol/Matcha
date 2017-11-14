@@ -12,8 +12,7 @@ const resetPassword = async (req, res) => {
     res.status = 200;
     res.json({ details: 'password has been updated!' });
   } catch (err) {
-    res.status = 201;
-    res.json({ details: 'wrong format' });
+    req.Err('wrong format');
   }
 };
 

@@ -10,9 +10,8 @@ const login = async (req, res) => {
     const token = jwt.sign({ sub: user.id }, secretSentence, { expiresIn });
     res.json({ matchaToken: token });
   } catch (err) {
-    res.status = 201;
-    if (err.message === 'invalid') return res.json({ details: 'wrong password' });
-    res.json({ details: 'failed to auth' });
+    const message = err.message === 'invalid' ? 'wrong password': 'failed to auth';
+    req.Err(message);
   }
 };
 export default login;

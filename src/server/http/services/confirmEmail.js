@@ -10,8 +10,7 @@ const confirmEmail = async (req, res) => {
     const user = await User.update.bind({ db })({ confirmed: true }, Number(id));
     res.redirect(`${urlClient}?login=${user.login}`);
   } catch (err) {
-    res.status = 201;
-    res.json = { details: err.message };
+    req.Err(err.message);
   }
 };
 

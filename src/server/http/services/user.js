@@ -1,14 +1,11 @@
 import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
-import debug from 'debug';
 // import jwt from 'jsonwebtoken';
 
 import User from '../../models/User';
 import { validateRegisterForm, sendConfirmEmail, getIp, getLocalisation, getInfoToUpdate } from './hooks/user';
 import { checkAuth } from './hooks/token';
 
-
-const logger = debug('matcha:server/service/user.js');
 const service = {
   async post(req, res) {
     const user = { ...R.pick(req.registerInputName, req.body), ...req.user };
@@ -22,9 +19,7 @@ const service = {
       sendConfirmEmail(newUser, req.ctx);
       res.json({ details: 'Succesfully register, please check your mail' });
     } catch (err) {
-      logger(err.message);
-      res.status = 201;
-      res.json({ details: 'User already register' });
+      req.Err('User already register');
     }
   },
   async put(req, res) {
@@ -42,21 +37,17 @@ const service = {
       await User.update.bind({ db })(info, Number(id));
       res.json({ details: 'Succesfully update your info', more: Object.keys(info) });
     } catch (err) {
-      logger(err.message);
-      res.status = 201;
-      res.json({ details: 'Failed To upload your info.s' });
+      req.Err('Failed To upload your info');
     }
   },
-  async delete$id(req, res) {
+  async delete(req, res) {
     try {
       const { ctx: { db } } = req;
-      const { id } = req.id;
-      await User.delete.bind({ db })(Number(id));
+      const { tokenIdd } = req;
+      await User.delete.bind({ db })(Number(tokenId));
       res.json({ details: 'Succesfully delete' });
     } catch (err) {
-      logger(err.message);
-      res.status = 201;
-      res.json({ details: 'Failed to delete', more: req.user.login });
+      req.Err('Failed to delete', req.user.login);
     }
   },
   async get$id(req, res) {

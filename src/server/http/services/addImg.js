@@ -19,8 +19,7 @@ const addImg = async (req, res) => {
     const imgsPath = await User.addImg.bind({ db })(imgs, path, id);
     res.json = R.pick(['photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5'], imgsPath);
   } catch (err) {
-    res.status = 201;
-    res.json({ details: 'Failed to authenticate' });
+    req.Err('Failed to authenticate');
   }
 };
 export default addImg;

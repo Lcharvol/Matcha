@@ -30,9 +30,21 @@ const bindError = (req, res, next) => {
     const matches = regex.exec(stack.split('\n')[2]);
     const [, file, line] = matches;
     const log = debug(`matcha:${file}:${line}`);
-    log(msg);
+    log(`DETAILS: ${msg}`);
     res.status(201);
     res.json({ details: msg });
+  };
+  next();
+};
+
+const bindLogger = (req, res, next) => {
+  req.log = (msg) => {
+    const { stack } = new Error();
+    const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
+    const matches = regex.exec(stack.split('\n')[2]);
+    const [, file, line] = matches;
+    const log = debug(`matcha:${file}:${line}`);
+    log(msg);
   };
   next();
 };
@@ -57,6 +69,7 @@ const init = ctx => new Promise(resolve => {
     .use(logger('matcha:http', 'dev'))
     .use(cors())
     .use(bindCtx(ctx))
+    .use(bindLogger)
     .use(bindError);
 
   app

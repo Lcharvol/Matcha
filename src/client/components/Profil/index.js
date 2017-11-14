@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { map } from 'ramda';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Avatar, Spacer, Tag, Score, Picture, Throphy } from '../widgets';
+import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
 import styled from 'styled-components';
 import { Link } from 'react-router'
 
@@ -79,7 +79,7 @@ const Throphys = styled.div`
     align-items: center;
 `;
 
-const Header = styled.div`
+const ProfilHeader = styled.div`
     display:flex;
     flex-direction:column;
     justify-content: center;
@@ -93,47 +93,50 @@ const Name = styled.p`
 `;
 
 const Profil = ({ user = {} }) => (
-    <ProfilContainer>
-        <LinkStyled to={`/profil`}>
-            <Icon className="fa fa-pencil" aria-hidden="true"/>
-        </LinkStyled>
-        <Header>
-            <Avatar user={user}/>
-            <Spacer size={20}/>
-            <Name>{`${user.firstName} ${user.lastName}`}</Name>
-                {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
-        </Header>
-        <ProfilInfo>
-            <InlineBlock>
-                <Text>Je recherche: </Text>
-                {user.sexualOrientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
-            </InlineBlock>
-            <Title>Ma bio</Title>
-            <InlineBlock>
-                <Text>{user.bio}</Text>
-            </InlineBlock>
-            <Title>Interêts: </Title>
-            <InlineBlock>
-                {map(tag => <Tag key={tag} name={tag}/> , user.interest)}
-            </InlineBlock>
-            <Title>Mes Photos: </Title>
-            <InlineBlock>
-                <Pictures>
-                    {map(picture => <Picture key={picture} picture={picture} /> , user.pictures)}
-                </Pictures>
-            </InlineBlock>
-            <Title>Mes Throphés: </Title>
-            <InlineBlock>
-                <Throphys>
-                    {map(throphy => <Throphy key={throphy.id} throphy={throphy} /> , user.throphys)}
-                </Throphys>
-            </InlineBlock>
-            <Title>Mon Score: </Title>
-            <InlineBlock>
-                <Score score={user.score}/>
-            </InlineBlock>
-        </ProfilInfo>
-    </ProfilContainer>
+    <div>
+        <Header />
+        <ProfilContainer>
+            <LinkStyled to={`/profil`}>
+                <Icon className="fa fa-pencil" aria-hidden="true"/>
+            </LinkStyled>
+            <ProfilHeader>
+                <Avatar user={user}/>
+                <Spacer size={20}/>
+                <Name>{`${user.firstName} ${user.lastName}`}</Name>
+                    {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+            </ProfilHeader>
+            <ProfilInfo>
+                <InlineBlock>
+                    <Text>Je recherche: </Text>
+                    {user.sexualOrientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                </InlineBlock>
+                <Title>Ma bio</Title>
+                <InlineBlock>
+                    <Text>{user.bio}</Text>
+                </InlineBlock>
+                <Title>Interêts: </Title>
+                <InlineBlock>
+                    {map(tag => <Tag key={tag} name={tag}/> , user.interest)}
+                </InlineBlock>
+                <Title>Mes Photos: </Title>
+                <InlineBlock>
+                    <Pictures>
+                        {map(picture => <Picture key={picture} picture={picture} /> , user.pictures)}
+                    </Pictures>
+                </InlineBlock>
+                <Title>Mes Throphés: </Title>
+                <InlineBlock>
+                    <Throphys>
+                        {map(throphy => <Throphy key={throphy.id} throphy={throphy} /> , user.throphys)}
+                    </Throphys>
+                </InlineBlock>
+                <Title>Mon Score: </Title>
+                <InlineBlock>
+                    <Score score={user.score}/>
+                </InlineBlock>
+            </ProfilInfo>
+        </ProfilContainer>
+    </div>
 );
 
 Profil.propTypes = {

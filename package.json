@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint src --color",
     "client": "NODE_ENV=development webpack-dev-server --progress --config webpack.config.js",
+    "resetdb": "DEBUG=matcha* babel-node src/server/scripts/resetDb",
     "server": "NODE_ENV=development DEBUG=matcha* nodemon --watch config/server --watch src/lib --watch src/server --exec \"babel-node src/server\"",
     "coverage": "NODE_ENV=testing nyc yarn srv:test",
     "test:server": "NODE_ENV=testing DEBUG=matcha* mocha --compilers js:babel-core/register --require babel-polyfill --reporter spec \"./src/server/**/__test__/*.js\" ",

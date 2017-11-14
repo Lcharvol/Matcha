@@ -136,7 +136,7 @@ const Login = ({
     ...props
   }) => (
     <Content>
-      <Container top='' width='350px'>
+      <Container top='' width='350px' height='550px'>
           <Logo width={200} />
           <LoginForm
               type="add"

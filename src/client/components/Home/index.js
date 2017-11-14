@@ -73,13 +73,13 @@ const Home = ({ user, users }) => (
             <Avatar user={user} top='-80px'/>
             <Name>{`${user.firstName} ${user.lastName}`}</Name>
             <Content>
-                <LinkStyled>
+                <LinkStyled to='/profil'>
                     <Icon className="fa fa-user" aria-hidden="true" />
                 </LinkStyled>
                 <LinkStyled>
                     <Icon className="fa fa-search" aria-hidden="true" />
                 </LinkStyled>
-                <LinkStyled to='/profil'>
+                <LinkStyled to='/editprofil'>
                     <Icon className="fa fa-pencil" aria-hidden="true" />
                 </LinkStyled>
                 <LinkStyled to='/chat'>

@@ -50,6 +50,14 @@ const initialState = {
   },
   users: [
     {
+      login: 'tdouge',
+      firstName: 'Thibault',
+      lastName: 'Douge',
+      sexe: 'homme',
+      bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
+      avatar: 'https://cdn.intra.42.fr/users/large_tdouge.jpg',
+    },
+    {
       login: 'lcharvol',
       firstName: 'Lucas',
       lastName: 'Charvolin',
@@ -58,14 +66,6 @@ const initialState = {
       bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
       avatar: 'https://cdn.intra.42.fr/users/large_lcharvol.jpg',
     },
-    {
-      login: 'tdouge',
-      firstName: 'Thibault',
-      lastName: 'Douge',
-      sexe: 'homme',
-      bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
-      avatar: 'https://cdn.intra.42.fr/users/medium_tdouge.jpg',
-    }
   ]
 };
 

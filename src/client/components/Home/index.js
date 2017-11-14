@@ -93,14 +93,20 @@ const Home = ({ user, users }) => (
 
 Home.propTypes = {
     user: PropTypes.object.isRequired,
+<<<<<<< HEAD
     users: PropTypes.array.isRequired,
+=======
+>>>>>>> 849fedec8a71d16434cb29f10e1233fbf553c923
 }
 
 const actions = {};
 
 const mapStateToProps = state => ({
   user: getUser(state),
+<<<<<<< HEAD
   users: getUsers(state),
+=======
+>>>>>>> 849fedec8a71d16434cb29f10e1233fbf553c923
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

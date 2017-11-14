@@ -62,7 +62,7 @@ const initialState = {
       firstName: 'Lucas',
       lastName: 'Charvolin',
       sexe: 'man',
-      
+
       bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
       avatar: 'https://cdn.intra.42.fr/users/large_lcharvol.jpg',
     },

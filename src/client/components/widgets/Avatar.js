@@ -31,7 +31,11 @@ const AvatarContainer = styled.div`
     width:140px;
     height:140px;
     border-radius:500px;
+<<<<<<< HEAD
     background-color:white;
+=======
+    background-color:rgb(250,250,250);
+>>>>>>> 849fedec8a71d16434cb29f10e1233fbf553c923
 `;
 
 const ScoreIcon = styled.i`
@@ -50,7 +54,11 @@ const ScoreContainer = styled.div`
 const Score = styled.p`
     color:white;
     font-size:0.8em;
+<<<<<<< HEAD
     margin-top:-29px;
+=======
+    margin-top:-28px;
+>>>>>>> 849fedec8a71d16434cb29f10e1233fbf553c923
 `;
 
 const Avatar = ({ user, size = 'big', top = '0px' }) => (

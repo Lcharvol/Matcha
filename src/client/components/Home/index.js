@@ -1,26 +1,108 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header } from '../widgets';
-import Profil from '../Profil';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUser, getUsers } from '../../selectors/user';
+import { Header, Container, Avatar } from '../widgets';
+import { Link } from 'react-router';
 import Suggestion from '../Suggestion';
+import Profil from '../Profil';
 
-const Content = styled.div`
-    max-width:1000px;
-    margin:auto;
-    display: grid;
-    grid-auto-columns: minmax(70px, auto);
-    grid-auto-rows: minmax(70px, auto);
-    grid-template-areas: 'profil' 'suggestion';
+const MainContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    min-height:100vh;
 `;
 
-const Home = () => (
-    <div>
+const Content = styled.div`
+    display:flex;
+    flex:1;
+    flex-wrap: wrap;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+    margin-top:15px;
+    margin-bottom:15px;
+`;
+
+const Icon = styled.i`
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:#EA5555;
+    font-size:2.7em;
+    margin:10px;
+`;
+
+const LinkStyled = styled(Link)`
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    min-width:80px;
+    max-width:80px;
+    min-height:80px;
+    max-height:80px;
+    background-color:white;
+    border-radius:4px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.10);
+    margin:15px;
+    cursor:pointer;
+    &:hover {
+        transition: all 60ms ease;
+        opacity: .8;
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.10);
+    };
+    text-decoration:none;
+`;
+
+const Name = styled.p`
+    color:#EA5555;
+    margin:auto;
+    margin-top:10px;
+    font-size:1.5em;
+`;
+
+const Home = ({ user, users }) => (
+    <MainContainer>
         <Header />
-        <Content>
-            <Profil style={{ gridArea: 'profil'}}/>
-            <Suggestion style={{ gridArea: 'suggestion'}}/>
-        </Content>
-    </div>
+        <Container width='450px' top='125px'>
+            <Avatar user={user} top='-80px'/>
+            <Name>{`${user.firstName} ${user.lastName}`}</Name>
+            <Content>
+                <LinkStyled>
+                    <Icon className="fa fa-user" aria-hidden="true" />
+                </LinkStyled>
+                <LinkStyled>
+                    <Icon className="fa fa-search" aria-hidden="true" />
+                </LinkStyled>
+                <LinkStyled to='/profil'>
+                    <Icon className="fa fa-pencil" aria-hidden="true" />
+                </LinkStyled>
+                <LinkStyled to='/chat'>
+                    <Icon className="fa fa-comment" aria-hidden="true" />
+                </LinkStyled>
+            </Content>
+        </Container>
+        <Suggestion users={users}/>
+    </MainContainer>
 );
 
-export default Home;
+Home.propTypes = {
+    user: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
+}
+
+const actions = {};
+
+const mapStateToProps = state => ({
+  user: getUser(state),
+  users: getUsers(state),
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

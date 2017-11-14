@@ -68,9 +68,7 @@ const service = {
     try {
       const { ctx: { db } } = req;
       const users = await User.getAll.bind({ db })();
-      const newUsers = users.map((item, value) => {
-        return R.omit(['password'], item);
-      });
+      const newUsers = users.map((item) => R.omit(['password'], item));
       req.Err(newUsers);
         // console.log(_.reduce(users, (acc, item, key) => ({ ...acc, item: R.omit(['password'], item) })));
     } catch (err) {

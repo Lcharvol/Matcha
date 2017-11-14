@@ -1,28 +1,12 @@
 import React from 'react';
 import App from '../client/components/App';
 import { Router, browserHistory } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
 import routes from './routes';
 import configureStore from './store';
 
 const initialState = {
-  // user: {
-  //   login: 'lcharvol',
-  //   firstName: 'Lucas',
-  //   lastName: 'Charvolin',
-  //   sexe: 'man',
-  //   sexualOrientation: 'women',
-  //   interest: ['bio', 'geek', 'piercing'],
-  //   bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
-  //   avatar: 'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
-  //   pictures: [
-  //     'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
-  //     'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
-  //     'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
-  //     'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
-  //   ],
-  //   score: 70,
-  // },
   user: {
     login: 'tferrari',
     firstName: 'Tony',
@@ -61,7 +45,8 @@ const initialState = {
         id: 2,
       },
     ],
-    score: 10,
+    score: 70,
+    like: 0,
   },
   users: [
     {
@@ -71,7 +56,7 @@ const initialState = {
       sexe: 'man',
       
       bio: '« Belle plume cherche joli crayon de couleur pour écrire ensemble les plus belles pages de notre vie . Dans la joie de nous décrire, Arc-en-Cielement vôtre ! »',
-      avatar: 'https://cdn.intra.42.fr/users/small_lcharvol.jpg',
+      avatar: 'https://cdn.intra.42.fr/users/large_lcharvol.jpg',
     },
     {
       login: 'tdouge',
@@ -88,12 +73,14 @@ const store = configureStore(initialState);
 
 const root = (
   <App>
-    <Provider store={store}>
-      <Router
-        history={browserHistory}
-        routes={routes}
-      />
-    </Provider>
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <Router
+          history={browserHistory}
+          routes={routes}
+        />
+      </Provider>
+    </MuiThemeProvider>
   </App>
 );
 

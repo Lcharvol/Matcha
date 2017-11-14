@@ -73,6 +73,10 @@ const LinkStyled = styled(Link)`
     transition: all 60ms ease;
     opacity: .8;
   }
+  &:active {
+    transition: all 60ms ease;
+    box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const LoginForm = ({

@@ -11,9 +11,12 @@ const Button = styled.div`
     background-color: #3498db;
     background: linear-gradient( 160deg, #649cbe 0%, #3498db  100%);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+    margin:auto;
     cursor: pointer;
+    transition: all 60ms ease;
     &:hover {
         transition: all 60ms ease;
+        width:95%;
     }
 `;
 

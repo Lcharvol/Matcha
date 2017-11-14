@@ -10,9 +10,12 @@ const Button = styled.div`
     border-radius:3px;
     background: linear-gradient( 160deg, #ea5e53 0%, #e74c3c  100%);
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+    margin:auto;
     cursor: pointer;
+    transition: all 60ms ease;
     &:hover {
         transition: all 60ms ease;
+        width:95%;
     }
 `;
 

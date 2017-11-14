@@ -7,36 +7,36 @@ import { withHandlers, compose, withStateHandlers } from 'recompose';
 import { Container, Avatar } from '../widgets';
 import Profil from './Profil';
 
-const ContainerStyled = styled.div`
+const MainContent = styled.div`
+    display:flex;
+    flex:1;
     width:100%;
-    margin-top:10px;
+`;
+
+const ContainerStyled = styled(Container)`
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top:25px;
+    max-height:500px;
     background-color:white;
-    border-radius:0px;
-    margin-bottom:10px;
-    padding-bottom:25px;
 `;
 
 const ProfilContainer = styled.div`
     display: flex;
     flex-direction:row;
     width:100%;
+    margin-top:15px;
     justify-content: center;
     align-items: center;
 `;
 
-const Content = styled.div`
-    display:flex;
-    height:200px;
-    flex:1;
-    overflow: hidden;
-`;
 
 const VoteContainer = styled.div` 
     display:flex;
     justify-content: center;
     align-items: center;
     width:100%;
-    min-height:50px;
 `;
 
 const IconStyled = styled.i`
@@ -52,18 +52,28 @@ const IconStyled = styled.i`
     }
 `;
 
-const Suggestion = ({ user }) => (
-    <ContainerStyled>
-        <ProfilContainer>
-            <Content>
-                <Profil />
-            </Content>
-        </ProfilContainer>
-        <VoteContainer>
-            <IconStyled color="#EA5555" className="fa fa-check" aria-hidden="true"/>
-            <IconStyled color="#2ecc71" className="fa fa-times" aria-hidden="true"/>
-        </VoteContainer>
-    </ContainerStyled>
+const MatchPicture = styled.div`
+    display:flex;
+    border-radius:3px;
+    background-image: ${({ avatar  }) => `url(${avatar})`};
+    background-position:center center;
+    background-size: 100%;
+    width:425px;
+    height:400px;
+`;
+
+const Suggestion = ({ users }) => (
+    <MainContent>
+        <ContainerStyled width="450px">
+            <ProfilContainer>
+                <MatchPicture avatar={users[0].avatar}/>
+            </ProfilContainer>
+            <VoteContainer>
+                <IconStyled color="#2ecc71" className="fa fa-check" aria-hidden="true"/>
+                <IconStyled color="#EA5555" className="fa fa-times" aria-hidden="true"/>
+            </VoteContainer>
+        </ContainerStyled>
+    </MainContent>
 );
 
 Suggestion.propTypes = {

@@ -8,6 +8,15 @@ import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { getValidationSchema, defaultValues, getField } from '../../forms/register';
 
+const Content = styled.div`
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:100vh;
+`;
+
 const RegisterFormStyled = styled.form`
     display: grid;
     margin: auto;
@@ -79,7 +88,10 @@ const LinkStyled = styled(Link)`
   opacity: .95;
   &:hover {
     transition: all 60ms ease;
-    opacity: .90;
+    opacity: .8;
+  }
+  &:active {
+    transition: all 60ms ease;
     box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
 `;
@@ -180,25 +192,27 @@ const Register= ({
     requestCancel,
     ...props
   }) => (
-    <ContainerStyled top='20vh' width='350px'>
-        <Logo width={200} />
-        <RegisterForm
-            type="add"
-            handleSubmit={handleSubmit}
-            values={values}
-            setFieldTouched={setFieldTouched}
-            setFieldValue={setFieldValue}
-            {...props}
-        />
-        <ButtonContainer>
-          <LinkStyled to={`/login`}>
-            Login
-          </LinkStyled>
-          <LinkStyled to={`/login`}>
-            Register
-          </LinkStyled>
-        </ButtonContainer>
-    </ContainerStyled>
+    <Content>
+      <ContainerStyled top='' width='350px'>
+          <Logo width={200} />
+          <RegisterForm
+              type="add"
+              handleSubmit={handleSubmit}
+              values={values}
+              setFieldTouched={setFieldTouched}
+              setFieldValue={setFieldValue}
+              {...props}
+          />
+          <ButtonContainer>
+            <LinkStyled to={`/login`}>
+              Login
+            </LinkStyled>
+            <LinkStyled to={`/login`}>
+              Register
+            </LinkStyled>
+          </ButtonContainer>
+      </ContainerStyled>
+    </Content>
 );
 
 export default compose(

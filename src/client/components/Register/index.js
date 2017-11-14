@@ -17,15 +17,15 @@ const RegisterFormStyled = styled.form`
     grid-gap: 20px;
     grid-auto-columns: minmax(70px, auto);
     grid-auto-rows: minmax(70px, auto);
-    grid-template-areas: 'login' 'email' 'firstName' 'lastName' 'password' 'repeatPassword';
+    grid-template-areas: 'login' 'email' 'firstname' 'lastname' 'password' 'age' 'sexe';
     @media (min-width: 700px) {
-      grid-template-areas: 'login email' 'firstName lastName'
-        'password repeatPassword';
+      grid-template-areas: 'login email' 'firstname lastname'
+        'password password' 'age sexe';
     }
 `;
 
 const StyledFormField = styled(FormField)`
-grid-area: ${({ field }) => field.name};
+  grid-area: ${({ field }) => field.name};
 `;
 
 const ContainerStyled = styled(Container)`
@@ -104,7 +104,7 @@ const RegisterForm = ({
           setFieldValue={setFieldValue}
         />
         <StyledFormField
-          field={getField('firstName')}
+          field={getField('firstname')}
           values={values}
           errors={errors}
           touched={touched}
@@ -112,7 +112,7 @@ const RegisterForm = ({
           setFieldValue={setFieldValue}
         />
         <StyledFormField
-          field={getField('lastName')}
+          field={getField('lastname')}
           values={values}
           errors={errors}
           touched={touched}
@@ -136,7 +136,15 @@ const RegisterForm = ({
           setFieldValue={setFieldValue}
         />
         <StyledFormField
-          field={getField('repeatPassword')}
+          field={getField('age')}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setFieldTouched={setFieldTouched}
+          setFieldValue={setFieldValue}
+        />
+        <StyledFormField
+          field={getField('sexe')}
           values={values}
           errors={errors}
           touched={touched}
@@ -146,7 +154,7 @@ const RegisterForm = ({
       </RegisterFormStyled>
     );
   };
-  
+
   RegisterForm.propTypes = {
     type: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,

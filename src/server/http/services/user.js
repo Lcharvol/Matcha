@@ -1,9 +1,11 @@
 import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
+import _ from 'lodash';
 // import jwt from 'jsonwebtoken';
 
 import User from '../../models/User';
 import { validateRegisterForm, sendConfirmEmail, getIp, getLocalisation, getInfoToUpdate } from './hooks/user';
+import { checkIfNotBlocked } from './hooks/block';
 import { checkAuth } from './hooks/token';
 
 const service = {
@@ -42,17 +44,38 @@ const service = {
   },
   async delete(req, res) {
     try {
-      const { ctx: { db } } = req;
-      const { tokenIdd } = req;
-      await User.delete.bind({ db })(Number(tokenId));
+      const { ctx: { db }, user } = req;
+      await User.delete.bind({ db })(Number(user.id));
       res.json({ details: 'Succesfully delete' });
     } catch (err) {
       req.Err('Failed to delete', req.user.login);
     }
   },
+  async get(req, res) {
+    res.json({ details: R.omit(['password'], req.user) });
+  },
   async get$id(req, res) {
-    console.log('postId');
-    res.json({ details: 'fuck' });
+    try {
+      const { ctx: { db } } = req;
+      const { params: { id } } = req;
+      const user = await User.load.bind({ db })(id);
+      res.json({ details: R.omit(['password'], user) });
+    } catch (err) {
+      req.Err('Failed to get the user');
+    }
+  },
+  async get$all(req, res) {
+    try {
+      const { ctx: { db } } = req;
+      const users = await User.getAll.bind({ db })();
+      const newUsers = users.map((item, value) => {
+        return R.omit(['password'], item);
+      });
+      req.Err(newUsers);
+        // console.log(_.reduce(users, (acc, item, key) => ({ ...acc, item: R.omit(['password'], item) })));
+    } catch (err) {
+      req.Err('Failed to get users');
+    }
   },
 };
 
@@ -63,9 +86,12 @@ const init = {
     post: [validateRegisterForm, getIp, getLocalisation],
     put: [checkAuth, getInfoToUpdate],
     delete: [checkAuth],
+    get: [checkAuth],
+    get$id: [checkAuth],
+    get$all: [checkAuth],
   },
   after: {
-    post: [sendConfirmEmail],
+    get$all: [checkIfNotBlocked],
   },
 };
 

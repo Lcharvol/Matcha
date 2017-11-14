@@ -11,10 +11,10 @@ import path from 'path';
 import switchEvent from '../../lib/event';
 import { getToken, getUserFromToken, sendTokenResetPassword, checkToken, checkAuth } from './services/hooks/token';
 import { validateLoginForm, checkIfConfirmedAndReturnUser } from './services/hooks/user';
-import confirmEmail from './services/confirmEmail';
-import addImg from './services/addImg';
-import resetPassword from './services/resetPassword';
-import login from './services/login';
+import confirmEmail from './services/routes/confirmEmail';
+import addImg from './services/routes/addImg';
+import resetPassword from './services/routes/resetPassword';
+import login from './services/routes/login';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 

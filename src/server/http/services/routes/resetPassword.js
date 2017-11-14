@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt-as-promised';
-import User from '../../models/User';
-import { schemaLogin } from '../../../lib/validators';
+import User from '../../../models/User';
+import { schemaLogin } from '../../../../lib/validators';
 
 const resetPassword = async (req, res) => {
   try {

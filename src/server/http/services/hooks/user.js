@@ -48,14 +48,11 @@ export const checkIfConfirmedAndReturnUser = async (req, res, next) => {
   const { db } = req.ctx;
   try {
     const user = await User.getByLogin.bind({ db })(login);
-    logger(user);
-    if (!user.confirmed) {
-      return req.Err('Not Confirmed!');
-    }
+    if (!user.confirmed) return req.Err('Not Confirmed!');
     req.user = user;
     next();
   } catch (err) {
-    req.Err('Not Confirmed!');
+    req.Err('No account found!');
   }
 };
 

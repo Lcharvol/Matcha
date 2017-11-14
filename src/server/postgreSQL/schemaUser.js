@@ -18,6 +18,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   latitude VARCHAR,
   longitude VARCHAR,
   ip VARCHAR,
+  blocked TEXT,
   popularity NUMERIC DEFAULT '0',
   confirmed BOOLEAN DEFAULT FALSE
 );`;

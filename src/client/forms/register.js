@@ -37,7 +37,17 @@ export const fields = {
     component: InputField,
     validate: Yup.number().integer().min(18).max(99).required(),
     required: true,
-  }
+  },
+  sexe: {
+    label: 'Je suis',
+    component: InputField,
+    domainValues: [
+      { id: 'man', value: 'Un homme' },
+      { id: 'woman', value: 'Une femme' },
+    ],
+    validate: Yup.string().matches(/^man|woman$/),
+    required: true,
+  },
 };
 
 export const defaultValues = getDefaultValues(fields);

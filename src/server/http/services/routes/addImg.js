@@ -1,5 +1,5 @@
 import R from 'ramda';
-import User from '../../models/User';
+import User from '../../../models/User';
 
 const addImg = async (req, res) => {
   const imgs = {};

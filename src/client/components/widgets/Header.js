@@ -9,8 +9,6 @@ const HeaderStyled = styled.div`
     align-items: center;
     width:100%;
     min-height:100px;
-    background-color:white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
 `;
 
 const HeaderLeft = styled.div`
@@ -28,7 +26,7 @@ const HeaderRight = styled.div`
 `;
 
 const Icon = styled.i`
-    color: rgba(244, 92, 67, 0.9);
+    color: white;
     margin-left:25px;
     font-size: 2em;
     cursor: pointer;
@@ -41,11 +39,11 @@ const Icon = styled.i`
 const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
-      <Spacer size={20}/>
-      <Logo width={70} justifycontent='flex-start'/>
+      <Link to={`/login`}>
+        <Icon className="fa fa-cog" aria-hidden="true"/>
+      </Link>
     </HeaderLeft>
     <HeaderRight>
-      <Icon className="fa fa-cog" aria-hidden="true"/>
       <Link to={`/login`}>
         <Icon className="fa fa-sign-out" aria-hidden="true"/>
       </Link>

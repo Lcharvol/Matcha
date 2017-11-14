@@ -1,14 +1,14 @@
-import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
-import User from '../../../models/User';
-import mailer from '../../../../lib/mailer';
-export const checkIfNotBlocked = async (req, res, next) => {
-  // try {
-  //   const user = req.body;
-  //   await schemaRegister.validate(user);
-  //   req.registerInputName = schemaRegister._nodes;
-  //   next();
-  // } catch (err) {
-  //   req.Err(err.errors);
-  // }
+export const checkIfNotBlocked = async (req, res) => {
+  try {
+    const currentUser = req.user;
+    const _users = req.users || [req.userRequested];
+    const users = _.filter(_users, (user) => !_.includes(user.blocked, currentUser.id));
+    if (_.isEmpty(users)) return req.Err('no data returned');
+    if (req.userRequested) return res.json({ details: users[0] });
+    res.json({ details: users });
+  } catch (err) {
+    req.Err(err || 'failed to get user');
+  }
 };

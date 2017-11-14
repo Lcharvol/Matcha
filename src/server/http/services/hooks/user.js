@@ -14,9 +14,18 @@ export const getInfoToUpdate = async (req, res, next) => {
       return req.Err('no one valid champ');
     }
     req.infoToUpdate = infoCleaned;
+    const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
+    if (contains.length > 0) {
+      contains.forEach(index => {
+        console.log(req.user[index]);
+        const inDb = req.user[index].split(',');
+        inDb.push(req.infoToUpdate[index]);
+        req.infoToUpdate[index] = inDb.toString();
+      });
+    }
     next();
   } catch (err) {
-    req.Err(err.errors);
+    req.Err(_.isEmpty(err.message), 'wrong data provided');
   }
 };
 

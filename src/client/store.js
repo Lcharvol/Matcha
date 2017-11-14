@@ -7,11 +7,19 @@ const logger = createLogger({
   collapsed: true,
 });
 
+const httpMiddleware = () => ({ dispatch, getState }) => {
+  console.log(getState, dispatch);
+  console.log('httpMiddleware');
+  return next => (action) => {
+    console.log(action);
+     return next(action);
+  };
+};
 const configureStore = (initialState) =>
   createStore(
       reducer,
       initialState,
-      applyMiddleware(thunk, logger),
+      applyMiddleware(thunk, logger, httpMiddleware),
     );
 
 export default configureStore;

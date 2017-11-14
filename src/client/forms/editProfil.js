@@ -87,7 +87,13 @@ export const fields = {
     component: InputField,
     validate: Yup.number().integer().min(18).max(99),
     required: true,
-  }
+  },
+  blocked: {
+    label: 'Blocked',
+    component: InputField,
+    validate: Yup.number(),
+    required: true,
+  },
 };
 
 export const defaultValues = getDefaultValues(fields);

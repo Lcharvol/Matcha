@@ -46,33 +46,31 @@ const service = {
     try {
       const { ctx: { db }, user } = req;
       await User.delete.bind({ db })(Number(user.id));
+      console.log('okD');
       res.json({ details: 'Succesfully delete' });
     } catch (err) {
+      console.log('ok');
       req.Err('Failed to delete', req.user.login);
     }
   },
   async get(req, res) {
     res.json({ details: R.omit(['password'], req.user) });
   },
-  async get$id(req, res) {
+  async get$id(req, res, next) {
+    const { ctx: { db }, user: { id } } = req;
+    const { params: { id: idRequest } } = req;
     try {
-      const { ctx: { db } } = req;
-      const { params: { id } } = req;
-      const user = await User.load.bind({ db })(id);
-      res.json({ details: R.omit(['password'], user) });
+      if (idRequest === 'all') {
+        const _users = await User.getAll.bind({ db })();
+        const users = _users.filter((item) => item.id !== id && R.omit(['password'], item));
+        req.users = users;
+      } else {
+        const _user = await User.load.bind({ db })(idRequest);
+        req.userRequested = R.omit(['password'], _user);
+      }
+      next();
     } catch (err) {
       req.Err('Failed to get the user');
-    }
-  },
-  async get$all(req, res) {
-    try {
-      const { ctx: { db } } = req;
-      const users = await User.getAll.bind({ db })();
-      const newUsers = users.map((item) => R.omit(['password'], item));
-      req.Err(newUsers);
-        // console.log(_.reduce(users, (acc, item, key) => ({ ...acc, item: R.omit(['password'], item) })));
-    } catch (err) {
-      req.Err('Failed to get users');
     }
   },
 };
@@ -86,10 +84,9 @@ const init = {
     delete: [checkAuth],
     get: [checkAuth],
     get$id: [checkAuth],
-    get$all: [checkAuth],
   },
   after: {
-    get$all: [checkIfNotBlocked],
+    get$id: [checkIfNotBlocked],
   },
 };
 

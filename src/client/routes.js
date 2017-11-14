@@ -8,9 +8,11 @@ import Register from './components/Register';
 import EditProfil from './components/EditProfil';
 import Profil from './components/Profil';
 import Chat from './components/Chat';
+import Tester from './components/Tester';
 
 export default (
     <Switch>
+        <Route exact path="/tester" component={() => <Tester />}/>
         <Route exact path="/" component={() => <Auth><Home /></Auth>}/>
         <Route exact path="/login" component={() => <Login />}/>
         <Route exact path="/register" component={() => <Register />}/>

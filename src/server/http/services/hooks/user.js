@@ -17,15 +17,14 @@ export const getInfoToUpdate = async (req, res, next) => {
     const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
     if (contains.length > 0) {
       contains.forEach(index => {
-        console.log(req.user[index]);
-        const inDb = req.user[index].split(',');
+        const inDb = req.user[index] ? req.user[index].split(',') : [];
         inDb.push(req.infoToUpdate[index]);
         req.infoToUpdate[index] = inDb.toString();
       });
     }
     next();
   } catch (err) {
-    req.Err(_.isEmpty(err.message), 'wrong data provided');
+    req.Err(_.isEmpty(err.message) ? 'wrong data provided' : err.message);
   }
 };
 

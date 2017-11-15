@@ -18,6 +18,7 @@ const service = {
         .then(hashedPassword =>
           User.add.bind({ db })(R.assoc('password', hashedPassword, user)));
       req.user = newUser;
+      await User.scoring.bind({ db })(req.user);
       sendConfirmEmail(newUser, req.ctx);
       res.json({ details: 'Succesfully register, please check your mail' });
     } catch (err) {
@@ -36,7 +37,8 @@ const service = {
       if (info.password) {
         info.password = await bcrypt.hash(info.password, 10);
       }
-      await User.update.bind({ db })(info, Number(id));
+      const user = await User.update.bind({ db })(info, Number(id));
+      await User.scoring.bind({ db })(user);
       res.json({ details: 'Succesfully update your info', more: Object.keys(info) });
     } catch (err) {
       req.Err('Failed To upload your info');

@@ -8,7 +8,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   sexe VARCHAR,
   sexualorientation VARCHAR DEFAULT 'bisexual',
   bio TEXT,
-  age NUMERIC,
+  age INTEGER,
   interest TEXT,
   photo_1 VARCHAR,
   photo_2 VARCHAR,

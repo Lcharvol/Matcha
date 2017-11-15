@@ -4,7 +4,12 @@ import User from '../../../models/User';
 import mailer from '../../../../lib/mailer';
 
 const getToken = async (req, res, next) => {
-  const token = req.cookies.matchaToken || req.query.matchaToken || req.body.matchaToken;
+  const auth = req.get('authorization');
+  const token =
+    (auth && auth.length > 15 && auth.substr(0, 7) === 'Bearer ') ? auth.substr(7) : undefined
+    || req.cookies.matchaToken
+    || req.query.matchaToken
+    || req.body.matchaToken;
   req.matchaToken = token;
   next();
 };

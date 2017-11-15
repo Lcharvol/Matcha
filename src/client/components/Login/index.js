@@ -109,7 +109,7 @@ const LoginForm = ({
       </LoginFormStyled>
     );
   };
-  
+
   LoginForm.propTypes = {
     type: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -140,7 +140,7 @@ const Login = ({
           <Logo width={200} />
           <LoginForm
               type="add"
-              handleSubmit={handleSubmit}
+              handleSubmit={() => handleSubmit}
               values={values}
               setFieldTouched={setFieldTouched}
               setFieldValue={setFieldValue}
@@ -168,7 +168,7 @@ export default compose(
       },
       { props },
     ) => {
-      console.log('Login')
+      console.log(login);
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

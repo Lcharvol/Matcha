@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Login from '../Login';
+import { checkAuth } from '../../actions/user';
 
-const Auth = ({ user, children }) => {
-  if (user.login) {
-    return children;
+class Auth extends Component {
+
+  state = {
+    authorized: false,
   }
-  else return <Login />
+
+  async componentWillMount() {
+    const resp = await checkAuth('matchaToken');
+    // desactice ca pour pas avoir de auth
+    if (resp.status === 201) {
+      this.setState({ authorized: false });
+    } else
+      this.setState({ authorized: true});
+  }
+
+  render() {
+    const { me, children } = this.props;
+    const { authorized } = this.state;
+    if (authorized) return children;
+    return <Login />;
+  }
 };
 
 Auth.propTypes = {
-  user: PropTypes.object.isRequired,
+  me: PropTypes.object,
 }
 
-const actions = {};
+const actions = {
+};
 
 const mapStateToProps = state => ({
-  user: state.user,
+  me: state.me,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

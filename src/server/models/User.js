@@ -1,5 +1,4 @@
 import pgpConnector from 'pg-promise';
-import { bindActionCreators } from 'redux';
 import _ from 'lodash';
 
 const pgp = pgpConnector({ capSQL: true });
@@ -26,11 +25,9 @@ const User = {
   scoring(user) {
     const { id } = user;
     const score = _.reduce(user, (acc, item, key) => {
-      if (_.includes(key, scoreTable)) return (acc + scoreTable[key]);
+      if (_.includes(Object.keys(scoreTable), key) && (!_.isEmpty(item) || item === true)) return (acc + scoreTable[key]);
       return acc;
     }, 0);
-    console.log(score);
-    console.log(user);
     return this.db.one(`UPDATE users SET popularity = ${score} WHERE id = ${id} RETURNING *`);
   },
   add(user) {

@@ -1,5 +1,6 @@
 import Yup from 'yup';
 import { InputField } from '../fields';
+import { SelectField } from '../fields/SelectField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 export const fields = {
   login: {
@@ -40,7 +41,7 @@ export const fields = {
   },
   sexe: {
     label: 'Je suis',
-    component: InputField,
+    component: SelectField,
     domainValues: [
       { id: 'man', value: 'Un homme' },
       { id: 'woman', value: 'Une femme' },

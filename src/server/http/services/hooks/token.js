@@ -22,9 +22,8 @@ const checkAuth = async (req, res, next) => {
       return req.Err('no token provided');
     }
     jwt.verify(matchaToken, secret);
-    const { sub } = jwt.decode(matchaToken);
-    req.tokenId = sub;
-    const user = await User.load.bind({ db })(sub);
+    const { sub: id } = jwt.decode(matchaToken);
+    const user = await User.load.bind({ db })(id);
     req.user = user;
     next();
   } catch (err) {

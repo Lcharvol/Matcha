@@ -1,7 +1,7 @@
 import R from 'ramda';
 import User from '../../../models/User';
 
-const addImg = async (req, res) => {
+export const addImg = async (req, res) => {
   const imgs = {};
   const { user: { id }, ctx: { db } } = req;
   const { profilePicture } = req.files;
@@ -21,5 +21,9 @@ const addImg = async (req, res) => {
   } catch (err) {
     req.Err('Failed to authenticate');
   }
+};
+
+export const addProfilePicture = async (req, res) => {
+
 };
 export default addImg;

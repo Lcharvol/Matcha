@@ -70,15 +70,16 @@ const init = ctx => new Promise(resolve => {
     .use(cors())
     .use(bindCtx(ctx))
     .use(bindLogger)
+    .use(getToken)
     .use(bindError);
 
   app
     .get('/ping', (req, res) => res.json({ ping: 'pong' }))
-    .get('/confirm_email', getToken, getUserFromToken, confirmEmail)
-    .post('/reset_password', getToken, checkToken, resetPassword)
+    .get('/confirm_email', getUserFromToken, confirmEmail)
+    .post('/reset_password', checkToken, resetPassword)
     .get('/lost_password', sendTokenResetPassword)
     .post('/login', validateLoginForm, checkIfConfirmedAndReturnUser, login)
-    .use('/api', getToken, switchEvent)
+    .use('/api', switchEvent)
     .post(
       '/add_img', upload.fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]),
       getToken, checkAuth, addImg,

@@ -36,7 +36,7 @@ export const validateRegisterForm = async (req, res, next) => {
     req.registerInputName = schemaRegister._nodes;
     next();
   } catch (err) {
-    req.Err(err.errors);
+    req.Err(`${err.name} ${err.errors}`);
   }
 };
 

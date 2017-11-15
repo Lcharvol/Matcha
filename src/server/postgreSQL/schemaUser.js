@@ -6,7 +6,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   firstname VARCHAR NOT NULL,
   lastname VARCHAR NOT NULL,
   sexe VARCHAR,
-  sexualOrientation VARCHAR DEFAULT 'bisexual',
+  sexualorientation VARCHAR DEFAULT 'bisexual',
   bio TEXT,
   age NUMERIC,
   interest TEXT,
@@ -19,7 +19,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   longitude VARCHAR,
   ip VARCHAR,
   blocked TEXT,
-  popularity NUMERIC DEFAULT '0',
+  popularity INTEGER DEFAULT '0',
   confirmed BOOLEAN DEFAULT FALSE
 );`;
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;

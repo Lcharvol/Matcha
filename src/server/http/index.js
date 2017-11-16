@@ -24,15 +24,21 @@ const bindCtx = (ctx) => (req, res, next) => {
 };
 
 const bindError = (req, res, next) => {
-  req.Err = (msg) => {
+  req.Err = (msg, er) => {
     const { stack } = new Error();
-    const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
-    const matches = regex.exec(stack.split('\n')[2]);
-    const [, file, line] = matches;
-    const log = debug(`matcha:${file}:${line}`);
-    log(`DETAILS: ${msg}`);
-    res.status(201);
-    res.json({ details: msg });
+    try {
+      const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
+      const matches = regex.exec(stack.split('\n')[2]);
+      const [, file, line] = matches;
+      const log = debug(`matcha:${file}:${line}`);
+      log(`DETAILS: ${msg}`);
+      res.status(201);
+      res.json({ details: msg });
+    } catch (err) {
+      console.log(err);
+      res.status(201);
+      res.json({ details: msg });
+    }
   };
   next();
 };
@@ -55,7 +61,7 @@ const upload = multer({
     fileSize: 2000000,
     files: 5,
   },
-});
+}).fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]);
 
 const init = ctx => new Promise(resolve => {
   const app = express();
@@ -81,7 +87,7 @@ const init = ctx => new Promise(resolve => {
     .post('/login', validateLoginForm, checkIfConfirmedAndReturnUser, login)
     .use('/api', switchEvent)
     .post(
-      '/add_img', upload.fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]),
+      '/add_img', (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next()),
       getToken, checkAuth, addImg,
     );
 

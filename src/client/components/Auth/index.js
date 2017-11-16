@@ -12,7 +12,7 @@ class Auth extends Component {
   }
 
   async componentWillMount() {
-    const resp = await checkAuth('matchaToken');
+    const resp = await checkAuth();
     // desactice ca pour pas avoir de auth
     if (resp.status === 201) {
       this.setState({ authorized: false });

@@ -14,7 +14,7 @@ export const fields = {
       { id: 'man', value: 'Un homme' },
       { id: 'woman', value: 'Une femme' },
     ],
-    validate: Yup.string().matches(/^man|woman$/),
+    validate: Yup.string().matches(/^man|woman$/, { message: 'man or woman', excludeEmptyString: true }),
     required: true,
   },
   sexualOrientation: {
@@ -25,7 +25,7 @@ export const fields = {
       { id: 'homosexual', value: 'Une Homosexuel' },
       { id: 'heterosexual', value: 'Un Hétérosexuel' },
     ],
-    validate: Yup.string().matches(/^bisexual|homosexual|heterosexual$/),
+    validate: Yup.string().matches(/^bisexual|homosexual|heterosexual$/, { message: 'not a good orientation', excludeEmptyString: true }),
     required: true,
   },
   bio: {
@@ -67,19 +67,19 @@ export const fields = {
   firstname: {
     label: 'First Name',
     component: InputField,
-    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/),
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/, { message: 'not a good login', excludeEmptyString: true }),
     required: true,
   },
   lastname: {
     label: 'Last Name',
     component: InputField,
-    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/),
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/, { message: 'not a good login', excludeEmptyString: true }),
     required: true,
   },
   password: {
     label: 'Password',
     component: InputField,
-    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/),
+    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/, { message: 'not secure', excludeEmptyString: true }),
     required: true,
   },
   age: {

@@ -18,19 +18,19 @@ export const fields = {
   firstname: {
     label: 'First Name',
     component: InputField,
-    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/).required(),
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/,  { message: 'not a good name', excludeEmptyString: true }).required(),
     required: true,
   },
   lastname: {
     label: 'Last Name',
     component: InputField,
-    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/).required(),
+    validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/,  { message: 'not a good name', excludeEmptyString: true }).required(),
     required: true,
   },
   password: {
     label: 'Password',
     component: InputField,
-    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/).required(),
+    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/, { message: 'not secure', excludeEmptyString: true }).required(),
     required: true,
   },
   age: {
@@ -46,7 +46,7 @@ export const fields = {
       { id: 'man', value: 'Un homme' },
       { id: 'woman', value: 'Une femme' },
     ],
-    validate: Yup.string().matches(/^man|woman$/),
+    validate: Yup.string().matches(/^man|woman$/, { message: 'man or woman', excludeEmptyString: true }),
     required: true,
   },
 };

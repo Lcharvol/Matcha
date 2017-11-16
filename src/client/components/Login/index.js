@@ -8,7 +8,7 @@ import { compose } from 'ramda';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
-
+import { reqLogin } from '../../actions/user';
 
 const Content = styled.div`
   display:flex;
@@ -140,7 +140,7 @@ const Login = ({
           <Logo width={200} />
           <LoginForm
               type="add"
-              handleSubmit={() => handleSubmit}
+              handleSubmit={handleSubmit}
               values={values}
               setFieldTouched={setFieldTouched}
               setFieldValue={setFieldValue}
@@ -150,9 +150,11 @@ const Login = ({
             <LinkStyled to={`/register`}>
               Register
             </LinkStyled>
-            <LinkStyled to={`/home`}>
+            {/* <LinkStyled to={`/home`}>
               Login
-            </LinkStyled>
+            </LinkStyled> */}
+            <input type='submit' form='login'>
+            </input>
           </ButtonContainer>
       </Container>
       <FacebookLogin />
@@ -165,10 +167,14 @@ export default compose(
     handleSubmit: (
       {
         login,
+        password,
       },
       { props },
     ) => {
-      console.log(login);
+      reqLogin(login, password)
+        .then(({ matchaToken }) => {
+          localStorage.setItem('matchaToken', matchaToken);
+        }).catch(err => console.log(err))
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

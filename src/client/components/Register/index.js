@@ -1,7 +1,7 @@
 import React from 'react';
 import { Logo, Container, InputButton} from '../widgets';
 import styled from 'styled-components';
-import { register } from '../../actions/register';
+import { reqRegister } from '../../actions/user';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
 import { connect } from 'react-redux';
@@ -230,7 +230,7 @@ export default compose(
       },
       { props },
     ) => {
-      register({});
+      reqRegister({});
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

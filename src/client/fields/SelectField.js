@@ -5,8 +5,6 @@ import { compose, map } from 'ramda';
 import { Field } from '../fields';
 import Select from 'react-select';
 
-import './react-select-override.css';
-
 const SelectCreatableStyled = styled(Select.Creatable)``;
 const SelectStyled = styled(Select)``;
 

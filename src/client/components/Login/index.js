@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo, Container, FacebookLogin, GoogleLogin } from '../widgets';
+import { Logo, Container, FacebookLogin, GoogleLogin, InputButton } from '../widgets';
 import styled from 'styled-components';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
@@ -11,12 +11,13 @@ import { getValidationSchema, defaultValues } from '../../forms/login';
 import { reqLogin } from '../../actions/user';
 
 const Content = styled.div`
+  position:relative;
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width:100%;
-  height:100vh;
+  min-height:100vh;
 `;
 
 const LoginFormStyled = styled.form`
@@ -36,15 +37,21 @@ const StyledFormField = styled(FormField)`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px;
+  position:relative;
+  display:grid;
+  margin: auto;
+  width: 90%;
+  grid-gap: 25px;
+  grid-auto-columns: minmax(150px, auto);
+  grid-template-areas: 'register inputbutton';
+  @media (max-width: 700px) {
+    grid-template-areas: 'register' 'inputbutton';
+  }
 `;
 
 const LinkStyled = styled(Link)`
+  grid-area: register;
   padding: 12px 12px;
-  max-width:120px;
   cursor: pointer;
   user-select: none;
   transition: all 60ms ease-in-out;
@@ -54,7 +61,6 @@ const LinkStyled = styled(Link)`
   text-transform: none;
   text-transform: capitalize;
   color: #fff;
-  border: 0 none;
   border-radius: 4px;
   font-size: 13px;
   font-weight: 500;
@@ -77,43 +83,6 @@ const LinkStyled = styled(Link)`
     transition: all 60ms ease;
     box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
-`;
-
-const ButtonStyled = styled.input`
-padding: 12px 12px;
-max-width:120px;
-cursor: pointer;
-user-select: none;
-transition: all 60ms ease-in-out;
-text-align: center;
-white-space: nowrap;
-text-decoration: none !important;
-text-transform: none;
-text-transform: capitalize;
-color: #fff;
-border: 0 none;
-border-radius: 4px;
-font-size: 13px;
-font-weight: 500;
-line-height: 1.3;
--webkit-appearance: none;
--moz-appearance:    none;
-appearance:         none;
-justify-content: center;
-align-items: center;
-flex: 0 0 160px;
-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
-color: #FFFFFF;
-background: linear-gradient( 160deg, rgba(244, 92, 67, 0.7) -200%, #EA5555  200%);
-opacity: .95;
-&:hover {
-  transition: all 60ms ease;
-  opacity: .8;
-}
-&:active {
-  transition: all 60ms ease;
-  box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
-}
 `;
 
 const LoginForm = ({
@@ -187,8 +156,7 @@ const Login = ({
             <LinkStyled to={`/register`}>
               Register
             </LinkStyled>
-            <ButtonStyled type='submit' form='login'>
-            </ButtonStyled>
+            <InputButton  type='submit' form='login' value="Login" />
           </ButtonContainer>
       </Container>
       <FacebookLogin />

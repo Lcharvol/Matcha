@@ -208,8 +208,7 @@ const Register= ({
             <LinkStyled to={`/login`}>
               Login
             </LinkStyled>
-            <InputButton type="submit" form="register">
-            </InputButton>
+            <InputButton type="submit" form="register" value="Register" />
           </ButtonContainer>
       </ContainerStyled>
     </Content>

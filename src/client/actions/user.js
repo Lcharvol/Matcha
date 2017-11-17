@@ -24,7 +24,7 @@ export const reqLogin = (data) => axios({
 
 export const reqRegister = (data) => axios({
   method: 'post',
-  url:'http://127.0.0.1:3004/api/register',
+  url:'http://127.0.0.1:3004/api/user',
   data,
 }).then(({ data, status }) => {
   if (status === 201)

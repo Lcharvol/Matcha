@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 const InputButton = styled.input`
+    grid-area: inputbutton;
+    min-width:145px;
     padding: 12px 12px;
-    max-width:120px;
     cursor: pointer;
     user-select: none;
     transition: all 60ms ease-in-out;

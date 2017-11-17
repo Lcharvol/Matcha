@@ -110,6 +110,7 @@ const LoginForm = ({
           values={values}
           errors={errors}
           touched={touched}
+          type="password"
           setFieldTouched={setFieldTouched}
           setFieldValue={setFieldValue}
         />
@@ -174,8 +175,6 @@ export default compose(
       },
       { props },
     ) => {
-      console.log('login: ', login);
-      console.log('password: ', password);
       reqLogin(login, password)
         .then(({ matchaToken }) => {
           localStorage.setItem('matchaToken', matchaToken);

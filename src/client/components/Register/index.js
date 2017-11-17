@@ -1,10 +1,9 @@
 import React from 'react';
 import { Logo, Container, InputButton} from '../widgets';
 import styled from 'styled-components';
+import { reqRegister } from '../../actions/user';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
@@ -216,10 +215,7 @@ const Register= ({
     </Content>
 );
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
 export default compose(
-  connect(null, mapDispatchToProps),
   withFormik({
     handleSubmit: (
       {

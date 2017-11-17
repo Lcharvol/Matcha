@@ -1,8 +1,11 @@
 import React from 'react';
-import { Logo, Container } from '../widgets';
+import { Logo, Container, InputButton} from '../widgets';
 import styled from 'styled-components';
+import { register } from '../../actions/register';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
@@ -207,23 +210,27 @@ const Register= ({
             <LinkStyled to={`/login`}>
               Login
             </LinkStyled>
-            <LinkStyled to={`/login`}>
-              Register
-            </LinkStyled>
+            <InputButton type="submit" form="register">
+            </InputButton>
           </ButtonContainer>
       </ContainerStyled>
     </Content>
 );
 
+const actions = { register };
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
 export default compose(
+  connect(null, mapDispatchToProps),
   withFormik({
     handleSubmit: (
       {
         login,
+        email,
       },
       { props },
     ) => {
-      console.log('Login')
+      register({});
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

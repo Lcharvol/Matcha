@@ -12,10 +12,9 @@ export const checkAuth = () => axios({
   ...config(matchaToken)
 });
 
-export const reqLogin = (data) => axios({
-  method: 'post',
-  url:'http://127.0.0.1:3004/login',
-  data,
+export const reqLogin = (login, password) => axios.post('http://127.0.0.1:3004/login', {
+  login,
+  password,
 }).then(({ data, status }) => {
   if (status === 201)
     throw data;

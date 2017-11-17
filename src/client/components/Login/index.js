@@ -28,7 +28,7 @@ const LoginFormStyled = styled.form`
   width: 90%;
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
-  grid-auto-rows: minmax(70px, auto);
+  grid-auto-rows: minmax(100px, auto);
   grid-template-areas: 'login' 'password';
 `;
 
@@ -41,6 +41,7 @@ const ButtonContainer = styled.div`
   display:grid;
   margin: auto;
   width: 90%;
+  margin-bottom:30px;
   grid-gap: 25px;
   grid-auto-columns: minmax(150px, auto);
   grid-template-areas: 'register inputbutton';
@@ -173,6 +174,8 @@ export default compose(
       },
       { props },
     ) => {
+      console.log('login: ', login);
+      console.log('password: ', password);
       reqLogin(login, password)
         .then(({ matchaToken }) => {
           localStorage.setItem('matchaToken', matchaToken);

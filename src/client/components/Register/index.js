@@ -27,8 +27,8 @@ const RegisterFormStyled = styled.form`
     margin-bottom: 25px;
     width: 90%;
     grid-gap: 20px;
-    grid-auto-columns: minmax(0px, auto);
-    grid-auto-rows: minmax(70px, auto);
+    grid-auto-columns: 50%;
+    grid-auto-rows: minmax(100px, auto);
     grid-template-areas: 'login' 'email' 'firstname' 'lastname' 'password' 'age' 'sexe';
     @media (min-width: 800px) {
       grid-template-areas: 'login email' 'firstname lastname'
@@ -55,7 +55,7 @@ const ButtonContainer = styled.div`
   margin: auto;
   width: 90%;
   margin-top:25px;
-  margin-bottom:25px;
+  margin-bottom:35px;
   grid-gap: 25px;
   grid-auto-columns: minmax(150px, auto);
   grid-template-areas: 'login inputbutton';

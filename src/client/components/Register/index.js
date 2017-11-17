@@ -151,6 +151,7 @@ const RegisterForm = ({
           touched={touched}
           setFieldTouched={setFieldTouched}
           setFieldValue={setFieldValue}
+          type="password"
         />
         <StyledFormField
           field={getField('age')}

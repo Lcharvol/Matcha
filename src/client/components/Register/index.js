@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo, Container, InputButton} from '../widgets';
+import { Logo, Container, InputButton } from '../widgets';
 import styled from 'styled-components';
 import { reqRegister } from '../../actions/user';
 import { FormField } from '../../fields';
@@ -10,25 +10,27 @@ import PropTypes from 'prop-types';
 import { getValidationSchema, defaultValues, getField } from '../../forms/register';
 
 const Content = styled.div`
+  position:relative;
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width:100%;
-  height:100vh;
+  min-height:100vh;
 `;
 
 const RegisterFormStyled = styled.form`
+    position:relative;
     display: grid;
     margin: auto;
     margin-top: 25px;
     margin-bottom: 25px;
     width: 90%;
     grid-gap: 20px;
-    grid-auto-columns: minmax(70px, auto);
+    grid-auto-columns: minmax(0px, auto);
     grid-auto-rows: minmax(70px, auto);
     grid-template-areas: 'login' 'email' 'firstname' 'lastname' 'password' 'age' 'sexe';
-    @media (min-width: 700px) {
+    @media (min-width: 800px) {
       grid-template-areas: 'login email' 'firstname lastname'
         'password password' 'age sexe';
     }
@@ -39,30 +41,32 @@ const StyledFormField = styled(FormField)`
 `;
 
 const ContainerStyled = styled(Container)`
-  width:350px;
-  @media (min-width: 700px) {
-    width:550px;
+  margin-top:45px;
+  margin-bottom:45px;
+  width:400px;
+  @media (min-width: 800px) {
+    width:700px;
   }
 `;
 
 const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @media (min-width: 700px) {
-      margin: 25px;
-    }
-    margin: 18px;
+  position:relative;
+  display:grid;
+  margin: auto;
+  width: 90%;
+  margin-top:25px;
+  margin-bottom:25px;
+  grid-gap: 25px;
+  grid-auto-columns: minmax(150px, auto);
+  grid-template-areas: 'login inputbutton';
+  @media (max-width: 800px) {
+    grid-template-areas: 'login' 'inputbutton';
+  }
 `;
 
 const LinkStyled = styled(Link)`
+  grid-area: login;
   padding: 12px 12px;
-  max-width:120px;
-  min-width:120px;
-  @media (min-width: 700px) {
-    max-width:215px;
-    min-width:215px;
-  }
   cursor: pointer;
   user-select: none;
   transition: all 60ms ease-in-out;
@@ -72,7 +76,6 @@ const LinkStyled = styled(Link)`
   text-transform: none;
   text-transform: capitalize;
   color: #fff;
-  border: 0 none;
   border-radius: 4px;
   font-size: 13px;
   font-weight: 500;
@@ -96,6 +99,7 @@ const LinkStyled = styled(Link)`
     box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
   }
 `;
+
 
 const RegisterForm = ({
     handleSubmit,
@@ -194,7 +198,7 @@ const Register= ({
     ...props
   }) => (
     <Content>
-      <ContainerStyled top='' width='350px'>
+      <ContainerStyled top='' width='650px'>
           <Logo width={200} />
           <RegisterForm
               type="add"

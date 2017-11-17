@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 const AppStyled = styled.div`
-position:relative;
+  position:relative;
   background-color: rgb(230,230,230);
   background: linear-gradient( 160deg, rgba(244, 92, 67, 0.75) 0%, #EA5555  120%);
   bottom:0px;

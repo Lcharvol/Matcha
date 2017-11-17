@@ -10,6 +10,7 @@ import Separator  from './Separator';
 import Throphy from './Throphy';
 import FacebookLogin from './FacebookLogin';
 import GoogleLogin from './GoogleLogin';
+import InputButton from './InputButton';
 
 export {
   Logo,
@@ -24,4 +25,5 @@ export {
   Throphy,
   FacebookLogin,
   GoogleLogin,
+  InputButton,
 };

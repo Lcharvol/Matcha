@@ -122,6 +122,14 @@ const RegisterForm = ({
           setFieldValue={setFieldValue}
         />
         <StyledFormField
+          field={getField('email')}
+          values={values}
+          errors={errors}
+          touched={touched}
+          setFieldTouched={setFieldTouched}
+          setFieldValue={setFieldValue}
+        />
+        <StyledFormField
           field={getField('firstname')}
           values={values}
           errors={errors}
@@ -131,14 +139,6 @@ const RegisterForm = ({
         />
         <StyledFormField
           field={getField('lastname')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-        <StyledFormField
-          field={getField('email')}
           values={values}
           errors={errors}
           touched={touched}

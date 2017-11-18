@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Login from '../Login';
 import Home from '../Home';
+import Register from '../Register';
 import { checkAuth } from '../../request';
 
 class Auth extends Component {
@@ -27,6 +28,8 @@ class Auth extends Component {
     console.log(authorized);
     if (window.location.pathname.substr(1).match(/^login|register$/) && authorized)
       return <Home />;
+    if (window.location.pathname.substr(1).match(/^register$/))
+      return <Register />;
     if (authorized) return children;
     return <Login />;
   }

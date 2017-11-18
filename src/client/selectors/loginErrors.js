@@ -1,0 +1,1 @@
+export const getLoginErrors = state => state.loginErrors;

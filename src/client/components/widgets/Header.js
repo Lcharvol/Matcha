@@ -26,7 +26,7 @@ const HeaderRight = styled.div`
 `;
 
 const Icon = styled.i`
-    color: white;
+    color: rgba(244, 92, 67, 0.75);
     margin-left:25px;
     font-size: 2em;
     cursor: pointer;

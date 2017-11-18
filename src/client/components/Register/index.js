@@ -20,21 +20,21 @@ const Content = styled.div`
 `;
 
 const RegisterFormStyled = styled.form`
-    position:relative;
-    display: grid;
-    margin: auto;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    width: 90%;
-    grid-gap: 20px;
-    grid-auto-columns: 100%;
-    grid-auto-rows: minmax(100px, auto);
-    grid-template-areas: 'login' 'email' 'firstname' 'lastname' 'password' 'age' 'sexe';
-    @media (min-width: 800px) {
-      grid-auto-columns: 50%;
-      grid-template-areas: 'login email' 'firstname lastname'
-        'password password' 'age sexe';
-    }
+  position:relative;
+  display: grid;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  width: 90%;
+  grid-gap: 20px;
+  grid-auto-columns: 100%;
+  grid-auto-rows: minmax(100px, auto);
+  grid-template-areas: 'login' 'email' 'firstname' 'lastname' 'password' 'age' 'sexe';
+  @media (min-width: 800px) {
+    grid-auto-columns: 50%;
+    grid-template-areas: 'login email' 'firstname lastname'
+      'password password' 'age sexe';
+  }
 `;
 
 const StyledFormField = styled(FormField)`

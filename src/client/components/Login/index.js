@@ -23,6 +23,7 @@ const Content = styled.div`
   align-items: center;
   width:100%;
   min-height:100vh;
+  padding-bottom:45px;
 `;
 
 const LoginFormStyled = styled.form`
@@ -53,6 +54,10 @@ const ButtonContainer = styled.div`
   @media (max-width: 700px) {
     grid-template-areas: 'inputbutton' 'register';
   }
+`;
+
+const ContainerStyled = styled(Container)`
+  margin-top:45px;
 `;
 
 const LinkStyled = styled(Link)`
@@ -150,7 +155,7 @@ const Login = ({
     ...props
   }) => (
     <Content>
-      <Container top='' width='350px' height='550px'>
+      <ContainerStyled top='' width='350px' height='550px'>
           <Logo width={200} />
           <LoginForm
               type="add"
@@ -167,7 +172,7 @@ const Login = ({
             </LinkStyled>
             <InputButton  type='submit' form='login' value="Login" />
           </ButtonContainer>
-      </Container>
+      </ContainerStyled>
       <FacebookLogin />
       <GoogleLogin />
     </Content>

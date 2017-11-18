@@ -15,8 +15,9 @@ import Profil from '../Profil';
 const MainContainer = styled.div`
     display:flex;
     flex-direction:column;
-    align-items: center;
     min-height:100vh;
+    width:100%;
+    background-color:white;
 `;
 
 const Content = styled.div`
@@ -71,11 +72,6 @@ const Name = styled.p`
 const Home = ({ user, users }) => (
     <MainContainer>
         <Header />
-        <Container width='90%' top='125px'>
-            <Avatar user={user} top='-80px'/>
-            <Name>{`${user.firstName} ${user.lastName}`}</Name>
-        </Container>
-        {users.details && map(user => <p>{user.login}</p>,users.details)}
     </MainContainer>
 );
 

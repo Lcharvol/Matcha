@@ -5,10 +5,14 @@ import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
 import { reqLogin } from '../../actions/user';
+import { noAccountFound } from '../../actions/loginErrors';
+import { getLoginErrors } from '../../selectors/loginErrors';
 
 const Content = styled.div`
   position:relative;
@@ -166,7 +170,16 @@ const Login = ({
     </Content>
 );
 
+const actions = { noAccountFound }
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+const mapStateToProps = state => ({
+  loginErrors: getLoginErrors(state),
+});
+
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   withFormik({
     handleSubmit: (
       {
@@ -175,10 +188,14 @@ export default compose(
       },
       { props },
     ) => {
+      const {noAccountFound } = props;
       reqLogin(login, password)
         .then(({ matchaToken }) => {
           localStorage.setItem('matchaToken', matchaToken);
-        }).catch(err => console.log(err))
+        }).catch(() => {
+          err => console.log(err);
+          noAccountFound();
+        })
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

@@ -75,7 +75,7 @@ const Home = ({ user, users }) => (
             <Avatar user={user} top='-80px'/>
             <Name>{`${user.firstName} ${user.lastName}`}</Name>
         </Container>
-        {user.details && map(user => <p>{user.login}</p>,users.details)}
+        {users.details && map(user => <p>{user.login}</p>,users.details)}
     </MainContainer>
 );
 

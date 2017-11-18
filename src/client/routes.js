@@ -14,8 +14,8 @@ export default (
     <Switch>
         <Route exact path="/tester" component={() => <Tester />}/>
         <Route exact path="/" component={() => <Auth><Home /></Auth>}/>
-        <Route exact path="/login" component={() => <Login />}/>
-        <Route exact path="/register" component={() => <Register />}/>
+        <Route exact path="/login" component={() => <Auth><Login /></Auth>}/>
+        <Route exact path="/register" component={() => <Auth><Register /></Auth>}/>
         <Route exact path="/editprofil" component={() => <EditProfil />}/>
         <Route exact path="/profil" component={() => <Profil />}/>
         <Route exact path="/chat" component={() => <Chat />}/>

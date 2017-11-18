@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Login from '../Login';
+import Home from '../Home';
 import { checkAuth } from '../../actions/user';
 
 class Auth extends Component {
@@ -23,6 +24,8 @@ class Auth extends Component {
   render() {
     const { me, children } = this.props;
     const { authorized } = this.state;
+    if (window.location.pathname.substr(1).match(/^login|register$/) && authorized)
+      return <Home />; 
     if (authorized) return children;
     return <Login />;
   }

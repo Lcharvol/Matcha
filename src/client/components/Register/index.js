@@ -226,10 +226,21 @@ export default compose(
       {
         login,
         email,
+        firstname,
+        lastname,
+        password,
+        age,
+        sexe,
       },
       { props },
     ) => {
-      // reqRegister({});
+      const { } = props;
+      reqRegister({})
+        .then(() => {
+         console.log('c est bon');
+        }).catch(() => {
+          err => console.log(err);
+        })
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

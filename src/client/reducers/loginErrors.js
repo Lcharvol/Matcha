@@ -5,7 +5,7 @@ const reducer = (state = '', action) => {
         case NO_ACCOUNT_FOUND: {
             return 'Wrong login or password';
         }
-        case NO_ACCOUNT_FOUND: {
+        case RESET_LOGIN_ERRORS: {
             return '';
         }
         default:

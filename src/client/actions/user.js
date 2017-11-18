@@ -6,7 +6,9 @@ const config = () => ({
   headers: {'Authorization': "Bearer " + matchaToken},
 });
 
-export const checkAuth = () => axios.get('http://127.0.0.1:3004/api/user', {
+export const checkAuth = () => axios({
+  method: 'get',
+  url:'http://127.0.0.1:3004/api/user',
   ...config(matchaToken)
 });
 

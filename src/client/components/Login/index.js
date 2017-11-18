@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
-import { reqLogin } from '../../actions/user';
+import { reqLogin } from '../../request';
 import { noAccountFound, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
 

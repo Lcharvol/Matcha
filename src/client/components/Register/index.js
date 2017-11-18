@@ -1,7 +1,7 @@
 import React from 'react';
 import { Logo, Container, InputButton } from '../widgets';
 import styled from 'styled-components';
-import { reqRegister } from '../../actions/user';
+import { reqRegister } from '../../request';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';

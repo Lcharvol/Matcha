@@ -1,0 +1,18 @@
+{
+  "login": {
+    "verb": "post",
+    "url": "/login"
+  },
+  "resetPassword": {
+    "verb": "post",
+    "url": "/reset"
+  },
+  "confirmEmail": {
+    "verb": "get",
+    "url": "/confirm"
+  },
+  "lostPassword": {
+    "verb": "get",
+    "url": "/lost"
+  }
+}

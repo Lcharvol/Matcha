@@ -18,7 +18,7 @@ const webpackConfig = {
     path: path.join(__dirname, '/build'),
     publicPath: '/build/',
   },
-  entry: ['babel-polyfill', 'universal-fetch', './src/client/index.js'],
+  entry: ['babel-polyfill', 'universal-fetch', './src/client/root.js'],
   module: {
     rules: [
       {

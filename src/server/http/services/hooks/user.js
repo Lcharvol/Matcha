@@ -15,6 +15,7 @@ export const getInfoToUpdate = async (req, res, next) => {
     }
     req.infoToUpdate = infoCleaned;
     const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
+    if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude');
     if (contains.length > 0) {
       contains.forEach(index => {
         const inDb = req.user[index] ? req.user[index].split(',') : [];
@@ -78,6 +79,19 @@ export const sendConfirmEmail = async (user, ctx) => {
     'Confirmation Email - Matcha',
     `Hello, please click here to confirm your email:  ${getUrl}${confirmEmail}?matchaToken=${token}`,
   );
+};
+
+export const checkIfNotBlocked = async (req, res) => {
+  try {
+    const currentUser = req.user;
+    const _users = req.users || [req.userRequested];
+    const users = _.filter(_users, (user) => !_.includes(user.blocked, currentUser.id));
+    if (_.isEmpty(users)) return req.Err('blocked');
+    if (req.userRequested) return res.json({ details: users[0] });
+    res.json({ details: users });
+  } catch (err) {
+    req.Err(err || 'failed to get user');
+  }
 };
 
 export const getIp = (req, res, next) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import App from '../client/components/App';
 import { Router, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -84,4 +85,4 @@ const root = (
   </App>
 );
 
-export default root;
+ReactDOM.render(root, document.getElementById('__MATCHA__'));

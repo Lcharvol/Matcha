@@ -8,6 +8,7 @@ import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { getValidationSchema, defaultValues, getField } from '../../forms/register';
+import { push } from '../../history';
 
 const Content = styled.div`
   position:relative;
@@ -234,13 +235,17 @@ export default compose(
       },
       { props },
     ) => {
-      const { } = props;
-      reqRegister({})
+      reqRegister({login,
+        email,
+        firstname,
+        lastname,
+        password,
+        age,
+        sexe})
         .then(() => {
-         console.log('c est bon');
-        }).catch(() => {
-          err => console.log(err);
-        })
+          // JUST TELL LE EMAUL HAS BEEN SEND
+          push('/login');
+        }).catch(err => console.log(err))
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

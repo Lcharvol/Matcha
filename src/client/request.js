@@ -1,14 +1,14 @@
 import * as Axios from 'axios';
 
 const matchaToken = localStorage.getItem('matchaToken');
-
+console.log(matchaToken);
 const axios = Axios.create({
   baseURL: 'http://127.0.0.1:3004/api/',
   timeout: 3000,
   headers: {'Authorization': "Bearer " + matchaToken},
 })
 
-export const checkAuth = () => axios({
+export const reqAuth = () => axios({
   method: 'get',
   url: 'user',
 });

@@ -194,9 +194,11 @@ export default compose(
       reqLogin(login, password)
         .then(({ matchaToken }) => {
           localStorage.setItem('matchaToken', matchaToken);
+          console.log('ok')
           resetLoginErrors();
-        }).catch(() => {
-          err => console.log(err);
+          location.reload();
+        }).catch(err => {
+          console.log(err)
           noAccountFound();
         })
     },

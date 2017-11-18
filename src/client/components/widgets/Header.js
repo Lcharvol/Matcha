@@ -40,15 +40,15 @@ const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
       <Link to={`/`}>
-        <Icon className="fa fa-home" aria-hidden="true"/>
+        <Icon className="fa fa-home" aria-hidden="true" title="Home"/>
       </Link>
       <Link to={`/login`}>
-        <Icon className="fa fa-cog" aria-hidden="true"/>
+        <Icon className="fa fa-cog" aria-hidden="true" title="Profile"/>
       </Link>
     </HeaderLeft>
     <HeaderRight>
       <Link to={`/login`}>
-        <Icon className="fa fa-sign-out" aria-hidden="true" onclick={localStorage.setItem('matchaToken', '')}/>
+        <Icon className="fa fa-sign-out" aria-hidden="true" title="Disconnect" onClick={() => localStorage.removeItem('matchaToken')}/>
       </Link>
       <Spacer size={10}/>
     </HeaderRight>

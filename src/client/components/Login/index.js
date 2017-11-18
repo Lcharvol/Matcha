@@ -46,7 +46,7 @@ const ButtonContainer = styled.div`
   grid-auto-columns: minmax(150px, auto);
   grid-template-areas: 'register inputbutton';
   @media (max-width: 700px) {
-    grid-template-areas: 'register' 'inputbutton';
+    grid-template-areas: 'inputbutton' 'register';
   }
 `;
 

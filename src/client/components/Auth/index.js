@@ -24,6 +24,7 @@ class Auth extends Component {
   render() {
     const { me, children } = this.props;
     const { authorized } = this.state;
+    console.log(authorized);
     if (window.location.pathname.substr(1).match(/^login|register$/) && authorized)
       return <Home />; 
     if (authorized) return children;

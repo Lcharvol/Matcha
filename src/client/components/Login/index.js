@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
 import { withFormik } from 'formik';
+import { browserHistory } from 'react-router'
 import { compose } from 'ramda';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -193,6 +194,7 @@ export default compose(
       const { noAccountFound, resetLoginErrors } = props;
       reqLogin(login, password)
         .then(({ matchaToken }) => {
+          console.log('sucess');
           localStorage.setItem('matchaToken', matchaToken);
           resetLoginErrors();
         }).catch(() => {

@@ -48,7 +48,7 @@ const Header = () => (
     </HeaderLeft>
     <HeaderRight>
       <Link to={`/login`}>
-        <Icon className="fa fa-sign-out" aria-hidden="true" onclick={localStorage.setItem('matchaToken', '')}/>
+        <Icon className="fa fa-sign-out" aria-hidden="true" onclick={() => (localStorage.setItem('matchaToken', ''))}/>
       </Link>
       <Spacer size={10}/>
     </HeaderRight>

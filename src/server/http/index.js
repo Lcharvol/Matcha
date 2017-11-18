@@ -9,12 +9,8 @@ import multer from 'multer';
 import path from 'path';
 
 import switchEvent from '../../lib/event';
-import { getToken, getUserFromToken, sendTokenResetPassword, checkToken, checkAuth } from './services/hooks/token';
-import { validateLoginForm, checkIfConfirmedAndReturnUser } from './services/hooks/user';
-import confirmEmail from './services/routes/confirmEmail';
+import { getToken, checkAuth } from './services/hooks/token';
 import addImg from './services/routes/addImg';
-import resetPassword from './services/routes/resetPassword';
-import login from './services/routes/login';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
@@ -80,11 +76,6 @@ const init = ctx => new Promise(resolve => {
     .use(bindError);
 
   app
-    .get('/ping', (req, res) => res.json({ ping: 'pong' }))
-    .get('/confirm_email', getUserFromToken, confirmEmail)
-    .post('/reset_password', checkToken, resetPassword)
-    .get('/lost_password', sendTokenResetPassword)
-    .post('/login', validateLoginForm, checkIfConfirmedAndReturnUser, login)
     .use('/api', switchEvent)
     .post(
       '/add_img', (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next()),

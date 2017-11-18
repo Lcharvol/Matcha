@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 import User from '../../../models/User';
-import mailer from '../../../../lib/mailer';
 
 const getToken = async (req, res, next) => {
   const auth = req.get('authorization');
@@ -55,23 +54,6 @@ const getUserFromToken = async (req, res, next) => {
   }
 };
 
-const sendTokenResetPassword = async (req, res) => {
-  const { config: { routes: { resetPassword }, urlClient }, db } = req.ctx;
-  const { email } = req.query;
-  try {
-    const user = await User.EmailVerif.bind({ db })(email);
-    const token = jwt.sign({ sub: user.id }, user.password);
-    mailer(
-      user.email,
-      'Reset Password - Matcha',
-      `Registration Code: ${urlClient}${resetPassword}?matchaToken=${token}`,
-    );
-    res.json({ details: 'Email sent thank you' });
-  } catch (err) {
-    req.Err('Failed to authenticate');
-  }
-};
-
 const checkToken = async (req, res, next) => {
   const { db } = req.ctx;
   try {
@@ -93,7 +75,6 @@ const checkToken = async (req, res, next) => {
 export {
   getToken,
   getUserFromToken,
-  sendTokenResetPassword,
   checkToken,
   checkAuth,
 };

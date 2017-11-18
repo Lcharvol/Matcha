@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Login from '../Login';
 import Home from '../Home';
-import { checkAuth } from '../../actions/user';
+import { checkAuth } from '../../request';
 
 class Auth extends Component {
 
@@ -25,7 +25,7 @@ class Auth extends Component {
     const { me, children } = this.props;
     const { authorized } = this.state;
     if (window.location.pathname.substr(1).match(/^login|register$/) && authorized)
-      return <Home />; 
+      return <Home />;
     if (authorized) return children;
     return <Login />;
   }

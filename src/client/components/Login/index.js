@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logo, Container, FacebookLogin, GoogleLogin, InputButton } from '../widgets';
+import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
 import styled from 'styled-components';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import { getValidationSchema, defaultValues } from '../../forms/login';
 import { reqLogin } from '../../actions/user';
-import { noAccountFound } from '../../actions/loginErrors';
+import { noAccountFound, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
 
 const Content = styled.div`
@@ -28,7 +28,7 @@ const LoginFormStyled = styled.form`
   display: grid;
   margin: auto;
   margin-top: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 0px;
   width: 90%;
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
@@ -145,6 +145,7 @@ const Login = ({
     showCancelDialog,
     cancel,
     requestCancel,
+    loginErrors,
     ...props
   }) => (
     <Content>
@@ -158,6 +159,7 @@ const Login = ({
               setFieldValue={setFieldValue}
               {...props}
           />
+          <ErrorsContainer errors={loginErrors}/>
           <ButtonContainer>
             <LinkStyled to={`/register`}>
               Register
@@ -170,7 +172,7 @@ const Login = ({
     </Content>
 );
 
-const actions = { noAccountFound }
+const actions = { noAccountFound, resetLoginErrors }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
@@ -188,10 +190,11 @@ export default compose(
       },
       { props },
     ) => {
-      const {noAccountFound } = props;
+      const { noAccountFound, resetLoginErrors } = props;
       reqLogin(login, password)
         .then(({ matchaToken }) => {
           localStorage.setItem('matchaToken', matchaToken);
+          resetLoginErrors();
         }).catch(() => {
           err => console.log(err);
           noAccountFound();

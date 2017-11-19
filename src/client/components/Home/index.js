@@ -46,13 +46,20 @@ const Home = ({
     sort,
 }) => (
     <MainContainer>
-        <Header />
+        <Header
+            onChange={onFilterChange}
+            filter={filter}
+            resetValue={() => filterUsers('')}
+        />
         <SortMenu
             sortTypes={sortTypes}
             onClick={sortUsers}
             sort={sort}
         />
-        <List users={users} />
+        <List
+            users={users}
+            filterUsers={filterUsers}
+        />
     </MainContainer>
 );
 

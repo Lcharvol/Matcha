@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
@@ -40,12 +41,16 @@ const Icon = styled.i`
     }
 `;
 
-const Header = () => (
+const Header = ({ onChange, filter, resetValue}) => (
   <HeaderStyled>
     <HeaderLeft>
       <Spacer />
       <Logo width={40}/>
-      <SearchBar />
+      <SearchBar
+        onChange={onChange}
+        filter={filter}
+        resetValue={resetValue}
+      />
     </HeaderLeft>
     <HeaderRight>
       <Link to={`/login`}>
@@ -55,5 +60,11 @@ const Header = () => (
     </HeaderRight>
   </HeaderStyled>
 );
+
+Header.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  filter: PropTypes.string,
+  resetValue: PropTypes.func,
+}
 
 export default Header;

@@ -15,7 +15,7 @@ const Content = styled.div`
     margin-bottom:15px;
 `;
 
-const List = ({ users }) => (
+const List = ({ users, filterUsers }) => (
     <Content>
         {map(user =>
             <UserSugest
@@ -28,6 +28,7 @@ const List = ({ users }) => (
 
 List.propTypes = {
     users: PropTypes.array.isRequired,
+    filterUsers: PropTypes.func.isRequired,
 }
 
 export default List;

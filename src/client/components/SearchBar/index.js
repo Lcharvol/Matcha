@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
     position:relative;
@@ -44,13 +45,24 @@ const ButtonIcon = styled.i`
     font-size:1.3em;
 `;
 
-const SearchBar = () => (
+const SearchBar = ({ onChange, filter, resetValue }) => (
     <Container>
-        <InputStyled type="search" />
+        <InputStyled
+            type="search"
+            placeholder="Search ..."
+            value={filter}
+            onChange={onChange}
+        />
         <ButtonStyled>
             <ButtonIcon className="fa fa-search" aria-hidden="true" />
         </ButtonStyled>
     </Container>
 );
+
+SearchBar.propTypes = {
+    onChange: PropTypes.func.isRequired,
+    filter: PropTypes.string,
+    resetValue: PropTypes.func,
+}
 
 export default SearchBar;

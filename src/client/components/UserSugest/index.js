@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 const ProfilPicture = styled.div`
-    width:90%;
+    width:100%;
     height:130px;
     margin-top:10px;
     background-color:rgb(225,225,225);

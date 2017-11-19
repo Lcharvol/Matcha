@@ -1,23 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 import { Logo, Spacer } from '../widgets';
-import { Link } from 'react-router'
+import SearchBar from '../SearchBar';
 
 const HeaderStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width:100%;
-    min-height:55px;
+    min-height:65px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    background-color:white;
 `;
 
 const HeaderLeft = styled.div`
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
-    flex:1;
+    align-items: center;
+    flex:3;
 `;
 
 const HeaderRight = styled.div`
@@ -28,7 +30,7 @@ const HeaderRight = styled.div`
 `;
 
 const Icon = styled.i`
-    color: rgba(244, 92, 67, 0.75);
+    color: rgba(244, 92, 67, 0.85);
     margin-left:25px;
     font-size: 1.6em;
     cursor: pointer;
@@ -47,6 +49,7 @@ const Header = () => (
       <Link to={`/login`}>
         <Icon className="fa fa-cog" aria-hidden="true" title="Profile"/>
       </Link>
+      <SearchBar />
     </HeaderLeft>
     <HeaderRight>
       <Link to={`/login`}>

@@ -11,13 +11,14 @@ import { Link } from 'react-router';
 import { loadUsers } from '../../actions/users';
 import { reqGetAll } from '../../request';
 import Profil from '../Profil';
+import FilterBar from '../FilterBar';
 import UserSugest from '../UserSugest';
 
 const MainContainer = styled.div`
     display:flex;
     flex-direction:column;
     min-height:100vh;
-    background-color:white;
+    background-color:rgb(240,240,240);
 `;
 
 const Content = styled.div`
@@ -34,6 +35,7 @@ const Content = styled.div`
 const Home = ({ user, users }) => (
     <MainContainer>
         <Header />
+        <FilterBar />
         <Content>
             {users.details && map(user => <UserSugest key={user.id} user={user}/>, users.details)}
         </Content>

@@ -3,15 +3,24 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { map } from 'ramda';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
-import { getUser, getUsers } from '../../selectors/user';
-import { Header, Container, Avatar } from '../widgets';
 import { Link } from 'react-router';
-import { loadUsers } from '../../actions/users';
+import {
+    getUser,
+    getUsers,
+    getFilter,
+    getSort,
+} from '../../selectors/user';
+import {
+    loadUsers,
+    sortUsers,
+    filterUsers,
+} from '../../actions/users';
 import { reqGetAll } from '../../request';
+import { Header, Container, Avatar } from '../widgets';
 import Profil from '../Profil';
-import FilterBar from '../FilterBar';
+import SortMenu from '../SortMenu';
 import UserSugest from '../UserSugest';
 
 const MainContainer = styled.div`
@@ -32,16 +41,35 @@ const Content = styled.div`
     margin-bottom:15px;
 `;
 
-const Home = ({ user, users }) => (
+const sortTypes = [
+    { key: 'age', label: 'Sort by age' },
+    { key: 'location', label: 'Sort by location' },
+    { key: 'popularity', label: 'Sort by popularity' },
+    { key: 'tags', label: 'Sort by commun tags' },
+];
+
+const Home = ({
+    user,
+    users,
+    filterUsers,
+    onFilterChange,
+    sortUsers,
+    filter,
+    sort,
+}) => (
     <MainContainer>
         <Header />
-        <FilterBar />
+        <SortMenu
+            sortTypes={sortTypes}
+            onClick={sortUsers}
+            sort={sort}
+        />
         <Content>
-            {users.details && map(user =>
+            {map(user =>
                 <UserSugest
                     key={user.id}
                     user={user}
-                />, users.details)
+                />, users)
             }
         </Content>
     </MainContainer>
@@ -49,14 +77,21 @@ const Home = ({ user, users }) => (
 
 Home.propTypes = {
     user: PropTypes.object.isRequired,
-    users: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
+    filter: PropTypes.string,
+    sort: PropTypes.object,
+    filterUsers: PropTypes.func.isRequired,
+    sortUsers: PropTypes.func.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
 }
 
-const actions = { loadUsers };
+const actions = { loadUsers, sortUsers, filterUsers, };
 
 const mapStateToProps = state => ({
   user: getUser(state),
   users: getUsers(state),
+  filter: getFilter(state),
+  sort: getSort(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
@@ -68,10 +103,14 @@ const enhance = compose(
             reqGetAll()
             .then(users => {
                 const { loadUsers } = this.props;
-                console.log('users: ', users)
                 loadUsers(users);
             });
         },
+        
+    }),
+    withHandlers({
+        onFilterChange: ({ filterUsers }) => event =>
+          filterUsers(event.target.value),
     }),
 )
 

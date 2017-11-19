@@ -109,19 +109,10 @@ const LoginForm = ({
     return (
       <LoginFormStyled id="login" onSubmit={handleSubmit}>
         <StyledFormField
-          field={getField('login')}
+          field={getField('email')}
           values={values}
           errors={errors}
           touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-        <StyledFormField
-          field={getField('password')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          type="password"
           setFieldTouched={setFieldTouched}
           setFieldValue={setFieldValue}
         />

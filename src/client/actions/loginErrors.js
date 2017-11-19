@@ -1,8 +1,8 @@
-export const NO_ACCOUNT_FOUND = 'NO_ACCOUNT_FOUND';
+export const LOGIN_ERRORS = 'LOGIN_ERRORS';
 export const RESET_LOGIN_ERRORS = 'RESET_LOGIN_ERRORS';
 
-export const noAccountFound = () => {
-  return { type: NO_ACCOUNT_FOUND};
+export const errorLogin = (details) => {
+  return { type: LOGIN_ERRORS, details};
 };
 
 export const resetLoginErrors = () => {

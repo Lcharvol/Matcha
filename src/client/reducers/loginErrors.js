@@ -1,9 +1,9 @@
-import { NO_ACCOUNT_FOUND, RESET_LOGIN_ERRORS } from '../actions/loginErrors';
+import { LOGIN_ERRORS, RESET_LOGIN_ERRORS } from '../actions/loginErrors';
 
 const reducer = (state = '', action) => {
     switch (action.type) {
-        case NO_ACCOUNT_FOUND: {
-            return 'Wrong login or password';
+        case LOGIN_ERRORS: {
+            return action.details;
         }
         case RESET_LOGIN_ERRORS: {
             return '';
@@ -12,6 +12,5 @@ const reducer = (state = '', action) => {
           return state;
     }
   };
-  
+
   export default reducer;
-  

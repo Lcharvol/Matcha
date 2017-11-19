@@ -21,7 +21,10 @@ class Auth extends Component {
     const { children, revertCheck, path } = this.props;
     console.log(resp.status, revertCheck);
     if (resp.status === 201) {
-      history.push(path);
+      history.push({
+        pathname: path,
+        search: location.search,
+      });
       this.setState({ authorized: 1 });
     } else if (revertCheck === true) {
       history.push('/');

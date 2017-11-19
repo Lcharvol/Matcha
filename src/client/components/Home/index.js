@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { map } from 'ramda';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
@@ -19,26 +18,15 @@ import {
 } from '../../actions/users';
 import { reqGetAll } from '../../request';
 import { Header, Container, Avatar } from '../widgets';
+import List from './List';
 import Profil from '../Profil';
 import SortMenu from '../SortMenu';
-import UserSugest from '../UserSugest';
 
 const MainContainer = styled.div`
     display:flex;
     flex-direction:column;
     min-height:100vh;
     background-color:rgb(240,240,240);
-`;
-
-const Content = styled.div`
-    display:flex;
-    flex:1;
-    flex-wrap: wrap;
-    width:100%;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top:15px;
-    margin-bottom:15px;
 `;
 
 const sortTypes = [
@@ -64,14 +52,7 @@ const Home = ({
             onClick={sortUsers}
             sort={sort}
         />
-        <Content>
-            {map(user =>
-                <UserSugest
-                    key={user.id}
-                    user={user}
-                />, users)
-            }
-        </Content>
+        <List users={users} />
     </MainContainer>
 );
 

@@ -17,7 +17,7 @@ const HeaderStyled = styled.div`
 
 const HeaderLeft = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex:3;
 `;

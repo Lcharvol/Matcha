@@ -6,19 +6,20 @@ const Container = styled.div`
     display:flex;
     justify-content: flex-start;
     align-items: center;
-    flex:1;
-    width:200px;
+    flex:2;
+    max-width:600px;
     height:40px;
 `;
 
 const InputStyled = styled.input`
     border: none;
-    padding: 10px;
+    padding-left: 10px;
+    font-size: 0.9em;
     margin: 10px;
     height: 35px;
     margin:0;
     margin-left:25px;
-    width: 500px;
+    width: 100%;
     border:1px solid #eaeaea;
     outline:none;
 }`;
@@ -28,8 +29,8 @@ const ButtonStyled = styled.button`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    min-width: 65px;
-    border: 1px solid rgb(216, 216, 216);
+    min-width: 55px;
+    border: 1px solid rgb(230, 230, 230);
     border-left:0px;
     background-color:white;
     border-radius: 0 2px 2px 0;

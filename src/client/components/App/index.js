@@ -8,6 +8,7 @@ const AppStyled = styled.div`
   background: linear-gradient( 160deg, rgba(244, 92, 67, 0.75) 0%, #EA5555  120%);
   bottom:0px;
   font-family: 'PT Sans', sans-serif;
+  overflow-x: hidden;
   `;
 
 const App = props => (

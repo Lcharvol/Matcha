@@ -92,14 +92,13 @@ export const reqRegister= (user) => axios.post('user', {
 //   return data;
 // });
 
-// export const reqGetAll = () => axios({
-//   method: 'get',
-//   url:`http://127.0.0.1:3004/api/user/all`,
-//   ...config(matchaToken)
-// }).then(({ data, status }) => {
-//   if (status === 201)
-//     throw data;
-//   return data;
-// });
+export const reqGetAll = () => axios({
+  method: 'get',
+  url:`user?id=all`,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data;
+});
 
 // // export const reqAddImg = () =>

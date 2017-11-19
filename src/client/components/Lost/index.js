@@ -2,7 +2,7 @@ import React from 'react';
 import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
 import styled from 'styled-components';
 import { FormField } from '../../fields';
-import { getField } from '../../forms/login';
+import { getField } from '../../forms/register';
 import { withFormik } from 'formik';
 import { browserHistory } from 'react-router'
 import { compose } from 'ramda';
@@ -27,7 +27,7 @@ const Content = styled.div`
   padding-bottom:45px;
 `;
 
-const LoginFormStyled = styled.form`
+const LostFormStyled = styled.form`
   display: grid;
   margin: auto;
   margin-top: 25px;
@@ -97,7 +97,7 @@ const LinkStyled = styled(Link)`
   }
 `;
 
-const LoginForm = ({
+const LostForm = ({
     handleSubmit,
     values,
     touched,
@@ -107,7 +107,7 @@ const LoginForm = ({
     type,
   }) => {
     return (
-      <LoginFormStyled id="login" onSubmit={handleSubmit}>
+      <LostFormStyled id="lost" onSubmit={handleSubmit}>
         <StyledFormField
           field={getField('email')}
           values={values}
@@ -116,11 +116,11 @@ const LoginForm = ({
           setFieldTouched={setFieldTouched}
           setFieldValue={setFieldValue}
         />
-      </LoginFormStyled>
+      </LostFormStyled>
     );
   };
 
-  LoginForm.propTypes = {
+  LostForm.propTypes = {
     type: PropTypes.string.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
@@ -149,7 +149,7 @@ const Login = ({
     <Content>
       <ContainerStyled top='' width='350px' height='550px'>
           <Logo width={200} />
-          <LoginForm
+          <LostForm
               type="add"
               handleSubmit={handleSubmit}
               values={values}
@@ -159,10 +159,10 @@ const Login = ({
           />
           <ErrorsContainer errors={loginErrors}/>
           <ButtonContainer>
-            <LinkStyled to={`/register`}>
-              Register
+            <LinkStyled to={`/login`}>
+              Login
             </LinkStyled>
-            <InputButton  type='submit' form='login' value="Login" />
+            <InputButton  type='submit' form='lost' value="Send" />
           </ButtonContainer>
       </ContainerStyled>
       <FacebookLogin />
@@ -203,7 +203,6 @@ export default compose(
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({
       ...defaultValues,
-      login: queryString.parse(location.search).user,
     }),
   }),
 )(Login);

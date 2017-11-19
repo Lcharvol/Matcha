@@ -6,6 +6,7 @@ import history from '../../history';
 import { reqAuth } from '../../request';
 import Login from '../Login';
 import Register from '../Register';
+import Lost from '../Lost';
 
 // 2 - No response
 // 1 - bad
@@ -42,6 +43,7 @@ class Auth extends Component {
     if (authorized === 1){
       if (path === '/login') return <Login />;
       if (path === '/register') return <Register />;
+      if (path === '/lost') return <Lost />;
       if(!path) return <Login />;
     }
     if (authorized === 2)

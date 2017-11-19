@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Auth from './components/Auth';
 import Register from './components/Register';
 import EditProfil from './components/EditProfil';
+import Lost from './components/Lost';
 import Profil from './components/Profil';
 import Chat from './components/Chat';
 
@@ -14,6 +15,7 @@ export default (
         <Route exact path="/" component={() => <Auth><Home /></Auth>}/>
         <Route exact path="/login" component={() => <Auth revertCheck={true} path="/login" ><Login /></Auth>}/>
         <Route exact path="/register" component={() => <Auth revertCheck={true} path="/register"><Register /></Auth>}/>
+        <Route exact path="/lost" component={() => <Auth revertCheck={true} path="/lost"><Lost /></Auth>}/>
         <Route exact path="/editprofil" component={() => <Auth><EditProfil /></Auth>}/>
         <Route exact path="/profil" component={() => <Auth><Profil /></Auth>}/>
         <Route exact path="/chat" component={() => <Auth><Chat /></Auth>}/>

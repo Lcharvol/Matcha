@@ -12,7 +12,6 @@ const LogoContainer = styled.div`
     display:flex;
     justify-content: ${({ justifycontent }) => justifycontent};
     align-items: center;
-    width:100%;
 `;
 
 const Logo = ({ width = 50, justifycontent = 'center' }) => (

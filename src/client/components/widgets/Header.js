@@ -17,7 +17,7 @@ const HeaderStyled = styled.div`
 
 const HeaderLeft = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex:3;
 `;
@@ -43,12 +43,7 @@ const Icon = styled.i`
 const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
-      <Link to={`/`}>
-        <Icon className="fa fa-home" aria-hidden="true" title="Home"/>
-      </Link>
-      <Link to={`/login`}>
-        <Icon className="fa fa-cog" aria-hidden="true" title="Profile"/>
-      </Link>
+      <Logo width="40"/>
       <SearchBar />
     </HeaderLeft>
     <HeaderRight>

@@ -8,7 +8,9 @@ const HeaderStyled = styled.div`
     justify-content: center;
     align-items: center;
     width:100%;
-    min-height:100px;
+    min-height:55px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 `;
 
 const HeaderLeft = styled.div`
@@ -28,7 +30,7 @@ const HeaderRight = styled.div`
 const Icon = styled.i`
     color: rgba(244, 92, 67, 0.75);
     margin-left:25px;
-    font-size: 2em;
+    font-size: 1.6em;
     cursor: pointer;
     &:hover {
         transition: all 60ms ease;

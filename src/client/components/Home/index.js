@@ -37,7 +37,12 @@ const Home = ({ user, users }) => (
         <Header />
         <FilterBar />
         <Content>
-            {users.details && map(user => <UserSugest key={user.id} user={user}/>, users.details)}
+            {users.details && map(user =>
+                <UserSugest
+                    key={user.id}
+                    user={user}
+                />, users.details)
+            }
         </Content>
     </MainContainer>
 );

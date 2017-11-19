@@ -44,7 +44,7 @@ const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
       <Spacer />
-      <Logo width="40"/>
+      <Logo width={40}/>
       <SearchBar />
     </HeaderLeft>
     <HeaderRight>

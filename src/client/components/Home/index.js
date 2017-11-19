@@ -35,7 +35,7 @@ const Home = ({ user, users }) => (
     <MainContainer>
         <Header />
         <Content>
-            {users.details && map(user => <UserSugest />, users.details)}
+            {users.details && map(user => <UserSugest key={user.id} user={user}/>, users.details)}
         </Content>
     </MainContainer>
 );

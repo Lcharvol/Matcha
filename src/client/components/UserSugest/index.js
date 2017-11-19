@@ -10,20 +10,30 @@ const Container = styled.div`
     position:relative;
     justify-content: center;
     align-items: flex-start;
-    width:230px;
-    height:200px;
+    width:430px;
+    @media (max-width: 2000px) {
+        width:25%;
+    }
+    @media (max-width: 1500px) {
+        width:33.3%;
+    }
+    @media (max-width: 1000px) {
+        width:50%;
+    }
+    @media (max-width: 500px) {
+        width:100%;
+    }
     margin:0px;
-    padding:10px;
 `;
 
 const ProfilPicture = styled.div`
     width:100%;
-    height:130px;
-    margin-top:10px;
+    min-height:300px;
     background-color:rgb(225,225,225);
-    border-radius:2px;
     background-image:${({ picture }) => `url('${picture}.jpg')`};
-    background-size:100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     cursor:pointer;
 `;
 
@@ -77,7 +87,6 @@ const UserSugest = ({
                 </Shadow>
             }
         </ProfilPicture>
-        <Name>{`${formate(user.firstname)} ${formate(user.lastname)} - ${user.age} ans`}</Name>
     </Container>
 );
 

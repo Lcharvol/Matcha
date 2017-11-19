@@ -28,7 +28,7 @@ const ButtonStyled = styled.button`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 65px;
+    min-width: 65px;
     border: 1px solid rgb(216, 216, 216);
     border-left:0px;
     background-color:white;

@@ -51,14 +51,16 @@ const ButtonContainer = styled.div`
   margin-bottom:30px;
   grid-gap: 25px;
   grid-auto-columns: minmax(150px, auto);
-  grid-template-areas: 'register inputbutton';
-  @media (max-width: 700px) {
-    grid-template-areas: 'inputbutton' 'register';
-  }
+  grid-template-areas: 'inputbutton' 'register';
 `;
 
 const ContainerStyled = styled(Container)`
   margin-top:45px;
+  width:90%;
+  transition: all 0.3s ease-in;
+  @media (min-width: 500px) {
+    width:350px;
+  }
 `;
 
 const LinkStyled = styled(Link)`

@@ -43,6 +43,7 @@ const Icon = styled.i`
 const Header = () => (
   <HeaderStyled>
     <HeaderLeft>
+      <Spacer />
       <Logo width="40"/>
       <SearchBar />
     </HeaderLeft>

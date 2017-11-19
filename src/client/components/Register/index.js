@@ -45,7 +45,8 @@ const StyledFormField = styled(FormField)`
 const ContainerStyled = styled(Container)`
   margin-top:45px;
   margin-bottom:45px;
-  width:400px;
+  transition: all 0.3s ease-in;
+  width:90%;
   @media (min-width: 800px) {
     width:700px;
   }

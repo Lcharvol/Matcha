@@ -12,13 +12,20 @@ const LogoContainer = styled.div`
     display:flex;
     justify-content: ${({ justifycontent }) => justifycontent};
     align-items: center;
+    justify-content: center;
+`;
+
+const LinkStyled = styled(Link)`
+    display:flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Logo = ({ width = 50, justifycontent = 'center' }) => (
     <LogoContainer justifycontent={justifycontent}>
-        <Link to={`/`}>
+        <LinkStyled to={`/`}>
             <LogoStyled src="logo.svg" className="App-logo" alt="logo" width={width}/>
-        </Link>
+        </LinkStyled>
     </LogoContainer>
 );
 

@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Profil from './Profil';
 
 const Container = styled.div`
     position:fixed;
     display:flex;
+    justify-content: center;
+    align-items: center;
     background-color:rgba(0,0,0,0.3);
     top:0;
     bottom:0;
@@ -15,6 +18,7 @@ const Container = styled.div`
 
 const ProfilPreview = ({ user, hideProfilPreview }) => (
     <Container onClick={hideProfilPreview}>
+        <Profil user={user}/>
     </Container>
 );
 

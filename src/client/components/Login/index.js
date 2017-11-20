@@ -56,10 +56,10 @@ const ButtonContainer = styled.div`
 
 const ContainerStyled = styled(Container)`
   margin-top:45px;
-  width:90%;
+  width:100%;
   transition: all 0.3s ease-in;
   @media (min-width: 500px) {
-    width:350px;
+    width:390px;
   }
 `;
 

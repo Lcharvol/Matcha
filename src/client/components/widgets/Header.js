@@ -6,6 +6,7 @@ import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
 
 const HeaderStyled = styled.div`
+    position:fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,6 +15,7 @@ const HeaderStyled = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     background-color:white;
+    z-index:2000;
 `;
 
 const HeaderLeft = styled.div`

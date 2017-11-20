@@ -19,9 +19,10 @@ const AvatarStyled = styled.div`
     max-width:95px;
     max-height:95px;
     border-radius:200px;
-    background-image: ${({ avatar  }) => `url(${avatar})`};
-    background-position:center center;
-    background-size: 100%;
+    background-image: ${({ avatar  }) => `url(${avatar}.jpg)`};
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 
 const AvatarContainer = styled.div`
@@ -35,7 +36,7 @@ const AvatarContainer = styled.div`
 `;
 
 const ScoreIcon = styled.i`
-    margin-top:-5px;
+    margin-top:-6.5px;
     font-size:2.5em;
     color:#EA5555;
 `;
@@ -60,14 +61,14 @@ const Avatar = ({ user, size = 'big', top = '0px' }) => (
                 size={120}
                 thickness={8}
                 mode={'determinate'}
-                value={user.score}
+                value={user.popularity}
                 color="#EA5555"
             />
-            <AvatarStyled avatar={user.avatar}/>
+            <AvatarStyled avatar={user.photo_1}/>
         </AvatarContainer>
         <ScoreContainer>
             <ScoreIcon className="fa fa-heart" aria-hidden="true"/>
-            <Score>{user.score}</Score>
+            <Score>{user.popularity}</Score>
         </ScoreContainer>
     </Content>
 );

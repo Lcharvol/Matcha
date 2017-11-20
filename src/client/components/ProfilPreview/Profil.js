@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Avatar } from '../widgets';
 
 const Container = styled.div`
     width: 90%;
@@ -12,6 +13,7 @@ const Container = styled.div`
 
 const Profil = ({ user }) => (
     <Container>
+        <Avatar user={user} top={'-60px'}/>
     </Container>
 );
 

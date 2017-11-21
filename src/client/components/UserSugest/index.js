@@ -27,6 +27,7 @@ const Container = styled.div`
 `;
 
 const ProfilPicture = styled.div`
+    position:relative;
     width:100%;
     min-height:300px;
     background-color:rgb(225,225,225);
@@ -48,7 +49,7 @@ const Shadow = styled.div`
     justify-content: center;
     align-items: center;
     width:100%;
-    height:100%;
+    min-height:300px;
     background-color:rgba(0,0,0,0.2);
 `;
 
@@ -79,7 +80,7 @@ const UserSugest = ({
             onClick={showProfilPreview}
             onMouseEnter={showShadow}
             onMouseLeave={hideShadow}
-            picture={user.photo_1}
+            picture={user.photo_5}
         >
             {displayShadow && 
                 <Shadow>

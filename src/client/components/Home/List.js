@@ -11,7 +11,7 @@ const Content = styled.div`
     width:100%;
     justify-content: center;
     align-items: flex-start;
-    margin-top:15px;
+    margin-top:65px;
     margin-bottom:15px;
 `;
 

@@ -64,7 +64,7 @@ const Avatar = ({ user, size = 'big', top = '0px' }) => (
                 value={user.popularity}
                 color="#EA5555"
             />
-            <AvatarStyled avatar={user.photo_1}/>
+            <AvatarStyled avatar={user.photo_5}/>
         </AvatarContainer>
         <ScoreContainer>
             <ScoreIcon className="fa fa-heart" aria-hidden="true"/>

@@ -66,7 +66,7 @@ const SortMenuWrapper = ({ sortTypes, onClick, sort }) => (
             }
         >
         <Button>
-            <i class="fa fa-sort" aria-hidden="true"></i>
+            <i className="fa fa-sort" aria-hidden="true"></i>
         </Button>
         </Popover>
     </Container>

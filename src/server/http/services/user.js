@@ -14,13 +14,14 @@ import { validateRegisterForm,
   getInfoToUpdate } from './hooks/user';
 import { schemaLogin } from '../../../lib/validators';
 import { checkAuth, getUserFromToken, checkToken } from './hooks/token';
-
+// import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/location';
+import { getFilterAndSort, getFilterGeoAndInterest, cleanUsers } from './hooks/location';
 const service = {
   // CRUD
   async post(req, res) {
-    const user = { ...R.pick(req.registerInputName, req.body), ...req.user };
     const { db } = req.ctx;
     try {
+      const user = { ...R.pick(req.registerInputName, req.body), ...req.user };
       const newUser = await bcrypt
         .hash(req.body.password, 10)
         .then(hashedPassword =>
@@ -83,12 +84,25 @@ const service = {
   },
 
   // OTHER ACTIONS
+  async getAll(req, res, next) {
+    const { ctx: { db }, user: { id } } = req;
+    try {
+      const users = await User.getAll.bind({ db })(req.filterString, req.sortString);
+      req.users = users.filter((item) => item.id !== id).map(v => R.omit(['password'], v));
+      next();
+    } catch (err) {
+      console.log(err);
+      req.Err('Failed to get the user');
+    }
+  },
   async login(req, res) {
     try {
       const { password: inputPassword } = req.body;
       const { ctx: { config: { secretSentence, expiresIn } }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
+      console.log('dok');
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
+      console.log('merde');
     } catch (err) {
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
       req.Err(message);
@@ -138,11 +152,13 @@ const service = {
   },
 };
 
+// getAll: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
 const init = {
   name: 'user',
   service,
   before: {
     get: [checkAuth],
+    getAll: [checkAuth, getFilterAndSort],
     post: [validateRegisterForm, getIp, getLocalisation],
     put: [checkAuth, getInfoToUpdate],
     delete: [checkAuth],
@@ -152,6 +168,7 @@ const init = {
   },
   after: {
     get: [checkIfNotBlocked],
+    getAll: [getFilterGeoAndInterest],
   },
 };
 

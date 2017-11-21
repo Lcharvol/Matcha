@@ -15,7 +15,7 @@ export const getInfoToUpdate = async (req, res, next) => {
     }
     req.infoToUpdate = infoCleaned;
     const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
-    if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude');
+    if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude'); // keep the ==
     if (contains.length > 0) {
       contains.forEach(index => {
         const inDb = req.user[index] ? req.user[index].split(',') : [];
@@ -111,4 +111,3 @@ export const getLocalisation = (req, res, next) => {
   req.user = userWithRange;
   next();
 };
-

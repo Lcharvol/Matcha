@@ -14,5 +14,9 @@
   "lostPassword": {
     "verb": "get",
     "url": "/lost"
+  },
+  "getAll": {
+    "verb": "get",
+    "url": "/all"
   }
 }

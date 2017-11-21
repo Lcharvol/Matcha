@@ -47,8 +47,8 @@ const User = {
   EmailVerif(email) {
     return this.db.one('SELECT * FROM users WHERE email = $1', email);
   },
-  getAll() {
-    return this.db.any('SELECT * FROM users');
+  getAll(filterString, sortBy) {
+    return this.db.any(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
   },
   addImg(imgs, imgProfile, id) {
     if (!imgProfile && !imgs.photo_1) return Promise.reject('no files');

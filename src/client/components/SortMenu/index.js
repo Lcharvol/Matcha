@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover2 } from '@blueprintjs/labs';
+// import { Popover2 } from '@blueprintjs/labs';
 import { map } from 'ramda';
 import styled from 'styled-components';
 import { Menu, MenuItem, PopoverInteractionKind, Popover, Position } from '@blueprintjs/core';
@@ -66,16 +66,16 @@ const SortMenuWrapper = ({ sortTypes, onClick, sort }) => (
             }
         >
         <Button>
-            <i class="fa fa-sort" aria-hidden="true"></i>
+            <i className="fa fa-sort" aria-hidden="true"></i>
         </Button>
         </Popover>
     </Container>
   );
-  
+
   SortMenuWrapper.propTypes = {
     onClick: PropTypes.func.isRequired,
     sort: PropTypes.object.isRequired,
     sortTypes: PropTypes.array.isRequired,
   };
-  
+
   export default onlyUpdateForKeys(['sort'])(SortMenuWrapper);

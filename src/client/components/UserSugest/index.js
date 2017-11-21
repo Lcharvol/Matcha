@@ -79,9 +79,9 @@ const UserSugest = ({
             onClick={showProfilPreview}
             onMouseEnter={showShadow}
             onMouseLeave={hideShadow}
-            picture={user.photo_1}
+            picture={user.photo_5}
         >
-            {displayShadow && 
+            {displayShadow &&
                 <Shadow>
                     <ShadowIcon className="fa fa-search" aria-hidden="true"/>
                 </Shadow>

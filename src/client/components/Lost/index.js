@@ -151,6 +151,7 @@ const Login = ({
           <Logo width={200} />
           <LostForm
               type="add"
+              id="lost"
               handleSubmit={handleSubmit}
               values={values}
               setFieldTouched={setFieldTouched}
@@ -162,7 +163,7 @@ const Login = ({
             <LinkStyled to={`/login`}>
               Login
             </LinkStyled>
-            <InputButton  type='submit' form='lost' value="Send" />
+            <InputButton type='submit' form='lost' value="Send" />
           </ButtonContainer>
       </ContainerStyled>
       <FacebookLogin />
@@ -183,22 +184,11 @@ export default compose(
   withFormik({
     handleSubmit: (
       {
-        login,
-        password,
+        email,
       },
       { props },
     ) => {
-      const { errorLogin, resetLoginErrors } = props;
-      reqLogin(login, password)
-        .then(({ matchaToken }) => {
-          console.log('sucess');
-          localStorage.setItem('matchaToken', matchaToken);
-          resetLoginErrors();
-          location.reload();
-        }).catch(err => {
-          console.log('Error', err);
-          errorLogin(err.details || 'Failed to Authenticate');
-        })
+      console.log(email);
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

@@ -1,7 +1,7 @@
 import * as Axios from 'axios';
+import { LOAD_USERS } from './actions/users';
 
 const matchaToken = localStorage.getItem('matchaToken');
-console.log(matchaToken);
 const axios = Axios.create({
   baseURL: 'http://127.0.0.1:3004/api/',
   timeout: 3000,
@@ -18,7 +18,7 @@ export const reqLogin = (login, password) => axios.post('user/login', {
   password,
 }).then(({ data, status }) => {
   if (status === 201)
-    throw data;
+  throw data;
   return data;
 });
 
@@ -26,12 +26,25 @@ export const reqRegister= (user) => axios.post('user', {
   ...user,
 }).then(({ data, status }) => {
   if (status === 201)
-    throw data;
+  throw data;
   return data;
 });
 
+export const reqGetAll = (loadUsers, query) => {
+  const cleanQuery = JSON.stringify(query);
+  const params = `f=${cleanQuery}`;
+  return axios({
+    method: 'get',
+    url:`user/all?${params}`,
+  }).then(({ data, status }) => {
+    if (status === 201)
+      throw data;
+    loadUsers(data);
+    return data;
+  });
+};
 // export const reqLostPassword = (data) => axios({
-//   method: 'get',
+  //   method: 'get',
 //   url:'http://127.0.0.1:3004/lost_password',
 //   data,
 // }).then(({ data, status }) => {
@@ -92,13 +105,5 @@ export const reqRegister= (user) => axios.post('user', {
 //   return data;
 // });
 
-export const reqGetAll = () => axios({
-  method: 'get',
-  url:`user?id=all`,
-}).then(({ data, status }) => {
-  if (status === 201)
-    throw data;
-  return data;
-});
 
 // // export const reqAddImg = () =>

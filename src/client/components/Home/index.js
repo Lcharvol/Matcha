@@ -33,7 +33,7 @@ const sortTypes = [
     { key: 'age', label: 'Sort by age' },
     { key: 'location', label: 'Sort by location' },
     { key: 'popularity', label: 'Sort by popularity' },
-    { key: 'tags', label: 'Sort by commun tags' },
+    { key: 'interest', label: 'Sort by commun tags' },
 ];
 
 const Home = ({
@@ -88,13 +88,13 @@ const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle({
         componentWillMount() {
-            reqGetAll()
+            reqGetAll(this.props.loadUsers, { sort: 'location,ASC' })
             .then(users => {
-                const { loadUsers } = this.props;
-                loadUsers(users);
+                // const { loadUsers } = this.props;
+                // loadUsers(users);
             });
         },
-        
+
     }),
     withHandlers({
         onFilterChange: ({ filterUsers }) => event =>

@@ -77,12 +77,13 @@ export const getFilterGeoAndInterest = (req, res, next) => {
     let usersSortbyDistance = geolib.orderByDistance(user, users).map(userDis => ({ ...userDis, key: Number(userDis.key) }));
 
     if (req.sort[0] === 'location') {
-      if (req.sort[1] === 'DESC') usersSortbyDistance = _.reverse(usersSortbyDistance);
+      if (_.toUpper(req.sort[1]) === 'DESC') usersSortbyDistance = _.reverse(usersSortbyDistance);
       const idKey = usersSortbyDistance.map(({ key }) => key);
       const sortby = _.sortBy(users, ({ id }) => _.indexOf(idKey, id));
       req.users = _.map(sortby, (userSorted, index) => ({ ...userSorted, distance: usersSortbyDistance[index].distance }));
     }
-    if (!interestCount && !locationFilter) return res.json({ details: users });
+    console.log(interestCount, locationFilter);
+    if (!interestCount && !locationFilter) return res.json({ details: req.users });
     if (interestCount) {
       req.users = _.filter(users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= interestCount);
     }

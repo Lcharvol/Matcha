@@ -20,7 +20,6 @@ class Auth extends Component {
   async componentWillMount() {
     const resp = await reqAuth();
     const { children, revertCheck, path } = this.props;
-    console.log(resp.status, revertCheck);
     if (resp.status === 201) {
       history.push({
         pathname: path,

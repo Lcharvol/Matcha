@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
-
 const HeaderStyled = styled.div`
     position:fixed;
     display: flex;
@@ -43,7 +45,7 @@ const Icon = styled.i`
     }
 `;
 
-const Header = ({ onChange, filter, resetValue}) => (
+const Header = ({ onChange, filter, resetValue, connectedPeople }) => (
   <HeaderStyled>
     <HeaderLeft>
       <Spacer />
@@ -55,6 +57,12 @@ const Header = ({ onChange, filter, resetValue}) => (
       />
     </HeaderLeft>
     <HeaderRight>
+      <Icon className="fa fa-exclamation" aria-hidden="true" title="Notification"/>
+      { connectedPeople > 1 ? (connectedPeople - 1) : '-1'}
+      <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
+    <Link to={`/profil`}>
+        <Icon className="fa fa-address-card-o" aria-hidden="true" title="Me"/>
+      </Link>
       <Link to={`/login`}>
         <Icon className="fa fa-sign-out" aria-hidden="true" title="Disconnect" onClick={() => localStorage.removeItem('matchaToken')}/>
       </Link>
@@ -67,6 +75,16 @@ Header.propTypes = {
   onChange: PropTypes.func.isRequired,
   filter: PropTypes.string,
   resetValue: PropTypes.func,
+  connectedPeople: PropTypes.number,
 }
 
-export default Header;
+const actions = {};
+
+const mapStateToProps = state => ({
+  connectedPeople: state.connectedPeople
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+

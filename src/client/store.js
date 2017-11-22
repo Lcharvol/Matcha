@@ -34,12 +34,17 @@ const asyncDispatchMiddleware = store => next => action => {
   flushQueue();
 };
 
+const SocketIoMiddleware = io => store => next => action => {
+  io.on('connected', (data) => {
+    console.log('connected', data);
+  })
+};
 
-const configureStore = (initialState) =>
+const configureStore = (initialState, io) =>
   createStore(
       reducer,
       initialState,
-      applyMiddleware(thunk, logger, asyncDispatchMiddleware),
+      applyMiddleware(thunk, logger, asyncDispatchMiddleware, SocketIoMiddleware(io)),
     );
 
 export default configureStore;

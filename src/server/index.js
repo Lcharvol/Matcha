@@ -15,7 +15,7 @@ const init = async () => {
     if (process.env.RESET_DB) return resetDb(ctx.db);
     if (process.env.LOAD_USERS) return loadUsers(ctx.db);
     ctx = await initHttp(ctx);
-    logger(`Server started! ${ctx.config.startTime}`);
+    logger(`Server started at ${ctx.config.startTime.toString().substr(0, 25)}`);
   } catch (err) {
     logger(err.stack);
   }

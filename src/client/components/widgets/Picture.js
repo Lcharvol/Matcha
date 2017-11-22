@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStateHandlers } from 'recompose';
 
 const PictureStyled = styled.div`
-    background-image: ${({ picture  }) => `url(${picture})`};
+    background-image: ${({ picture  }) => `url(${picture}.jpg)`};
     background-position:center center;
     background-size: auto 100%;
     width: 150px;
@@ -54,7 +54,7 @@ const PictureSightedContainer = styled.div`
 const PictureSightedStyled = styled.div`
   width:90%;
   height:90%;
-  background-image: ${({ picture  }) => `url(${picture})`};
+  background-image: ${({ picture  }) => `url(${picture}.jpg)`};
   background-position:center center;
   background-repeat: no-repeat;
 `;

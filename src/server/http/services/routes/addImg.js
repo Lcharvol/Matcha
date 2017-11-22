@@ -7,7 +7,6 @@ export const addImg = async (req, res) => {
   const { user: { id }, ctx: { db } } = req;
   const { profile_picture } = req.files;
   let path = null;
-  console.log(req.files);
   if (req.files.pictures) {
     req.files.pictures.forEach((img, index) => {
       imgs[`photo_${index + 1}`] = `/uploads/${img.filename}`;

@@ -57,10 +57,8 @@ const service = {
     try {
       const { ctx: { db }, user } = req;
       await User.delete.bind({ db })(Number(user.id));
-      console.log('okD');
       res.json({ details: 'Succesfully delete' });
     } catch (err) {
-      console.log('ok');
       req.Err('Failed to delete', req.user.login);
     }
   },
@@ -100,9 +98,8 @@ const service = {
       const { password: inputPassword } = req.body;
       const { ctx: { config: { secretSentence, expiresIn } }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
-      console.log('dok');
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
-      console.log('merde');
+      // req.io.on('')
     } catch (err) {
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
       req.Err(message);

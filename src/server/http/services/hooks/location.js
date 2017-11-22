@@ -82,7 +82,6 @@ export const getFilterGeoAndInterest = (req, res, next) => {
       const sortby = _.sortBy(users, ({ id }) => _.indexOf(idKey, id));
       req.users = _.map(sortby, (userSorted, index) => ({ ...userSorted, distance: usersSortbyDistance[index].distance }));
     }
-    console.log(interestCount, locationFilter);
     if (!interestCount && !locationFilter) return res.json({ details: req.users });
     if (interestCount) {
       req.users = _.filter(users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= interestCount);

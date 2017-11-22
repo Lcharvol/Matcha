@@ -7,6 +7,7 @@ import debug from 'debug';
 import logger from 'morgan-debug';
 import multer from 'multer';
 import path from 'path';
+import socketIo from 'socket.io';
 
 import switchEvent from '../../lib/event';
 import { getToken, checkAuth } from './services/hooks/token';
@@ -51,6 +52,11 @@ const bindLogger = (req, res, next) => {
   next();
 };
 
+const bindSocketIO = (io) => (req, res, next) => {
+  res.io = io;
+  next();
+};
+
 const upload = multer({
   dest: path.join(__dirname, '../../../public/uploads/'),
   limits: {
@@ -59,11 +65,17 @@ const upload = multer({
   },
 }).fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]);
 
-const init = ctx => new Promise(resolve => {
-  const app = express();
+const init = async ctx => {
+  const app = await express();
   const { server: { host, port } } = ctx.config;
 
-  app
+  const httpServer = await app.listen(port, host, () => {
+    httpServer.url = getUrl(httpServer);
+    console.log(`Connected at this address: ${httpServer.url}`); // eslint-disable-line no-console
+  });
+
+  const io = socketIo(httpServer);
+  await app
     .use(compression())
     .use(cookieParser())
     .use(bodyParser.json())
@@ -71,22 +83,18 @@ const init = ctx => new Promise(resolve => {
     .use(logger('matcha:http', 'dev'))
     .use(cors())
     .use(bindCtx(ctx))
+    .use(bindSocketIO(io))
     .use(bindLogger)
     .use(getToken)
     .use(bindError);
 
-  app
+  await app
     .use('/api', switchEvent)
     .post(
       '/add_img', (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next()),
       getToken, checkAuth, addImg,
     );
-
-  const httpServer = app.listen(port, host, () => {
-    httpServer.url = getUrl(httpServer);
-    console.log(`Connected at this address: ${httpServer.url}`); // eslint-disable-line no-console
-    resolve({ ...ctx, http: httpServer });
-  });
-});
+  return ({ ...ctx, http: httpServer });
+};
 
 export default init;

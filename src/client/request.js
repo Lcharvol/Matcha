@@ -43,6 +43,16 @@ export const reqGetAll = (loadUsers, query) => {
     return data;
   });
 };
+
+export const reqMe = () => axios({
+  method: 'get',
+  url: 'user',
+}).then(({ data, status }) => {
+  if (status === 201)
+  throw data;
+  return data;
+});
+
 // export const reqLostPassword = (data) => axios({
   //   method: 'get',
 //   url:'http://127.0.0.1:3004/lost_password',

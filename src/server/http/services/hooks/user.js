@@ -14,6 +14,7 @@ export const getInfoToUpdate = async (req, res, next) => {
       return req.Err('no one valid champ');
     }
     req.infoToUpdate = infoCleaned;
+
     const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
     if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude'); // keep the ==
     if (contains.length > 0) {

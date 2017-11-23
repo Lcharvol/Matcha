@@ -40,9 +40,11 @@ const service = {
       const { id } = req.user;
       const { infoToUpdate } = req;
       const { ctx: { db } } = req;
+      console.log(infoToUpdate);
       const info = R.filter((single) => {
         if (typeof single === 'object' && single.length !== 0) return true;
         if (typeof single === 'string' && single !== '') return true;
+        if (typeof single === 'boolean') return true;
       }, infoToUpdate);
       if (info.password) {
         info.password = await bcrypt.hash(info.password, 10);
@@ -71,8 +73,8 @@ const service = {
         const _user = await User.load.bind({ db })(idRequest);
         req.userRequested = R.omit(['password'], _user);
       } else {
-        console.log('Connected');
-        return res.json({ details: R.omit(['password'], req.user) });
+        const connectedUser = await User.getConnectedUser.bind({ db })();
+        return res.json({ details: R.omit(['password'], req.user), connectedUser: connectedUser.count });
       }
       next();
     } catch (err) {
@@ -95,17 +97,16 @@ const service = {
   async login(req, res) {
     try {
       const { password: inputPassword } = req.body;
-      const { ctx: { config: { secretSentence, expiresIn } }, user } = req;
+      const { ctx: { config: { secretSentence, expiresIn }, db }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
-      res.io.on('connection', () => {
-        console.log('con');
-      });
-      console.log(Object.keys(res.io.sockets.sockets));
+      const wasConnected = user.connected;
+      await User.update.bind({ db })({ connected: true, cotime: Date.now() }, Number(req.user.id));
+      if(!wasConnected)
+      res.io.emit('userConnected', user.login);
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {
-      console.log(err);
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
-      req.Err(message);
+      req.Err(message, err);
     }
   },
   async confirmEmail(req, res) {

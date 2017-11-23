@@ -28,11 +28,11 @@ const bindError = (req, res, next) => {
       const matches = regex.exec(stack.split('\n')[2]);
       const [, file, line] = matches;
       const log = debug(`matcha:${file}:${line}`);
-      log(`DETAILS: ${msg}`);
+      log(`DETAILS: ${msg} ${er}`);
       res.status(201);
       res.json({ details: msg });
     } catch (err) {
-      console.log(err);
+      console.log(`DETAILS: $${err}`);
       res.status(201);
       res.json({ details: msg });
     }
@@ -76,6 +76,7 @@ const init = async ctx => {
   });
 
   const io = socketIo(httpServer);
+
   // initIO(io);
   await app
     .use(compression())

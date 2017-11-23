@@ -2,14 +2,17 @@ import {
   LOAD_USERS,
   loadUsers,
   SORT_USERS,
-  FILTER_USERS
+  FILTER_USERS,
+  CONNECTED_USER,
+  DISCONNECT_USER
 } from '../actions/users';
-import { reqGetAll } from '../request';
+import { reqGetAll, reqUpdateUser } from '../request';
 
 const initialState = {
   details: [],
   sort: { by: 'location', order: 'ASC' },
   filter: '',
+  connectedUser: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +30,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, filter: action.filter };
     case LOAD_USERS: {
       return {...state, details: action.users.details};
+    }
+    case CONNECTED_USER: {
+      return {...state, connectedUser: Number(action.usersConnected) + state.connectedUser};
+    }
+    case DISCONNECT_USER: {
+      reqUpdateUser({ connected: false });
+      localStorage.removeItem('matchaToken');
     }
     default:
         return state;

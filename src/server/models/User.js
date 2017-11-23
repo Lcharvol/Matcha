@@ -37,6 +37,9 @@ const User = {
   load(id) {
     return this.db.one(`SELECT * FROM users WHERE id = ${id}`);
   },
+  getConnectedUser() {
+    return this.db.one('SELECT count(*) FROM users WHERE connected = true');
+  },
   update(data, id) {
     const query = `${pgp.helpers.update(data, null, 'users')} WHERE id=${id} RETURNING *`;
     return this.db.one(query);

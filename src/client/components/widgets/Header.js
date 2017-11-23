@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 
 import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
+import { disconnectUser } from '../../actions/users';
+
 const HeaderStyled = styled.div`
     position:fixed;
     display: flex;
@@ -45,7 +47,7 @@ const Icon = styled.i`
     }
 `;
 
-const Header = ({ onChange, filter, resetValue, connectedPeople }) => (
+const Header = ({ onChange, filter, resetValue, connectedPeople, disconnectUser }) => (
   <HeaderStyled>
     <HeaderLeft>
       <Spacer />
@@ -58,13 +60,14 @@ const Header = ({ onChange, filter, resetValue, connectedPeople }) => (
     </HeaderLeft>
     <HeaderRight>
       <Icon className="fa fa-exclamation" aria-hidden="true" title="Notification"/>
-      { connectedPeople > 1 ? (connectedPeople - 1) : '-1'}
+      {/* { connectedPeople > 1 ? (connectedPeople - 1) : ''} */}
+      { connectedPeople}
       <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
     <Link to={`/profil`}>
         <Icon className="fa fa-address-card-o" aria-hidden="true" title="Me"/>
       </Link>
       <Link to={`/login`}>
-        <Icon className="fa fa-sign-out" aria-hidden="true" title="Disconnect" onClick={() => localStorage.removeItem('matchaToken')}/>
+        <Icon className="fa fa-sign-out" aria-hidden="true" title="Disconnect" onClick={disconnectUser}/>
       </Link>
       <Spacer size={10}/>
     </HeaderRight>
@@ -78,10 +81,12 @@ Header.propTypes = {
   connectedPeople: PropTypes.number,
 }
 
-const actions = {};
+const actions = {
+  disconnectUser,
+};
 
 const mapStateToProps = state => ({
-  connectedPeople: state.connectedPeople
+  connectedPeople: state.users.connectedUser
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

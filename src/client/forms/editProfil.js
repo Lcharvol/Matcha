@@ -94,6 +94,11 @@ export const fields = {
     validate: Yup.number(),
     required: true,
   },
+  connected: {
+    label: 'connected',
+    component: InputField,
+    validate: Yup.boolean(),
+  },
 };
 
 export const defaultValues = getDefaultValues(fields);

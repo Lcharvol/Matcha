@@ -24,7 +24,7 @@ export const getFilterAndSort = async (req, res, next) => {
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
     req.sort = sort.split(',');
-    console.log(req.sort);
+    // console.log(req.sort);
     req.sortString = '';
     const { age, popularity } = filter || {};
     const { sexe, sexualorientation } = req.user;

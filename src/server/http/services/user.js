@@ -15,7 +15,8 @@ import { validateRegisterForm,
 import { schemaLogin } from '../../../lib/validators';
 import { checkAuth, getUserFromToken, checkToken } from './hooks/token';
 // import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/location';
-import { getFilterAndSort, getFilterGeoAndInterest, cleanUsers } from './hooks/location';
+import { getFilterAndSort, getFilterGeoAndInterest } from './hooks/location';
+
 const service = {
   // CRUD
   async post(req, res) {
@@ -66,13 +67,11 @@ const service = {
     const { ctx: { db }, user: { id } } = req;
     const { query: { id: idRequest } } = req;
     try {
-      if (idRequest === 'all') {
-        const _users = await User.getAll.bind({ db })();
-        req.users = _users.filter((item) => item.id !== id).map(v => R.omit(['password'], v));
-      } else if (idRequest) {
+      if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
         req.userRequested = R.omit(['password'], _user);
       } else {
+        console.log('Connected');
         return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
@@ -98,9 +97,13 @@ const service = {
       const { password: inputPassword } = req.body;
       const { ctx: { config: { secretSentence, expiresIn } }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
+      res.io.on('connection', () => {
+        console.log('con');
+      });
+      console.log(Object.keys(res.io.sockets.sockets));
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
-      // req.io.on('')
     } catch (err) {
+      console.log(err);
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
       req.Err(message);
     }

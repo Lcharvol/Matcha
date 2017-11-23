@@ -54,6 +54,7 @@ const bindLogger = (req, res, next) => {
 
 const bindSocketIO = (io) => (req, res, next) => {
   res.io = io;
+  res.sockets = {};
   next();
 };
 
@@ -75,6 +76,7 @@ const init = async ctx => {
   });
 
   const io = socketIo(httpServer);
+  // initIO(io);
   await app
     .use(compression())
     .use(cookieParser())

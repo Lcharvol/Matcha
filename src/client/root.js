@@ -14,8 +14,8 @@ const io = socketIO.connect(url);
 io.on('disconnect', () => console.log('socket.io disconnected ...'));
 io.on('error', err => console.log(`socket.io error: ${err}`));
 io.on('connect', () => console.log('socket.io connected.'));
-io.on('connected', (data) => {
-  console.log('connected', data);
+io.on('userConnected', (user) => {
+  console.log('userConnected', user);
 })
 const initialState = {};
 

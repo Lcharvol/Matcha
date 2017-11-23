@@ -25,19 +25,15 @@ const asyncDispatchMiddleware = store => next => action => {
       flushQueue();
     }
   }
-
   const actionWithAsyncDispatch =
       Object.assign({}, action, { asyncDispatch });
-
   next(actionWithAsyncDispatch);
   syncActivityFinished = true;
   flushQueue();
 };
 
 const SocketIoMiddleware = io => store => next => action => {
-  io.on('connected', (data) => {
-    console.log('connected', data);
-  })
+  next(action);
 };
 
 const configureStore = (initialState, io) =>

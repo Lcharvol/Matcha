@@ -75,6 +75,8 @@ const service = {
       } else {
         const connectedUser = await User.getConnectedUser.bind({ db })();
         return res.json({ details: R.omit(['password'], req.user), connectedUser: connectedUser.count });
+        // await User.update.bin({ db })({ connected: true, cotime: Date.now() }, Number(id));
+        // return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
     } catch (err) {
@@ -100,9 +102,8 @@ const service = {
       const { ctx: { config: { secretSentence, expiresIn }, db }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
       const wasConnected = user.connected;
-      await User.update.bind({ db })({ connected: true, cotime: Date.now() }, Number(req.user.id));
-      if(!wasConnected)
-      res.io.emit('userConnected', user.login);
+      await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(req.user.id));
+      if (!wasConnected) res.io.emit('userConnected', user.login);
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
@@ -149,6 +150,15 @@ const service = {
       res.json({ details: 'Email sent thank you' });
     } catch (err) {
       req.Err('Failed to authenticate');
+    }
+  },
+  async getConnectedUser(req, res) {
+    const { ctx: { db } } = req;
+    try {
+      const connectedUser = await User.getConnectedUser.bind({ db })();
+      return res.json({ details: connectedUser.count });
+    } catch (err) {
+      req.Err('Failed to get connected user');
     }
   },
 };

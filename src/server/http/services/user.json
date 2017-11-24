@@ -18,5 +18,9 @@
   "getAll": {
     "verb": "get",
     "url": "/all"
+  },
+  "getConnectedUser": {
+    "verb": "get",
+    "url": "/connected"
   }
 }

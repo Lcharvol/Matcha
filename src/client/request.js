@@ -12,6 +12,10 @@ export const reqAuth = () => axios({
   method: 'get',
   url: 'user',
 });
+export const reqConnectedUser = () => axios({
+  method: 'get',
+  url: 'user/connected',
+});
 
 export const reqLogin = (login, password) => axios.post('user/login', {
   login,
@@ -60,6 +64,7 @@ export const reqUpdateUser = (data) => axios.put('user', {
     throw data;
   return data;
 });
+
 // export const reqLostPassword = (data) => axios({
   //   method: 'get',
 //   url:'http://127.0.0.1:3004/lost_password',

@@ -1,9 +1,12 @@
 import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
+import geoip from 'geoip-lite';
+import _ from 'lodash';
 
 import mailer from '../../lib/mailer';
 import User from '../models/User';
+import Like from '../models/Likes';
 import { validateRegisterForm,
   validateLoginForm,
   checkIfConfirmedAndReturnUser,
@@ -98,7 +101,12 @@ const service = {
       const { ctx: { config: { secretSentence, expiresIn }, db }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
       const wasConnected = user.connected;
-      await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(user.id));
+      const { connection: { remoteAddress } } = req;
+      let ip = remoteAddress;
+      if (ip === '127.0.0.1' || ip === '::1' || !ip) ip = '62.210.34.191';
+      const geo = geoip.lookup(ip);
+      const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
+      await User.update.bind({ db })({ connected: true, cotime: new Date(), ...range }, Number(user.id));
       if (!wasConnected) res.io.emit('userConnected', user.login);
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {
@@ -157,6 +165,27 @@ const service = {
       req.Err('Failed to get connected user');
     }
   },
+  async likeUser(req, res) {
+    try {
+      const { query: { id }, ctx: { db } } = req;
+      const userSendLike = req.user.id.toString();
+      const userReceiveLike = id;
+      if (userSendLike === userReceiveLike) return req.Err('can \'t liked yourself');
+      const { blocked } = await User.load.bind({ db })(id);
+      if (_.includes(_.split(blocked, ','), userSendLike)) return req.Err('cant like because b');
+      const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
+      res.io.sockets.connected[1].emit("notifs", "Howdy, User 1!");
+      res.io.emit('notifs', 'julie allan ta liker');
+      if (count > 0)
+        await Like.delete.bind({ db })(userSendLike, userReceiveLike);
+      else
+        await Like.add.bind({ db })(userSendLike, userReceiveLike);
+      return res.json({ details: 'ty' });
+    } catch (err) {
+      console.log(err);
+      req.Err('failed to like the user');
+    }
+  },
 };
 
 // getAll: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
@@ -169,6 +198,7 @@ const init = {
     post: [validateRegisterForm, getIp, getLocalisation],
     put: [checkAuth, getInfoToUpdate],
     delete: [checkAuth],
+    likeUser: [checkAuth],
     login: [validateLoginForm, checkIfConfirmedAndReturnUser],
     confirmEmail: [getUserFromToken],
     resetPassword: [checkToken],

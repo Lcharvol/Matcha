@@ -29,11 +29,18 @@ const requestConnectedUsers = () => {
 io.on('userConnected', () => {
   requestConnectedUsers();
 });
+io.on('usersList', () => {
+  requestConnectedUsers();
+});
+// console.log(io);
+// io.sockets[1]('notifs', (msg) => {
+  // console.log(msg);
+// });
 
 setInterval(requestConnectedUsers, 1000);
-// io.on('userDisconnected', () => {
-//   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
-// });
+  // io.on('userDisconnected', () => {
+  //   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
+  // });
 
 const root = (
   <App>

@@ -22,5 +22,9 @@
   "getConnectedUser": {
     "verb": "get",
     "url": "/connected"
+  },
+  "likeUser": {
+    "verb": "get",
+    "url": "/like"
   }
 }

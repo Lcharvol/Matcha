@@ -1,8 +1,9 @@
 const query = `CREATE TABLE IF NOT EXISTS likes (
   id SERIAL PRIMARY KEY,
-  to_user NUMERIC NOT NULL,
-  from_user NUMERIC NOT NULL,
-  push BOOLEAN DEFAULT FALSE,
+  user_send_like INTEGER NOT NULL,
+  user_receive_like INTEGER NOT NULL,
+  date TIMESTAMPTZ,
+  push BOOLEAN DEFAULT FALSE
 );`;
 
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;

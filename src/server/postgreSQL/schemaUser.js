@@ -22,6 +22,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   popularity INTEGER DEFAULT '0',
   confirmed BOOLEAN DEFAULT FALSE,
   connected BOOLEAN DEFAULT FALSE,
+  postal_code NUMBER,
   cotime TIMESTAMPTZ
 );`;
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;

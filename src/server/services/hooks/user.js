@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import geoip from 'geoip-lite';
 import _ from 'lodash';
+import axios from 'axios';
 
 import mailer from '../../../lib/mailer';
 import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../lib/validators';

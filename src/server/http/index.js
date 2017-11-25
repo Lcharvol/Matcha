@@ -19,7 +19,6 @@ const bindCtx = (ctx) => (req, res, next) => {
   req.ctx = ctx;
   next();
 };
-
 const bindError = (req, res, next) => {
   req.Err = (msg, er) => {
     const { stack } = new Error();
@@ -54,7 +53,6 @@ const bindLogger = (req, res, next) => {
 
 const bindSocketIO = (io) => (req, res, next) => {
   res.io = io;
-  res.sockets = {};
   next();
 };
 
@@ -74,8 +72,19 @@ const init = async ctx => {
     httpServer.url = getUrl(httpServer);
     console.log(`Connected at this address: ${httpServer.url}`); // eslint-disable-line no-console
   });
-
+  const users = ['abarriel'];
   const io = socketIo(httpServer);
+  io.on('connection', (socket) => {
+    socket.on('username', (userName) => {
+      users.push({
+        id: socket.id,
+        userName,
+      });
+      let len = this.users.length;
+      len--;
+      io.emit('userList', users, users[len].id);
+    });
+  });
 
   await app
     .use(compression())

@@ -3,10 +3,11 @@ import thunk from 'redux-thunk';
 import axios from 'axios';
 import { createLogger } from 'redux-logger';
 import reducer from './reducers';
-
+import { CONNECTED_USER } from './actions/users';
 
 const logger = createLogger({
   collapsed: true,
+  predicate: (getState, action) => action.type !== CONNECTED_USER
 });
 
 const asyncDispatchMiddleware = store => next => action => {

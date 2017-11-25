@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
       return {...state, details: action.users.details};
     }
     case CONNECTED_USER: {
-      return {...state, connectedUsers: action.usersConnected };
+      return {...state, connectedUsers: Number(action.usersConnected)};
     }
     case DISCONNECT_USER: {
       reqUpdateUser({ connected: false });

@@ -82,7 +82,7 @@ const init = async ctx => {
     .use(cookieParser())
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
-    .use(logger('matcha:http', 'dev'))
+    // .use(logger('matcha:http', 'dev'))
     .use(cors())
     .use(bindCtx(ctx))
     .use(bindSocketIO(io))

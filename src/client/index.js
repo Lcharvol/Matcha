@@ -30,7 +30,7 @@ io.on('userConnected', () => {
   requestConnectedUsers();
 });
 
-setInterval(requestConnectedUsers, 5000);
+setInterval(requestConnectedUsers, 1000);
 // io.on('userDisconnected', () => {
 //   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
 // });

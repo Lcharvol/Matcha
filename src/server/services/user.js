@@ -39,7 +39,6 @@ const service = {
       const { id } = req.user;
       const { infoToUpdate } = req;
       const { ctx: { db } } = req;
-      console.log(infoToUpdate);
       const info = R.filter((single) => {
         if (typeof single === 'object' && single.length !== 0) return true;
         if (typeof single === 'string' && single !== '') return true;
@@ -72,6 +71,7 @@ const service = {
         const _user = await User.load.bind({ db })(idRequest);
         req.userRequested = R.omit(['password'], _user);
       } else {
+        await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
         return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
@@ -98,7 +98,7 @@ const service = {
       const { ctx: { config: { secretSentence, expiresIn }, db }, user } = req;
       await bcrypt.compare(inputPassword, user.password);
       const wasConnected = user.connected;
-      await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(req.user.id));
+      await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(user.id));
       if (!wasConnected) res.io.emit('userConnected', user.login);
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {

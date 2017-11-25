@@ -22,8 +22,9 @@ export const getFilterAndSort = async (req, res, next) => {
 
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
+    if (!_.includes(['age', 'popularity', 'tags', 'location'], sort))
+      throw 'try to fuck us';
     req.sort = sort.split(',');
-    // console.log(req.sort);
     req.sortString = '';
     const { age, popularity } = filter || {};
     const { sexe, sexualorientation } = req.user;
@@ -34,11 +35,11 @@ export const getFilterAndSort = async (req, res, next) => {
     filterSexe = filterSexe.slice(0, -1).concat("}'::text[])");
     if (age) {
       const [min, max] = age.split('-');
-      filterAge = `age BETWEEN ${min} AND ${max}`;
+      filterAge = `age BETWEEN ${Number(min)} AND ${Number(max)}`;
     }
     if (popularity) {
       const [min, max] = popularity.split('-');
-      filterPopularity = `popularity BETWEEN ${min} AND ${max}`;
+      filterPopularity = `popularity BETWEEN ${Number(min)} AND ${Number(max)}`;
     }
     if (age && popularity) {
       req.filterString = `WHERE ${filterAge} AND ${filterPopularity}`;

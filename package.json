@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint src --color",
-    "client": "NODE_ENV=development webpack-dev-server --progress --config webpack.config.js",
+    "client": "NODE_ENV=development webpack-dev-server --client-log-level none --progress --config webpack.config.js",
     "server": "NODE_ENV=development DEBUG=matcha* nodemon --watch config/server --watch src/lib --watch src/server --exec \"babel-node src/server\"",
     "resetdb": "NODE_ENV=development RESET_DB=true DEBUG=matcha* babel-node src/server",
     "loadusers": "NODE_ENV=development LOAD_USERS=true DEBUG=matcha* babel-node src/server",
@@ -52,6 +52,7 @@
     "jest": "20.0.4",
     "jsonwebtoken": "^8.1.0",
     "kcors": "^2.2.1",
+    "knex": "^0.14.2",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.1.0",

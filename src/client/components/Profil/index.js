@@ -106,7 +106,6 @@ class Profil extends Component {
   render() {
     const { user } = this.state;
     if(!user) return null;
-    console.log(user);
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5];
     return (<div>

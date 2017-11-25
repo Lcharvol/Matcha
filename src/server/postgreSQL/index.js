@@ -3,7 +3,7 @@ import pgp from 'pg-promise';
 import UserSchema from './schemaUser';
 
 const pingUserConnected = async (db) => {
-  await db.any(`UPDATE users SET connected = false WHERE now() - cotime > interval '5 sec'`);
+  await db.any(`UPDATE users SET connected = false WHERE now() - cotime > interval '60 sec'`);
 };
 
 const init = async (ctx) => {
@@ -12,7 +12,7 @@ const init = async (ctx) => {
   const db = await pgConnector(config);
   const client = await db.connect();
   await UserSchema(client);
-  setInterval(() => pingUserConnected(db), 5000); // 10000
+  setInterval(() => pingUserConnected(db), 1000); // 10000
   return { ...ctx, db: client };
 };
 

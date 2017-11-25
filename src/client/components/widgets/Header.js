@@ -60,8 +60,7 @@ const Header = ({ onChange, filter, resetValue, connectedPeople, disconnectUser 
     </HeaderLeft>
     <HeaderRight>
       <Icon className="fa fa-exclamation" aria-hidden="true" title="Notification"/>
-      {/* { connectedPeople > 1 ? (connectedPeople - 1) : ''} */}
-      { connectedPeople}
+      { connectedPeople }
       <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
     <Link to={`/profil`}>
         <Icon className="fa fa-address-card-o" aria-hidden="true" title="Me"/>

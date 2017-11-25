@@ -8,7 +8,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from '../client/components/App';
 import routes from './routes';
 import configureStore from './store';
-import { connectedUser } from './actions/users';
+import { reqConnectedUsers } from './request';
+import { getConnectedUsers } from './actions/users';
 
 const url = 'http://127.0.0.1:3004';
 const io = socketIO.connect(url);
@@ -21,10 +22,18 @@ const initialState = {};
 
 const store = configureStore(initialState, io);
 
-io.on('userConnected', (user) => {
-  store.dispatch(connectedUser(1));
-  // console.log('userConnected', user);
+const requestConnectedUsers = () => {
+  reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))
+};
+
+io.on('userConnected', () => {
+  requestConnectedUsers();
 });
+
+setInterval(requestConnectedUsers, 5000);
+// io.on('userDisconnected', () => {
+//   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
+// });
 
 const root = (
   <App>

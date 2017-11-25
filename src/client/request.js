@@ -12,9 +12,15 @@ export const reqAuth = () => axios({
   method: 'get',
   url: 'user',
 });
-export const reqConnectedUser = () => axios({
+export const reqConnectedUsers = (getConnectedUsers) => axios({
   method: 'get',
   url: 'user/connected',
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  console.log(data, data.details);
+  getConnectedUsers(data.details);
+  return data;
 });
 
 export const reqLogin = (login, password) => axios.post('user/login', {

@@ -4,7 +4,7 @@ export const DISCONNECT_USER = 'DISCONNECT_USER';
 export const FILTER_USERS = 'FILTER_USERS';
 export const SORT_USERS = 'SORT_USERS';
 
-export const connectedUser = usersConnected => {
+export const getConnectedUsers = usersConnected => {
   return { type: CONNECTED_USER, usersConnected };
 };
 

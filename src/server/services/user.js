@@ -2,8 +2,8 @@ import R from 'ramda';
 import bcrypt from 'bcrypt-as-promised';
 import jwt from 'jsonwebtoken';
 
-import mailer from '../../../lib/mailer';
-import User from '../../models/User';
+import mailer from '../../lib/mailer';
+import User from '../models/User';
 import { validateRegisterForm,
   validateLoginForm,
   checkIfConfirmedAndReturnUser,
@@ -12,9 +12,8 @@ import { validateRegisterForm,
   getLocalisation,
   checkIfNotBlocked,
   getInfoToUpdate } from './hooks/user';
-import { schemaLogin } from '../../../lib/validators';
+import { schemaLogin } from '../../lib/validators';
 import { checkAuth, getUserFromToken, checkToken } from './hooks/token';
-// import { loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers } from './hooks/location';
 import { getFilterAndSort, getFilterGeoAndInterest } from './hooks/location';
 
 const service = {
@@ -73,10 +72,7 @@ const service = {
         const _user = await User.load.bind({ db })(idRequest);
         req.userRequested = R.omit(['password'], _user);
       } else {
-        const connectedUser = await User.getConnectedUser.bind({ db })();
-        return res.json({ details: R.omit(['password'], req.user), connectedUser: connectedUser.count });
-        // await User.update.bin({ db })({ connected: true, cotime: Date.now() }, Number(id));
-        // return res.json({ details: R.omit(['password'], req.user) });
+        return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
     } catch (err) {

@@ -7,7 +7,6 @@ import { reqAuth } from '../../request';
 import Login from '../Login';
 import Register from '../Register';
 import Lost from '../Lost';
-import { connectedUser } from '../../actions/users';
 
 // 2 - No response
 // 1 - bad
@@ -20,7 +19,7 @@ class Auth extends Component {
 
   async componentWillMount() {
     const resp = await reqAuth();
-    const { children, revertCheck, path, connectedUser } = this.props;
+    const { children, revertCheck, path, } = this.props;
     if (resp.status === 201) {
       history.push({
         pathname: path,
@@ -32,7 +31,6 @@ class Auth extends Component {
       location.reload();
     } else
       this.setState({ authorized: 0 });
-    connectedUser(resp.data.connectedUser);
   }
 
   render() {
@@ -57,7 +55,6 @@ Auth.propTypes = {
 }
 
 const actions = {
-  connectedUser,
 };
 
 const mapStateToProps = state => ({

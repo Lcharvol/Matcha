@@ -1,6 +1,6 @@
 /* eslint-disable */
-import user from '../server/http/services/user';
-import userSchema from '../server/http/services/user.json';
+import user from '../server/services/user';
+import userSchema from '../server/services/user.json';
 import { Router } from 'express';
 import _ from 'lodash';
 

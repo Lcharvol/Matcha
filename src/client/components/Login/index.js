@@ -1,8 +1,5 @@
 import React from 'react';
-import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
 import styled from 'styled-components';
-import { FormField } from '../../fields';
-import { getField } from '../../forms/login';
 import { withFormik } from 'formik';
 import { browserHistory } from 'react-router'
 import { compose } from 'ramda';
@@ -11,6 +8,10 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import queryString from 'query-string';
+
+import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
+import { FormField } from '../../fields';
+import { getField } from '../../forms/login';
 import { getValidationSchema, defaultValues } from '../../forms/login';
 import { reqLogin } from '../../request';
 import { errorLogin, resetLoginErrors } from '../../actions/loginErrors';
@@ -202,7 +203,6 @@ export default compose(
       const { errorLogin, resetLoginErrors } = props;
       reqLogin(login, password)
         .then(({ matchaToken }) => {
-          console.log('sucess');
           localStorage.setItem('matchaToken', matchaToken);
           resetLoginErrors();
           location.reload();

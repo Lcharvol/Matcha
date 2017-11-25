@@ -1,9 +1,10 @@
 import jwt from 'jsonwebtoken';
 import geoip from 'geoip-lite';
 import _ from 'lodash';
-import mailer from '../../../../lib/mailer';
-import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../../lib/validators';
-import User from '../../../models/User'; // eslint-disable-line
+
+import mailer from '../../../lib/mailer';
+import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../lib/validators';
+import User from '../../models/User'; // eslint-disable-line
 
 export const getInfoToUpdate = async (req, res, next) => {
   const inputUpdate = req.body;

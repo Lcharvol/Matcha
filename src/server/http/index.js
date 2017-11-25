@@ -10,8 +10,8 @@ import path from 'path';
 import socketIo from 'socket.io';
 
 import switchEvent from '../../lib/event';
-import { getToken, checkAuth } from './services/hooks/token';
-import addImg from './services/routes/addImg';
+import { getToken, checkAuth } from '../services/hooks/token';
+import addImg from './routes/addImg';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
@@ -77,7 +77,6 @@ const init = async ctx => {
 
   const io = socketIo(httpServer);
 
-  // initIO(io);
   await app
     .use(compression())
     .use(cookieParser())

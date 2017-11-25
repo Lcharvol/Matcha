@@ -12,7 +12,7 @@ const initialState = {
   details: [],
   sort: { by: 'location', order: 'ASC' },
   filter: '',
-  connectedUser: 0
+  connectedUsers: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
       return {...state, details: action.users.details};
     }
     case CONNECTED_USER: {
-      return {...state, connectedUser: Number(action.usersConnected) + state.connectedUser};
+      return {...state, connectedUsers: action.usersConnected };
     }
     case DISCONNECT_USER: {
       reqUpdateUser({ connected: false });

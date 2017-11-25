@@ -86,7 +86,7 @@ const actions = {
 };
 
 const mapStateToProps = state => ({
-  connectedPeople: state.users.connectedUser
+  connectedPeople: state.users.connectedUsers
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

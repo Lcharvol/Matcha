@@ -22,9 +22,9 @@ export const getFilterAndSort = async (req, res, next) => {
 
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
-    if (!_.includes(['age', 'popularity', 'tags', 'location'], sort))
-      throw 'try to fuck us';
     req.sort = sort.split(',');
+    if (req.sort && !_.includes(['age', 'popularity', 'tags', 'location'], req.sort[0]))
+      throw 'try to fuck us';
     req.sortString = '';
     const { age, popularity } = filter || {};
     const { sexe, sexualorientation } = req.user;

@@ -8,9 +8,16 @@ import styled from 'styled-components';
 import { reqMe } from '../../request';
 import { Link } from 'react-router'
 
+const MainContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    background-color:rgb(240,240,240);
+`;
+
 const ProfilContainer = styled.div`
     width:100%;
-    margin-top:10px;
+    margin-top:65px;
     background-color:white;
     border-radius:0px;
 `;
@@ -108,44 +115,41 @@ class Profil extends Component {
     if(!user) return null;
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5];
-    return (<div>
-      {/* <Header /> */}
-      <ProfilContainer>
-          <LinkStyled to={`/profil`}>
-              <Icon className="fa fa-pencil" aria-hidden="true"/>
-          </LinkStyled>
-          <ProfilHeader>
-              <Avatar user={user}/>
-              <Spacer size={20}/>
-              <Name>{`${user.firstname} ${user.lastname}`}</Name>
-                  {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
-          </ProfilHeader>
-          <ProfilInfo>
-              <InlineBlock>
-                  <Text>Je recherche </Text>
-                  {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
-              </InlineBlock>
-              <Title>Ma bio</Title>
-              <InlineBlock>
-                  <Text>{user.bio}</Text>
-              </InlineBlock>
-              <Title>Interêts: </Title>
-              <InlineBlock>
-                  {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
-              </InlineBlock>
-              <Title>Mes Photos: </Title>
-              <InlineBlock>
-                  <Pictures>
-                      {map(user.picture, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
-                  </Pictures>
-              </InlineBlock>
-              <Title>Mon Score: </Title>
-              <InlineBlock>
-                  <Score score={user.popularity}/>
-              </InlineBlock>
-          </ProfilInfo>
-      </ProfilContainer>
-    </div>);
+    return (
+        <MainContainer>
+            <Header displaySearchBar={false}/>
+            <ProfilContainer>
+                <LinkStyled to={`/profil`}>
+                    <Icon className="fa fa-pencil" aria-hidden="true"/>
+                </LinkStyled>
+                <ProfilHeader>
+                    <Avatar user={user}/>
+                    <Name>{`${user.firstname} ${user.lastname}`}</Name>
+                        {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                </ProfilHeader>
+                <ProfilInfo>
+                    <InlineBlock>
+                        <Text>Je recherche </Text>
+                        {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                    </InlineBlock>
+                    <Title>Ma bio</Title>
+                    <InlineBlock>
+                        <Text>{user.bio}</Text>
+                    </InlineBlock>
+                    <Title>Interêts: </Title>
+                    <InlineBlock>
+                        {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
+                    </InlineBlock>
+                    <Title>Mes Photos: </Title>
+                    <InlineBlock>
+                        <Pictures>
+                            {map(user.picture, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
+                        </Pictures>
+                    </InlineBlock>
+                </ProfilInfo>
+            </ProfilContainer>
+        </MainContainer>
+    );
   }
 }
 

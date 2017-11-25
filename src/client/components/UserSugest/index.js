@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { withStateHandlers } from 'recompose';
 import PropTypes from 'prop-types';
-import ProfilPreview from '../ProfilPreview';
+import { Link } from 'react-router';
 
-const Container = styled.div`
+const Container = styled(Link)`
     display:flex;
     flex-direction:column;
     position:relative;
@@ -24,6 +24,7 @@ const Container = styled.div`
         width:100%;
     }
     margin:0px;
+    text-decoration: none;
 `;
 
 const ProfilPicture = styled.div`
@@ -65,19 +66,9 @@ const UserSugest = ({
     displayShadow,
     showShadow,
     hideShadow,
-    displayProfilPreview,
-    showProfilPreview,
-    hideProfilPreview,
 }) => (
-    <Container>
-        {displayProfilPreview &&
-            <ProfilPreview
-                user={user}
-                hideProfilPreview={hideProfilPreview}
-            />
-        }
+    <Container to={`/user/${user.id}`}>
         <ProfilPicture
-            onClick={showProfilPreview}
             onMouseEnter={showShadow}
             onMouseLeave={hideShadow}
             picture={user.photo_5}
@@ -96,20 +87,14 @@ UserSugest.propTypes = {
     displayShadow: PropTypes.bool.isRequired,
     showShadow: PropTypes.func.isRequired,
     hideShadow: PropTypes.func.isRequired,
-    displayProfilPreview: PropTypes.bool.isRequired,
-    showProfilPreview: PropTypes.func.isRequired,
-    hideProfilPreview: PropTypes.func.isRequired,
 }
 const enhance = withStateHandlers(
     {
         displayShadow: false,
-        displayProfilPreview: false,
     },
     {
         showShadow: () => () => ({ displayShadow: true }),
         hideShadow: () => () => ({ displayShadow: false }),
-        showProfilPreview: () => () => ({ displayProfilPreview: true }),
-        hideProfilPreview: () => () => ({ displayProfilPreview: false }),
     },
 );
 

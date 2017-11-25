@@ -24,7 +24,7 @@ const LinkStyled = styled(Link)`
 const Logo = ({ width = 50, justifycontent = 'center' }) => (
     <LogoContainer justifycontent={justifycontent}>
         <LinkStyled to={`/`}>
-            <LogoStyled src="logo.svg" className="App-logo" alt="logo" width={width}/>
+            <LogoStyled src="/logo.svg" className="App-logo" alt="logo" width={width}/>
         </LinkStyled>
     </LogoContainer>
 );

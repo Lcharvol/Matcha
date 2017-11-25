@@ -9,6 +9,7 @@ import EditProfil from './components/EditProfil';
 import Lost from './components/Lost';
 import Profil from './components/Profil';
 import Chat from './components/Chat';
+import User from './components/User';
 
 export default (
     <Switch>
@@ -18,6 +19,7 @@ export default (
         <Route exact path="/lost" component={() => <Auth revertCheck={true} path="/lost"><Lost /></Auth>}/>
         <Route exact path="/editprofil" component={() => <Auth><EditProfil /></Auth>}/>
         <Route exact path="/profil" component={() => <Auth><Profil /></Auth>}/>
+        <Route path="/user/:login" component={() => <Auth><User /></Auth>}/>
         <Route exact path="/chat" component={() => <Auth><Chat /></Auth>}/>
         {/* <Redirect from="*" to="/" /> */}
     </Switch>

@@ -1,6 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import { getSearch } from '../../selectors/user';
+import { searchUsers } from '../../actions/users';
 import PropTypes from 'prop-types';
+import SortMenu from '../SortMenu';
 
 const Container = styled.div`
     position:relative;
@@ -45,7 +50,17 @@ const ButtonIcon = styled.i`
     font-size:1.3em;
 `;
 
-const SearchBar = ({ onChange, filter, resetValue }) => (
+const searchTypes = [
+    { key: 'name', label: 'Search by name' },
+];
+
+const SearchBar = ({
+    onChange,
+    filter,
+    resetValue,
+    searchUsers,
+    search,
+}) => (
     <Container>
         <InputStyled
             type="search"
@@ -56,6 +71,13 @@ const SearchBar = ({ onChange, filter, resetValue }) => (
         <ButtonStyled>
             <ButtonIcon className="fa fa-search" aria-hidden="true" />
         </ButtonStyled>
+        <SortMenu
+            sortTypes={searchTypes}
+            onClick={searchUsers}
+            sort={search}
+            position={'relative'}
+            icon='bars'
+        />
     </Container>
 );
 
@@ -63,6 +85,16 @@ SearchBar.propTypes = {
     onChange: PropTypes.func.isRequired,
     filter: PropTypes.string,
     resetValue: PropTypes.func,
+    searchUsers: PropTypes.func.isRequired,
+    search: PropTypes.object.isRequired,
 }
 
-export default SearchBar;
+const actions = { searchUsers };
+
+const mapStateToProps = state => ({
+  search: getSearch(state),
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

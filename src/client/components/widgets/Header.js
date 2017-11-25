@@ -47,16 +47,25 @@ const Icon = styled.i`
     }
 `;
 
-const Header = ({ onChange, filter, resetValue, connectedPeople, disconnectUser }) => (
+const Header = ({
+  displaySearchBar,
+  onChange,
+  filter,
+  resetValue,
+  connectedPeople,
+  disconnectUser,
+}) => (
   <HeaderStyled>
     <HeaderLeft>
       <Spacer />
       <Logo width={40}/>
-      <SearchBar
-        onChange={onChange}
-        filter={filter}
-        resetValue={resetValue}
-      />
+      {displaySearchBar &&
+        <SearchBar
+          onChange={onChange}
+          filter={filter}
+          resetValue={resetValue}
+        />
+      }
     </HeaderLeft>
     <HeaderRight>
       <Icon className="fa fa-exclamation" aria-hidden="true" title="Notification"/>
@@ -74,10 +83,12 @@ const Header = ({ onChange, filter, resetValue, connectedPeople, disconnectUser 
 );
 
 Header.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  displaySearchBar: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
   filter: PropTypes.string,
   resetValue: PropTypes.func,
   connectedPeople: PropTypes.number,
+  disconnectUser: PropTypes.func,
 }
 
 const actions = {

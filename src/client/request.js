@@ -13,12 +13,30 @@ export const reqAuth = () => axios({
   url: 'user',
 });
 
+export const reqGetUser = (id) => axios({
+  method: 'get',
+  url:`user?id=${id}`,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data.details;
+});
+
+export const reqGetLike= (id) => axios({
+  method: 'get',
+  url:`user/like?id=${id}`,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data.details;
+});
+
 export const reqConnectedUsers = (getConnectedUsers) => axios({
   method: 'get',
   url: 'user/connected',
 }).then(({ data, status }) => {
   if (status === 201)
-    throw data;
+  throw data;
   getConnectedUsers(data.details);
   return data;
 });
@@ -112,16 +130,6 @@ export const reqUpdateUser = (data) => axios.put('user', {
 //   return data;
 // });
 
-// export const reqGetUser = ({ id }) => axios({
-//   method: 'get',
-//   url:`http://127.0.0.1:3004/api/user/${id}`,
-//   data,
-//   ...config(matchaToken)
-// }).then(({ data, status }) => {
-//   if (status === 201)
-//     throw data;
-//   return data;
-// });
 
 // export const reqDeleteMe = () => axios({
 //   method: 'get',

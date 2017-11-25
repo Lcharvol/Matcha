@@ -9,6 +9,7 @@ const Content = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: ${({ top  }) => top};
+    margin-bottom: ${({ bottom  }) => bottom};
 `;
 
 const AvatarStyled = styled.div`
@@ -46,15 +47,16 @@ const ScoreContainer = styled.div`
     flex-direction:column;
     justify-content: center;
     align-items: center;
+    margin-top:10px;
 `;
 
 const Score = styled.p`
     color:white;
     font-size:0.8em;
-    margin-top:-29px;
+    margin-top:-24px;
 `;
 
-const Avatar = ({ user, size = 'big', top = '0px' }) => (
+const Avatar = ({ user, size = 'big', top = '0px', bottom = '0px' }) => (
     <Content top={top}>
         <AvatarContainer>
             <CircularProgress
@@ -77,6 +79,7 @@ Avatar.propTypes = {
     user: PropTypes.object.isRequired,
     size: PropTypes.string,
     top: PropTypes.string,
+    bottom: PropTypes.string,
 }
 
 export default Avatar;

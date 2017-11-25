@@ -7,9 +7,9 @@ import { Menu, MenuItem, PopoverInteractionKind, Popover, Position } from '@blue
 import { onlyUpdateForKeys } from 'recompose';
 
 const Container = styled.div`
-    position:fixed;
-    top:35px;
-    left:25px;
+    position: ${({ position }) => position};
+    top: ${({ top }) => top};
+    left: ${({ left }) => left};
     display:flex;
     margin-top:65px;
     z-index:150;
@@ -56,8 +56,16 @@ SortMenu.propTypes = {
     sortTypes: PropTypes.array.isRequired,
 };
 
-const SortMenuWrapper = ({ sortTypes, onClick, sort }) => (
-    <Container>
+const SortMenuWrapper = ({
+    sortTypes,
+    onClick,
+    sort,
+    position = 'fixed',
+    icon,
+    top = '0px',
+    left = '0px',
+}) => (
+    <Container position={position} top={top} left={left}>
         <Popover
             position={Position.RIGHT_TOP}
             interactionKind={PopoverInteractionKind.CLICK}
@@ -66,7 +74,7 @@ const SortMenuWrapper = ({ sortTypes, onClick, sort }) => (
             }
         >
         <Button>
-            <i className="fa fa-sort" aria-hidden="true"></i>
+            <i className={`fa fa-${icon}`} aria-hidden="true"></i>
         </Button>
         </Popover>
     </Container>
@@ -76,6 +84,9 @@ const SortMenuWrapper = ({ sortTypes, onClick, sort }) => (
     onClick: PropTypes.func.isRequired,
     sort: PropTypes.object.isRequired,
     sortTypes: PropTypes.array.isRequired,
+    icon: PropTypes.string.isRequired,
+    top: PropTypes.string,
+    left: PropTypes.string,
   };
 
   export default onlyUpdateForKeys(['sort'])(SortMenuWrapper);

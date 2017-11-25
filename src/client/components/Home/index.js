@@ -47,6 +47,7 @@ const Home = ({
 }) => (
     <MainContainer>
         <Header
+            displaySearchBar={true}
             onChange={onFilterChange}
             filter={filter}
             resetValue={() => filterUsers('')}
@@ -55,6 +56,9 @@ const Home = ({
             sortTypes={sortTypes}
             onClick={sortUsers}
             sort={sort}
+            icon='sort'
+            top='35px'
+            left='25px'
         />
         <List
             users={users}
@@ -89,10 +93,6 @@ const enhance = compose(
     lifecycle({
         componentWillMount() {
             reqGetAll(this.props.loadUsers, { sort: 'location,ASC' })
-            .then(users => {
-                // const { loadUsers } = this.props;
-                // loadUsers(users);
-            });
         },
 
     }),

@@ -174,13 +174,13 @@ const service = {
       const { blocked } = await User.load.bind({ db })(id);
       if (_.includes(_.split(blocked, ','), userSendLike)) return req.Err('cant like because b');
       const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
-      res.io.sockets.connected[1].emit("notifs", "Howdy, User 1!");
       res.io.emit('notifs', 'julie allan ta liker');
-      if (count > 0)
+      if (count > 0) {
         await Like.delete.bind({ db })(userSendLike, userReceiveLike);
-      else
-        await Like.add.bind({ db })(userSendLike, userReceiveLike);
-      return res.json({ details: 'ty' });
+        return res.json({ details: 'unlike' });
+      }
+      await Like.add.bind({ db })(userSendLike, userReceiveLike);
+      return res.json({ details: 'like' });
     } catch (err) {
       console.log(err);
       req.Err('failed to like the user');

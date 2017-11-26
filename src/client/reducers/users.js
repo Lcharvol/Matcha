@@ -33,7 +33,10 @@ const reducer = (state = initialState, action) => {
       const query = {
         sort: `${by},${newOrder}`,
       }
+      console.log(state.sort);
+      console.log(query);
       reqGetAll((users) => action.asyncDispatch(loadUsers(users)), query);
+      console.log(action.sortBy, newOrder);
       return { ...state, sort: { by: action.sortBy, order: newOrder } };
     }
     case FILTER_USERS:

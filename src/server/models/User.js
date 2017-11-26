@@ -51,7 +51,6 @@ const User = {
     return this.db.one('SELECT * FROM users WHERE email = $1', email);
   },
   getAll(filterString, sortBy) {
-    console.log(`${filterString} ${sortBy}`);
     return this.db.any(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
   },
   addImg(imgs, imgProfile, id) {

@@ -35,6 +35,20 @@ const checkAuth = async (req, res, next) => {
   }
 };
 
+const getUserFromTokenWithoutErr = async (req, res, next) => {
+  const { config: { secretSentence }, db } = req.ctx;
+  const { matchaToken } = req;
+  if (!matchaToken) return next();
+  try {
+    const dataDecoded = jwt.verify(matchaToken, secretSentence);
+    const user = await User.load.bind({ db })(dataDecoded.sub);
+    req.user = user;
+    next();
+  } catch (err) {
+    next();
+  }
+};
+
 const getUserFromToken = async (req, res, next) => {
   const { config: { secretSentence }, db } = req.ctx;
   const { matchaToken } = req;
@@ -77,4 +91,5 @@ export {
   getUserFromToken,
   checkToken,
   checkAuth,
+  getUserFromTokenWithoutErr,
 };

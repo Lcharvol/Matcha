@@ -67,11 +67,12 @@ const service = {
     }
   },
   async get(req, res, next) {
-    const { ctx: { db }, user: { id } } = req;
+    const { ctx: { db }, user: { id, login } } = req;
     const { query: { id: idRequest } } = req;
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
+        res.io.to(_user.socket_id).emit('like', `${login} like you`);
         req.userRequested = R.omit(['password'], _user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
@@ -108,6 +109,13 @@ const service = {
       const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
       await User.update.bind({ db })({ connected: true, cotime: new Date(), ...range }, Number(user.id));
       if (!wasConnected) res.io.emit('userConnected', user.login);
+      // res.io.on('connection', async socket => {
+      //   await User.update.bind({ db })({ socket_id: socket.id }, Number(user.id));
+      //   socket.on('disconnect', async () => {
+      //     console.log('user disconnected');
+
+      //   });
+      // });
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';

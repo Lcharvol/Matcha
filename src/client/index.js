@@ -25,21 +25,10 @@ const requestConnectedUsers = () => {
   reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))
 };
 
-io.on('userConnected', () => {
-  requestConnectedUsers();
+io.on('like', (data) => {
+  console.log(data);
 });
-io.on('usersList', () => {
-  requestConnectedUsers();
-});
-// console.log(io);
-// io.sockets[1]('notifs', (msg) => {
-  // console.log(msg);
-// });
-
-setInterval(requestConnectedUsers, 1000);
-  // io.on('userDisconnected', () => {
-  //   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
-  // });
+// setInterval(requestConnectedUsers, 1000);
 
 const root = (
   <App>

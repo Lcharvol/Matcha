@@ -10,7 +10,8 @@ import path from 'path';
 import socketIo from 'socket.io';
 
 import switchEvent from '../../lib/event';
-import { getToken, checkAuth } from '../services/hooks/token';
+import User from '../models/User';
+import { getToken, checkAuth, getUserFromTokenWithoutErr } from '../services/hooks/token';
 import addImg from './routes/addImg';
 
 const getUrl = server => `http://${server.address().address}:${server.address().port}`;
@@ -51,8 +52,15 @@ const bindLogger = (req, res, next) => {
   next();
 };
 
-const bindSocketIO = (io) => (req, res, next) => {
+const bindSocketIO = (io, currentSocketId, socketIdToDelete) => async (req, res, next) => {
   res.io = io;
+  res.currentSocketId = currentSocketId;
+  res.socketIdToDelete = socketIdToDelete;
+  const { db } = req.ctx;
+  if (req.user && req.user.socket_id !== currentSocketId[0])
+    await User.update.bind({ db })({ socket_id: currentSocketId[0] }, Number(req.user.id));
+  if (req.user && req.user.socket_id === socketIdToDelete[0])
+    await User.update.bind({ db })({ socket_id: '' }, Number(req.user.id));
   next();
 };
 
@@ -73,7 +81,16 @@ const init = async ctx => {
     console.log(`Connected at this address: ${httpServer.url}`); // eslint-disable-line no-console
   });
   const io = socketIo(httpServer);
-
+  const currentSocketId = [];
+  const socketIdToDelete = [];
+  io.on('connection', async socket => {
+    currentSocketId[0] = socket.id;
+    console.log('user connected', socket.id);
+    socket.on('disconnect', async () => {
+      console.log('user disconnected', socket.id);
+      socketIdToDelete[0] = socket.id;
+    });
+  });
   await app
     .use(compression())
     .use(cookieParser())
@@ -82,10 +99,11 @@ const init = async ctx => {
     // .use(logger('matcha:http', 'dev'))
     .use(cors())
     .use(bindCtx(ctx))
-    .use(bindSocketIO(io))
     .use(bindLogger)
     .use(getToken)
-    .use(bindError);
+    .use(getUserFromTokenWithoutErr)
+    .use(bindError)
+    .use(bindSocketIO(io, currentSocketId, socketIdToDelete));
 
   await app
     .use('/api', switchEvent)

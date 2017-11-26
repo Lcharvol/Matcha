@@ -6,14 +6,14 @@ import geolib from 'geolib';
 * Oui oui je sais, c'est sale, mais j'ai fai ca vite, je repasserai dessu
 *
 */
-// suggestion: [sortGeoLoc, reduceUsers, buildUsers],
+
 const whichSexe = (sexe, orientation) => {
   if (orientation === 'homosexual') return [sexe];
   if (orientation === 'bisexual') return (['man', 'woman']);
   if (sexe === 'man') return (['woman']);
   else if (sexe === 'woman') return (['man']);
 };
-// good sql = SELECT * FROM "public"."users" WHERE age BETWEEN 18 AND 25 AND popularity BETWEEN 18 AND 35 AND sexe = ANY('{man,woman}'::text[])
+
 export const getFilterAndSort = async (req, res, next) => {
   try {
     let filterAge = '';
@@ -23,8 +23,9 @@ export const getFilterAndSort = async (req, res, next) => {
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
     req.sort = sort.split(',');
-    if (req.sort && !_.includes(['age', 'popularity', 'tags', 'location'], req.sort[0]))
-      throw 'try to fuck us';
+    console.log(req.sort[0]);
+    if (req.sort && !_.includes(['age', 'popularity', 'interest', 'location'], req.sort[0]))
+     throw 'try to fuck us';
     req.sortString = '';
     const { age, popularity } = filter || {};
     const { sexe, sexualorientation } = req.user;
@@ -54,6 +55,7 @@ export const getFilterAndSort = async (req, res, next) => {
     } else {
       req.filterString = `WHERE ${filterSexe}`;
     }
+    console.log(sort);
     if (sort && req.sort[0] !== 'location') {
       if (_.toUpper(req.sort[1]) === 'DESC') {
         req.sortString = `ORDER BY ${_.toLower(req.sort[0])} DESC`;
@@ -61,6 +63,7 @@ export const getFilterAndSort = async (req, res, next) => {
         req.sortString = `ORDER BY ${_.toLower(req.sort[0])} ASC`;
       }
     }
+    console.log(req.sortString);
     next();
   } catch (err) {
     console.log('err in GetFilterAndSort', err);

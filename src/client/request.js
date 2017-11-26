@@ -11,7 +11,7 @@ const axios = Axios.create({
 export const reqAuth = () => axios({
   method: 'get',
   url: 'user',
-});
+}).catch(err => err);
 
 export const reqGetUser = (id) => axios({
   method: 'get',
@@ -20,7 +20,7 @@ export const reqGetUser = (id) => axios({
   if (status === 201)
     throw data;
   return data.details;
-});
+}).catch(err => err);
 
 export const reqGetLike= (id) => axios({
   method: 'get',
@@ -29,7 +29,7 @@ export const reqGetLike= (id) => axios({
   if (status === 201)
     throw data;
   return data.details;
-});
+}).catch(err => err);
 
 export const reqConnectedUsers = (getConnectedUsers) => axios({
   method: 'get',
@@ -39,7 +39,7 @@ export const reqConnectedUsers = (getConnectedUsers) => axios({
   throw data;
   getConnectedUsers(data.details);
   return data;
-});
+}).catch(err => err);
 
 export const reqLogin = (login, password) => axios.post('user/login', {
   login,
@@ -48,7 +48,7 @@ export const reqLogin = (login, password) => axios.post('user/login', {
   if (status === 201)
   throw data;
   return data;
-});
+}).catch(err => err);
 
 export const reqRegister= (user) => axios.post('user', {
   ...user,
@@ -56,11 +56,12 @@ export const reqRegister= (user) => axios.post('user', {
   if (status === 201)
   throw data;
   return data;
-});
+}).catch(err => err);
 
 export const reqGetAll = (loadUsers, query) => {
   const cleanQuery = JSON.stringify(query);
   const params = `f=${cleanQuery}`;
+  console.log(params);
   return axios({
     method: 'get',
     url:`user/all?${params}`,
@@ -69,7 +70,7 @@ export const reqGetAll = (loadUsers, query) => {
       throw data;
     loadUsers(data);
     return data;
-  });
+  }).catch(err => err);
 };
 
 export const reqMe = () => axios({
@@ -79,7 +80,7 @@ export const reqMe = () => axios({
   if (status === 201)
   throw data;
   return data;
-});
+}).catch(err => err);
 
 export const reqUpdateUser = (data) => axios.put('user', {
   ...data,
@@ -87,7 +88,7 @@ export const reqUpdateUser = (data) => axios.put('user', {
   if (status === 201)
     throw data;
   return data;
-});
+}).catch(err => err);
 
 // export const reqLostPassword = (data) => axios({
   //   method: 'get',

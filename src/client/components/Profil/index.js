@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { map } from 'lodash';
+import { map, isNil } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
@@ -114,7 +114,7 @@ class Profil extends Component {
     const { user } = this.state;
     if(!user) return null;
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
-    user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5];
+    user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
     return (
         <MainContainer>
             <Header displaySearchBar={false}/>
@@ -138,7 +138,7 @@ class Profil extends Component {
                     </InlineBlock>
                     <Title>Interêts: </Title>
                     <InlineBlock>
-                        {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
+                        {user.interest && map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
                     <Title>Mes Photos: </Title>
                     <InlineBlock>

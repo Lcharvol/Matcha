@@ -39,7 +39,7 @@ const AvatarContainer = styled.div`
 const ScoreIcon = styled.i`
     margin-top:-6.5px;
     font-size:2.5em;
-    color:#EA5555;
+    color: ${({ color  }) => color};
 `;
 
 const ScoreContainer = styled.div`
@@ -64,12 +64,12 @@ const Avatar = ({ user, size = 'big', top = '0px', bottom = '0px' }) => (
                 thickness={8}
                 mode={'determinate'}
                 value={user.popularity}
-                color="#EA5555"
+                color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}
             />
             <AvatarStyled avatar={user.photo_5}/>
         </AvatarContainer>
         <ScoreContainer>
-            <ScoreIcon className="fa fa-heart" aria-hidden="true"/>
+            <ScoreIcon color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'} className="fa fa-heart" aria-hidden="true"/>
             <Score>{user.popularity}</Score>
         </ScoreContainer>
     </Content>

@@ -22,9 +22,27 @@ const Content = styled.div`
     height:100%;
 `;
 
+const FakeContent = styled.div`
+    display:flex;
+    width:100%;
+    min-height:45px;
+    border-radius:3px;
+    background-color:rgb(235,235,235);
+`;
+
+const HeaderContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    margin-top:15px;
+    margin-bottom:25px;
+`;
+
 const LikeButton = styled.i`
-    font-size:2em;
-    color: #EA5555;
+    font-size:5em;
+    color: ${({ color  }) => color};
     cursor:pointer;
 `;
 
@@ -36,15 +54,16 @@ const ProfilContainer = styled.div`
 `;
 
 const Icon = styled.i`
-    color: rgba(244, 88, 65, 0.8);
     margin-top:15px;
     margin-right:15px;
-    font-size: 1.5em;
+    font-size: 2em;
+    margin-left: 10px;
     cursor: pointer;
     &:hover {
         transition: all 60ms ease;
         opacity: .85;
     }
+    color:${({ color }) => color};
 `;
 
 const InlineBlock = styled.div`
@@ -64,7 +83,7 @@ const Text = styled.p`
 const Title = styled.p`
     margin: 0;
     margin-bottom: 15px;
-    color:#EA5555;
+    color:${({ color }) => color};
 `;
 
 const LinkStyled = styled(Link)`
@@ -76,15 +95,19 @@ const LinkStyled = styled(Link)`
 
 const ProfilHeader = styled.div`
     display:flex;
-    flex-direction:column;
+    flex-direction:wrap;
     justify-content: center;
     align-items: center;
     width:100%;
+    background:${({ background }) => `url(${background}.jpg)`};
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 
 const Name = styled.p`
     font-size: 1.3em;
-    color:rgb(25,25,25);
+    color:white;
 `;
 
 const ProfilInfo = styled.div`
@@ -95,6 +118,7 @@ const ProfilInfo = styled.div`
     padding-left: 25px;
     padding-right: 25px;
     color:rgb(25,25,25);
+    padding-top:25px;
 `;
 
 const Pictures = styled.div`
@@ -111,50 +135,55 @@ const User = ({ user, statusLike, handleStatusLike }) => {
     }
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     const pictures = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && !isNil(picture));
+    console.log('pictures', pictures)
     return (
         <MainContainer>
             <Header
                 displaySearchBar={false}
             />
             <ProfilContainer>
-                <LinkStyled to={`/profil`}>
-                    <Icon className="fa fa-pencil" aria-hidden="true"/>
-                </LinkStyled>
-                <ProfilHeader>
-                    <Avatar user={user}/>
-                    <Name>{`${user.firstname} ${user.lastname}`}</Name>
-                    {!isEmpty(statusLike) && <LikeButton
-                        className={`fa fa-thumbs-${statusLike === 'like' ? 'up' : 'down'}`}
-                        aria-hidden="true"
-                        onClick={
-                            () => {
-                                reqGetLike(user.id)
-                                .then(res => {
-                                    handleStatusLike(res);
-                                })
-                                .catch(err => {
-                                    // redirection sur le history
-                                    console.log(err.details);
-                                });
+                <ProfilHeader background={pictures[0]}>
+                    <HeaderContainer>
+                        {!isEmpty(statusLike) && <LikeButton
+                            color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}
+                            className={`fa fa-heart${statusLike === 'like' ? '' : '-o'}`}
+                            aria-hidden="true"
+                            onClick={
+                                () => {
+                                    reqGetLike(user.id)
+                                    .then(res => {
+                                        handleStatusLike(res);
+                                    })
+                                    .catch(err => {
+                                        // redirection sur le history
+                                        console.log(err.details);
+                                    });
+                                }
                             }
-                        }
-                    />}
-                    {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                        />}
+                    </HeaderContainer>
+                    <HeaderContainer>
+                        <Avatar user={user}/>
+                        <Name>{`${user.firstname} ${user.lastname}`}</Name>
+                    </HeaderContainer>
+                    <HeaderContainer>
+                    </HeaderContainer>
                 </ProfilHeader>
                 <ProfilInfo>
                     <InlineBlock>
-                        <Text>Je recherche </Text>
-                        {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                        <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Looking for</Title>
+                        {user.sexualorientation === 'man' ? <Icon className="fa fa-male" color="rgb(73,125,173)" aria-hidden="true"/> : <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
                     </InlineBlock>
-                    <Title>Ma bio</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Bio</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>
+                        {!user.bio && <FakeContent/>}
                     </InlineBlock>
-                    <Title>Interêts: </Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Interêts: </Title>
                     <InlineBlock>
                         {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
-                    <Title>Mes Photos: </Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Mes Photos: </Title>
                     <InlineBlock>
                         <Pictures>
                             {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}

@@ -52,8 +52,10 @@ const ButtonIcon = styled.i`
 `;
 
 const SliderStyled = styled(Slider)`
-    width:500px;
+    width:100%;
     margin:0;
+    padding-left: 10px;
+    padding-right: 10px;
 `;
 
 const searchTypes = [
@@ -86,7 +88,15 @@ const SearchBar = ({
                 onChange={onChange}
             />
             :
-            <SliderStyled defaultValue={1} />
+            <SliderStyled
+                defaultValue={0}
+                min={0}
+                max={100}
+                step={25}
+                sliderStyle={{
+                    margin: 0,
+                }}
+            />
         }
         <ButtonStyled>
             <ButtonIcon className="fa fa-search" aria-hidden="true" />

@@ -92,9 +92,7 @@ const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle({
         componentWillMount() {
-          const { users, sort } = this.props;
-          const { by, order } = sort;
-          // reqGetAll(this.props.loadUsers, { sort: `${by},${order}` })
+          reqGetAll(this.props.loadUsers, { sort: 'location,asc' })
         },
 
     }),

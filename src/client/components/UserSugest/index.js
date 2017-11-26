@@ -56,7 +56,7 @@ const Shadow = styled.div`
 const ShadowIcon = styled.i`
     color:rgba(255,255,255,0.7);
     font-size:3em;
-    text-decoration:none;
+    text-decoration:none '!important';
 `;
 
 const formate = string => string.replace(/(^|\s|[\-\,\.])\w/g,function(cWrd){return cWrd.toUpperCase()});
@@ -75,7 +75,7 @@ const UserSugest = ({
         >
             {displayShadow &&
                 <Shadow>
-                    <ShadowIcon className="fa fa-search" aria-hidden="true"/>
+                    <ShadowIcon className="fa fa-search" aria-hidden="true" style={{ textDecoration: 'none !important'}}/>
                 </Shadow>
             }
         </ProfilPicture>

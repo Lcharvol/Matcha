@@ -4,6 +4,7 @@ import socketIO from 'socket.io-client';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import App from '../client/components/App';
 import routes from './routes';
@@ -41,10 +42,15 @@ setInterval(requestConnectedUsers, 1000);
   // io.on('userDisconnected', () => {
   //   reqConnectedUsers(() => store.dispatch(getConnectedUsers()))
   // });
-
+const muiTheme = getMuiTheme({
+  slider: {
+    selectionColor: 'rgba(244, 92, 67, 1)',
+    handleFillColor: 'rgba(244, 92, 67, 1)'
+  }
+})
 const root = (
   <App>
-    <MuiThemeProvider>
+    <MuiThemeProvider muiTheme={muiTheme}>
       <Provider store={store}>
         <Router
           history={browserHistory}

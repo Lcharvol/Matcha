@@ -21,6 +21,6 @@ export default (
         <Route exact path="/profil" component={() => <Auth><Profil /></Auth>}/>
         <Route path="/user/:login" component={() => <Auth><User /></Auth>}/>
         <Route exact path="/chat" component={() => <Auth><Chat /></Auth>}/>
-        {/* <Redirect from="*" to="/" /> */}
+        <Redirect from="*" to="/" />
     </Switch>
 );

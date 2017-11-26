@@ -1,3 +1,4 @@
+/* eslint-disable */
 import _ from 'lodash';
 import geolib from 'geolib';
 
@@ -16,43 +17,24 @@ const whichSexe = (sexe, orientation) => {
 
 export const getFilterAndSort = async (req, res, next) => {
   try {
-    let filterAge = '';
-    let filterPopularity = '';
     req.f = {};
 
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
     req.sort = sort.split(',');
-    console.log(req.sort[0]);
     if (req.sort && !_.includes(['age', 'popularity', 'interest', 'location'], req.sort[0]))
-     throw 'try to fuck us';
+        throw 'try to fuck us';
     req.sortString = '';
-    const { age, popularity } = filter || {};
+    const { by, value } = filter || {};
     const { sexe, sexualorientation } = req.user;
     let filterSexe = "sexe = ANY('{";
     whichSexe(sexe, sexualorientation).forEach(sex => {
       filterSexe = filterSexe.concat(`${sex},`);
     });
     filterSexe = filterSexe.slice(0, -1).concat("}'::text[])");
-    if (age) {
-      const [min, max] = age.split('-');
-      filterAge = `age BETWEEN ${Number(min)} AND ${Number(max)}`;
-    }
-    if (popularity) {
-      const [min, max] = popularity.split('-');
-      filterPopularity = `popularity BETWEEN ${Number(min)} AND ${Number(max)}`;
-    }
-    if (age && popularity) {
-      req.filterString = `WHERE ${filterAge} AND ${filterPopularity}`;
-    } else if (age) {
-      req.filterString = `WHERE ${filterAge}`;
-    } else if (popularity) {
-      req.filterString = `WHERE ${filterPopularity}`;
-    }
-
-    if (age || popularity) {
-      req.filterString = `${req.filterString} AND ${filterSexe}`;
-    } else {
+    if (by === 'age' || by === 'popularity')
+      req.filterString = `WHERE ${filterSexe} AND ${by} > ${Number(value)}`;
+    else {
       req.filterString = `WHERE ${filterSexe}`;
     }
     if (sort && req.sort[0] !== 'location' && req.sort[0] !== 'interest') {
@@ -71,11 +53,11 @@ export const getFilterAndSort = async (req, res, next) => {
 
 export const getFilterGeoAndInterest = (req, res, next) => {
   try {
-    const { interest: interestCount, location: locationFilter } = req.filter || {};
     const { users } = req;
     const { interest: myInterest } = req.user;
     const { user } = req;
 
+    const { by: byFilter, value: valueFilter } = req.filter || {};
     req.users = users.map((user, index) => ({ ...user, key: index }));
     let usersSortbyDistance = geolib.orderByDistance(user, req.users).map(userDis => ({ ...userDis, key: Number(userDis.key) }));
     if (req.sort[0] === 'location') {
@@ -88,22 +70,21 @@ export const getFilterGeoAndInterest = (req, res, next) => {
     if (req.sort[0] === 'interest') {
       let sortbyInterest = _.sortBy(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length);
       if (_.toUpper(req.sort[1]) === 'DESC') sortbyInterest = _.reverse(sortbyInterest);
-      sortbyInterest.map(({ id, interest }) => { console.log(id, interest); });
       req.users = sortbyInterest;
     }
-    if (!interestCount && !locationFilter) return res.json({ details: req.users });
-    if (interestCount) {
-      console.log('My Interest', myInterest, ' et interestCount', interestCount);
-      req.users.map(({ id, interest }) => { console.log(id, interest); });
-      req.users = _.filter(users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= interestCount);
+    if (!byFilter) return res.json({ details: req.users });
+    if (byFilter === 'interest') {
+      req.users = _.filter(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= Number(valueFilter));
     }
-    if (locationFilter) {
+    if (byFilter === 'location') {
       req.users = _.filter(
         _.map(
           req.users,
           (user, index) => ({ ...user, distance: usersSortbyDistance[index].distance }),
         ),
-        ({ distance }) => (distance <= locationFilter),
+        (({ distance }) => {
+          return (distance <= Number(valueFilter) * 1000);
+        }),
       );
     }
     return res.json({ details: req.users });

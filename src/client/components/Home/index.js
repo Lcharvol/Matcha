@@ -91,8 +91,10 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle({
-        componentDidMount() {
-          reqGetAll(this.props.loadUsers, { sort: 'location,asc' })
+        componentWillMount() {
+          // const { filter, sort } = this.props;
+          // console.log(filter, sort);
+          reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
         },
 
     }),

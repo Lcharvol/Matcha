@@ -14,7 +14,7 @@ import { reqGetAll, reqUpdateUser } from '../request';
 const initialState = {
   details: [],
   sort: { by: 'location', order: 'ASC' },
-  search: { by: 'age', value: '' },
+  search: { by: 'age', value: '99' },
   filter: '',
   connectedUsers: 0
 };
@@ -22,6 +22,17 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_USERS: {
+      const { by: byFilter, value: valueFilter } = state.search;
+      const { by, order } = state.sort;
+      const newOrder = by === action.sortBy && order === 'asc' ? 'desc' : 'asc';
+      const query = {
+        sort: `${by},${order}`,
+        filter: {
+          by: byFilter,
+          value: valueFilter,
+        }
+      }
+      reqGetAll((users) => action.asyncDispatch(loadUsers(users)), query);
       return state;
     }
     case UPDATE_SEARCH_USERS_TYPE: {

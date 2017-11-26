@@ -10,11 +10,11 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   bio TEXT,
   age INTEGER,
   interest TEXT,
-  photo_1 VARCHAR,
-  photo_2 VARCHAR,
-  photo_3 VARCHAR,
-  photo_4 VARCHAR,
-  photo_5 VARCHAR,
+  photo_1 VARCHAR DEFAULT '/uploads/null',
+  photo_2 VARCHAR DEFAULT '/uploads/null',
+  photo_3 VARCHAR DEFAULT '/uploads/null',
+  photo_4 VARCHAR DEFAULT '/uploads/null',
+  photo_5 VARCHAR DEFAULT '/uploads/null',
   latitude VARCHAR,
   longitude VARCHAR,
   ip VARCHAR,
@@ -22,7 +22,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   popularity INTEGER DEFAULT '0',
   confirmed BOOLEAN DEFAULT FALSE,
   connected BOOLEAN DEFAULT FALSE,
-  postal_code NUMBER,
+  postal_code INTEGER,
   cotime TIMESTAMPTZ
 );`;
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;

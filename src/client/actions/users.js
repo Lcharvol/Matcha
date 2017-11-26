@@ -3,12 +3,24 @@ export const CONNECTED_USER = 'CONNECTED_USER';
 export const DISCONNECT_USER = 'DISCONNECT_USER';
 export const FILTER_USERS = 'FILTER_USERS';
 export const SORT_USERS = 'SORT_USERS';
+export const UPDATE_SEARCH_USERS_TYPE = 'UPDATE_SEARCH_USERS_TYPE';
+export const UPDATE_SEARCH_USERS_VALUE = 'UPDATE_SEARCH_USERS_VALUE';
 export const SEARCH_USERS = 'SEARCH_USERS';
 
-export const searchUsers = searchBy => ({
-  type: SEARCH_USERS,
+export const updateSearchUsersType = searchBy => ({
+  type: UPDATE_SEARCH_USERS_TYPE,
   searchBy,
 })
+
+export const updateSearchUsersValue = value => ({
+  type: UPDATE_SEARCH_USERS_VALUE,
+  value,
+})
+
+export const searchUsers = () => {
+  return { type: SEARCH_USERS };
+};
+
 export const getConnectedUsers = usersConnected => {
   return { type: CONNECTED_USER, usersConnected };
 };

@@ -6,13 +6,15 @@ import {
   CONNECTED_USER,
   DISCONNECT_USER,
   SEARCH_USERS,
+  UPDATE_SEARCH_USERS_TYPE,
+  UPDATE_SEARCH_USERS_VALUE,
 } from '../actions/users';
 import { reqGetAll, reqUpdateUser } from '../request';
 
 const initialState = {
   details: [],
   sort: { by: 'location', order: 'ASC' },
-  search: { by: '', value: '' },
+  search: { by: 'age', value: '' },
   filter: '',
   connectedUsers: 0
 };
@@ -20,12 +22,13 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_USERS: {
-      const { by, order } = state.sort;
-      const newOrder = by === action.searchBy && order === 'asc' ? 'desc' : 'asc';
-      const query = {
-        search: `${by},${newOrder}`,
-      }
-      return { ...state, search: { by: action.searchBy, order: newOrder } };
+      return state;
+    }
+    case UPDATE_SEARCH_USERS_TYPE: {
+      return {...state, search: { ...state.search, by: action.searchBy }};
+    }
+    case UPDATE_SEARCH_USERS_VALUE: {
+      return {...state, search: { ...state.search, value: action.value }};
     }
     case SORT_USERS: {
       const { by, order } = state.sort;

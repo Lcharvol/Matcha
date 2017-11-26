@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map } from 'ramda';
+import { map, isEmpty } from 'ramda';
 import styled from 'styled-components';
 import { Menu, MenuItem, PopoverInteractionKind, Popover, Position } from '@blueprintjs/core';
 import { onlyUpdateForKeys } from 'recompose';
@@ -18,7 +18,7 @@ const Button = styled.div`
     display:flex;
     justify-content: center;
     align-items: center;
-    width:40px;
+    width:${({ width }) => width};
     height:40px;
     background-color:white;
     border-radius:3px;
@@ -29,6 +29,12 @@ const menuItemsIcon = {
     asc: 'pt-icon-caret-up',
     desc: 'pt-icon-caret-down',
 };
+
+const TextStyled = styled.p`
+    font-size:0.8em;
+    margin:0;
+    margin-right:5px;
+`;
 
 const SortMenu = ({ sortTypes, handleClick, sort }) => (
     <Menu>
@@ -63,6 +69,8 @@ const SortMenuWrapper = ({
     icon,
     top = '0px',
     left = '0px',
+    width = '40px',
+    text,
 }) => (
     <Container position={position} top={top} left={left}>
         <Popover
@@ -72,8 +80,9 @@ const SortMenuWrapper = ({
                 <SortMenu sortTypes={sortTypes} handleClick={onClick} sort={sort} />
             }
         >
-        <Button>
-            <i className={`fa fa-${icon}`} aria-hidden="true"></i>
+        <Button width={width}>
+            {!isEmpty(text) && text && <TextStyled>{text}</TextStyled>}
+            {!isEmpty(icon) && <i className={`fa fa-${icon}`} aria-hidden="true" />}
         </Button>
         </Popover>
     </Container>
@@ -83,9 +92,11 @@ const SortMenuWrapper = ({
     onClick: PropTypes.func.isRequired,
     sort: PropTypes.object.isRequired,
     sortTypes: PropTypes.array.isRequired,
-    icon: PropTypes.string.isRequired,
+    icon: PropTypes.string,
     top: PropTypes.string,
     left: PropTypes.string,
+    text: PropTypes.string,
+    width: PropTypes.string,
   };
 
   export default onlyUpdateForKeys(['sort'])(SortMenuWrapper);

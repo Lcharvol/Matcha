@@ -19,7 +19,6 @@ const HeaderStyled = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     background-color:white;
-    z-index:500;
 `;
 
 const HeaderLeft = styled.div`

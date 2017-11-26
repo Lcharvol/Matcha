@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { getSearch } from '../../selectors/user';
+import Slider from 'material-ui/Slider';
 import { searchUsers } from '../../actions/users';
 import PropTypes from 'prop-types';
 import SortMenu from '../SortMenu';
@@ -17,7 +18,7 @@ const Container = styled.div`
     height:40px;
 `;
 
-const InputStyled = styled.input`
+const SearchInput = styled.input`
     border: none;
     padding-left: 10px;
     font-size: 0.9em;
@@ -50,8 +51,16 @@ const ButtonIcon = styled.i`
     font-size:1.3em;
 `;
 
+const SliderStyled = styled(Slider)`
+    width:500px;
+    margin:0;
+`;
+
 const searchTypes = [
-    { key: 'name', label: 'Search by name' },
+    { key: 'age', label: 'Search by age'},
+    { key: 'popularity', label: 'Search by popularity'},
+    { key: 'location', label: 'Search by location'},
+    { key: 'tags', label: 'Search by commun tags'},
 ];
 
 const SearchBar = ({
@@ -62,15 +71,6 @@ const SearchBar = ({
     search,
 }) => (
     <Container>
-        <InputStyled
-            type="search"
-            placeholder="Search ..."
-            value={filter}
-            onChange={onChange}
-        />
-        <ButtonStyled>
-            <ButtonIcon className="fa fa-search" aria-hidden="true" />
-        </ButtonStyled>
         <SortMenu
             sortTypes={searchTypes}
             onClick={searchUsers}
@@ -78,6 +78,19 @@ const SearchBar = ({
             position={'relative'}
             icon='bars'
         />
+        {search.by === 'tags' ?
+            <SearchInput
+                type="search"
+                placeholder="Search ..."
+                value={filter}
+                onChange={onChange}
+            />
+            :
+            <SliderStyled defaultValue={1} />
+        }
+        <ButtonStyled>
+            <ButtonIcon className="fa fa-search" aria-hidden="true" />
+        </ButtonStyled>
     </Container>
 );
 

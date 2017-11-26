@@ -57,7 +57,7 @@ const Home = ({
             onClick={sortUsers}
             sort={sort}
             icon='sort'
-            top='35px'
+            top='45px'
             left='25px'
         />
         <List

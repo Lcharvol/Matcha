@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Popover2 } from '@blueprintjs/labs';
 import { map } from 'ramda';
 import styled from 'styled-components';
 import { Menu, MenuItem, PopoverInteractionKind, Popover, Position } from '@blueprintjs/core';
@@ -11,8 +10,8 @@ const Container = styled.div`
     top: ${({ top }) => top};
     left: ${({ left }) => left};
     display:flex;
-    margin-top:65px;
-    z-index:150;
+    margin-top:${({ top }) => top};
+    z-index:1000;
 `;
 
 const Button = styled.div`
@@ -67,7 +66,7 @@ const SortMenuWrapper = ({
 }) => (
     <Container position={position} top={top} left={left}>
         <Popover
-            position={Position.RIGHT_TOP}
+            position={Position.BOTTOM_LEFT}
             interactionKind={PopoverInteractionKind.CLICK}
             content={
                 <SortMenu sortTypes={sortTypes} handleClick={onClick} sort={sort} />

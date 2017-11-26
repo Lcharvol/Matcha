@@ -24,7 +24,6 @@ const Container = styled(Link)`
         width:100%;
     }
     margin:0px;
-    text-decoration: none;
 `;
 
 const ProfilPicture = styled.div`
@@ -57,6 +56,7 @@ const Shadow = styled.div`
 const ShadowIcon = styled.i`
     color:rgba(255,255,255,0.7);
     font-size:3em;
+    text-decoration:none;
 `;
 
 const formate = string => string.replace(/(^|\s|[\-\,\.])\w/g,function(cWrd){return cWrd.toUpperCase()});

@@ -12,7 +12,7 @@ import { reqGetAll, reqUpdateUser } from '../request';
 const initialState = {
   details: [],
   sort: { by: 'location', order: 'ASC' },
-  search: { by: 'name', value: '' },
+  search: { by: '', value: '' },
   filter: '',
   connectedUsers: 0
 };
@@ -20,7 +20,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_USERS: {
-      const { by, value } = state.sort;
+      const { by, order } = state.sort;
+      const newOrder = by === action.searchBy && order === 'asc' ? 'desc' : 'asc';
+      const query = {
+        search: `${by},${newOrder}`,
+      }
       return { ...state, search: { by: action.searchBy, order: newOrder } };
     }
     case SORT_USERS: {

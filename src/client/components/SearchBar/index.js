@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { getSearch } from '../../selectors/user';
-import Slider from 'material-ui/Slider';
-import { searchUsers } from '../../actions/users';
+import { updateSearchUsersType, updateSearchUsersValue, searchUsers } from '../../actions/users';
 import PropTypes from 'prop-types';
 import SortMenu from '../SortMenu';
+import { Spacer } from '../widgets';
 
 const Container = styled.div`
     position:relative;
@@ -38,7 +38,6 @@ const ButtonStyled = styled.button`
     cursor: pointer;
     min-width: 55px;
     border: 1px solid rgb(230, 230, 230);
-    border-left:0px;
     background-color:white;
     border-radius: 0 2px 2px 0;
     margin: 0;
@@ -51,13 +50,6 @@ const ButtonIcon = styled.i`
     font-size:1.3em;
 `;
 
-const SliderStyled = styled(Slider)`
-    width:100%;
-    margin:0;
-    padding-left: 10px;
-    padding-right: 10px;
-`;
-
 const searchTypes = [
     { key: 'age', label: 'Search by age'},
     { key: 'popularity', label: 'Search by popularity'},
@@ -65,41 +57,72 @@ const searchTypes = [
     { key: 'tags', label: 'Search by commun tags'},
 ];
 
+const searchValue = {
+    age: [
+        { key: '20', label: 'at least 20 years'},
+        { key: '30', label: 'at least 30 years'},
+        { key: '40', label: 'at least 40 years'},
+        { key: '50', label: 'at least 50 years'},
+        { key: '60', label: 'at least 60 years'},
+        { key: '70', label: 'at least 70 years'},
+        { key: '80', label: 'at least 80 years'},
+    ],
+    location: [
+        { key: '20', label: 'at least 20 km'},
+        { key: '30', label: 'at least 30 km'},
+        { key: '40', label: 'at least 40 km'},
+        { key: '50', label: 'at least 50 km'},
+        { key: '60', label: 'at least 60 km'},
+        { key: '70', label: 'at least 70 km'},
+        { key: '80', label: 'at least 80 km'},
+    ],
+    interest: [
+        { key: '20', label: 'at least 20 km'},
+        { key: '30', label: 'at least 30 km'},
+        { key: '40', label: 'at least 40 km'},
+        { key: '50', label: 'at least 50 km'},
+        { key: '60', label: 'at least 60 km'},
+        { key: '70', label: 'at least 70 km'},
+        { key: '80', label: 'at least 80 km'},
+    ],
+    popularity: [
+        { key: '20', label: 'at least 20 km'},
+        { key: '30', label: 'at least 30 km'},
+        { key: '40', label: 'at least 40 km'},
+        { key: '50', label: 'at least 50 km'},
+        { key: '60', label: 'at least 60 km'},
+        { key: '70', label: 'at least 70 km'},
+        { key: '80', label: 'at least 80 km'},
+    ],
+}
 const SearchBar = ({
     onChange,
     filter,
     resetValue,
     searchUsers,
+    updateSearchUsersType,
+    updateSearchUsersValue,
     search,
 }) => (
     <Container>
         <SortMenu
             sortTypes={searchTypes}
-            onClick={searchUsers}
+            onClick={updateSearchUsersType}
             sort={search}
             position={'relative'}
+            text='Search by'
+            width='65px'
             icon='bars'
         />
-        {search.by === 'tags' ?
-            <SearchInput
-                type="search"
-                placeholder="Search ..."
-                value={filter}
-                onChange={onChange}
-            />
-            :
-            <SliderStyled
-                defaultValue={0}
-                min={0}
-                max={100}
-                step={25}
-                sliderStyle={{
-                    margin: 0,
-                }}
-            />
-        }
+        <SortMenu
+            sortTypes={searchValue[search.by]}
+            onClick={updateSearchUsersValue}
+            sort={search}
+            position={'relative'}
+            icon='sort-desc'
+        />
         <ButtonStyled>
-            <ButtonIcon className="fa fa-search" aria-hidden="true" />
+            <ButtonIcon className="fa fa-search" aria-hidden="true" onClick={() => searchUsers()}/>
         </ButtonStyled>
     </Container>
 );
@@ -108,11 +131,13 @@ SearchBar.propTypes = {
     onChange: PropTypes.func.isRequired,
     filter: PropTypes.string,
     resetValue: PropTypes.func,
+    updateSearchUsersType: PropTypes.func.isRequired,
+    updateSearchUsersValue: PropTypes.func.isRequired,
     searchUsers: PropTypes.func.isRequired,
     search: PropTypes.object.isRequired,
 }
 
-const actions = { searchUsers };
+const actions = { updateSearchUsersType, updateSearchUsersValue, searchUsers };
 
 const mapStateToProps = state => ({
   search: getSearch(state),

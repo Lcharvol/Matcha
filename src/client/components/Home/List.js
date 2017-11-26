@@ -13,6 +13,7 @@ const Content = styled.div`
     align-items: flex-start;
     margin-top:65px;
     margin-bottom:15px;
+    z-index:0;
 `;
 
 const List = ({ users, filterUsers }) => (

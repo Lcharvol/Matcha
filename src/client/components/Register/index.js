@@ -1,13 +1,17 @@
 import React from 'react';
-import { Logo, Container, InputButton } from '../widgets';
+import { Logo, Container, InputButton, ErrorsContainer } from '../widgets';
 import styled from 'styled-components';
 import { reqRegister } from '../../request';
 import { FormField } from '../../fields';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import { getValidationSchema, defaultValues, getField } from '../../forms/register';
+import { errorRegister, resetRegisterErrors } from '../../actions/registerErrors';
+import { getRegisterErrors } from '../../selectors/registerErrors';
 import { push } from '../../history';
 
 const Content = styled.div`
@@ -199,6 +203,7 @@ const Register= ({
     showCancelDialog,
     cancel,
     requestCancel,
+    registerErrors,
     ...props
   }) => (
     <Content>
@@ -212,6 +217,7 @@ const Register= ({
               setFieldValue={setFieldValue}
               {...props}
           />
+          <ErrorsContainer errors={registerErrors}/>
           <ButtonContainer>
             <LinkStyled to={`/login`}>
               Login
@@ -222,7 +228,16 @@ const Register= ({
     </Content>
 );
 
+const actions = { errorRegister, resetRegisterErrors }
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+const mapStateToProps = state => ({
+  registerErrors: getRegisterErrors(state),
+});
+
 export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
   withFormik({
     handleSubmit: (
       {
@@ -236,6 +251,7 @@ export default compose(
       },
       { props },
     ) => {
+      const { errorRegister, resetRegisterErrors } = props;
       reqRegister({login,
         email,
         firstname,
@@ -246,7 +262,7 @@ export default compose(
         .then(() => {
           // JUST TELL LE EMAUL HAS BEEN SEND
           push('/login');
-        }).catch(err => console.log(err))
+        }).catch(err =>  errorRegister(err.details || 'Failed to Register'))
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({

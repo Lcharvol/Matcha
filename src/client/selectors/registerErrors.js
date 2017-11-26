@@ -1,0 +1,1 @@
+export const getRegisterErrors = state => state.registerErrors;

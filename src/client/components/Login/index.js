@@ -207,7 +207,6 @@ export default compose(
           resetLoginErrors();
           location.reload();
         }).catch(err => {
-          console.log('Error', err);
           errorLogin(err.details || 'Failed to Authenticate');
         })
     },

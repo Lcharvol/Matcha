@@ -24,7 +24,7 @@ const ErrorsContainer = ({ errors = '' }) => (
 );
 
 ErrorsContainer.propTypes = {
-    errors: PropTypes.string.isRequired,
+    errors: PropTypes.string,
 }
 
 export default ErrorsContainer;

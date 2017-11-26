@@ -55,15 +55,13 @@ export const getFilterAndSort = async (req, res, next) => {
     } else {
       req.filterString = `WHERE ${filterSexe}`;
     }
-    console.log(sort);
-    if (sort && req.sort[0] !== 'location') {
+    if (sort && req.sort[0] !== 'location' && req.sort[0] !== 'interest') {
       if (_.toUpper(req.sort[1]) === 'DESC') {
         req.sortString = `ORDER BY ${_.toLower(req.sort[0])} DESC`;
       } else {
         req.sortString = `ORDER BY ${_.toLower(req.sort[0])} ASC`;
       }
     }
-    console.log(req.sortString);
     next();
   } catch (err) {
     console.log('err in GetFilterAndSort', err);
@@ -77,16 +75,26 @@ export const getFilterGeoAndInterest = (req, res, next) => {
     const { users } = req;
     const { interest: myInterest } = req.user;
     const { user } = req;
-    let usersSortbyDistance = geolib.orderByDistance(user, users).map(userDis => ({ ...userDis, key: Number(userDis.key) }));
 
+    req.users = users.map((user, index) => ({ ...user, key: index }));
+    let usersSortbyDistance = geolib.orderByDistance(user, req.users).map(userDis => ({ ...userDis, key: Number(userDis.key) }));
     if (req.sort[0] === 'location') {
       if (_.toUpper(req.sort[1]) === 'DESC') usersSortbyDistance = _.reverse(usersSortbyDistance);
+
       const idKey = usersSortbyDistance.map(({ key }) => key);
-      const sortby = _.sortBy(users, ({ id }) => _.indexOf(idKey, id));
+      const sortby = _.sortBy(req.users, ({ key }) => _.indexOf(idKey, key));
       req.users = _.map(sortby, (userSorted, index) => ({ ...userSorted, distance: usersSortbyDistance[index].distance }));
+    }
+    if (req.sort[0] === 'interest') {
+      let sortbyInterest = _.sortBy(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length);
+      if (_.toUpper(req.sort[1]) === 'DESC') sortbyInterest = _.reverse(sortbyInterest);
+      sortbyInterest.map(({ id, interest }) => { console.log(id, interest); });
+      req.users = sortbyInterest;
     }
     if (!interestCount && !locationFilter) return res.json({ details: req.users });
     if (interestCount) {
+      console.log('My Interest', myInterest, ' et interestCount', interestCount);
+      req.users.map(({ id, interest }) => { console.log(id, interest); });
       req.users = _.filter(users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= interestCount);
     }
     if (locationFilter) {

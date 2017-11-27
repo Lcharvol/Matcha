@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map, isEmpty, isNil } from 'lodash';
+import { map, isEmpty, isNil, upperFirst } from 'lodash';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 import { Header, Avatar, Picture, Tag } from '../widgets';
@@ -57,15 +57,10 @@ const ProfilContainer = styled.div`
 `;
 
 const Icon = styled.i`
-    margin-top:15px;
+    margin-top:-15px;
     margin-right:15px;
     font-size: 2em;
     margin-left: 10px;
-    cursor: pointer;
-    &:hover {
-        transition: all 60ms ease;
-        opacity: .85;
-    }
     color:${({ color }) => color};
 `;
 
@@ -111,6 +106,7 @@ const ProfilHeader = styled.div`
 const Name = styled.p`
     font-size: 1.3em;
     color:white;
+    margin-top:20px;
 `;
 
 const ProfilInfo = styled.div`
@@ -129,7 +125,7 @@ const Pictures = styled.div`
     flex:1;
     flex-wrap: wrap;
     width:100%;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-top:65px;
     margin-bottom:15px;
@@ -180,7 +176,7 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                     </HeaderContainer>
                     <HeaderContainer>
                         <Avatar user={user}/>
-                        <Name>{`${user.firstname} ${user.lastname}`}</Name>
+                        <Name>{`${upperFirst(user.firstname)} ${upperFirst(user.lastname)}`}</Name>
                     </HeaderContainer>
                     <HeaderContainer>
                         <BlockButton className="fa fa-times" aria-hidden="true" onClick={() => reqUpdateUser({ blocked: user.id })}/>
@@ -229,13 +225,13 @@ const enhance = compose(
             .then(user => {
               reqGetLikeStatus(user.id)
                 .then(res => {
-											this.props.handleStatusLike(res);
+				    this.props.handleStatusLike(res);
                   })
                 this.props.loadUser(user);
             })
             .catch(err => {
                 // redirection sur le history
-                console.log(err.details);
+                console.log('zbob', err);
             });
         },
     }),

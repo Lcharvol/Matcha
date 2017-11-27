@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { map, isNil } from 'lodash';
+import { map, isNil, upperFirst } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
@@ -69,6 +69,7 @@ const LinkStyled = styled(Link)`
     display:flex;
     justify-content: flex-end;
     text-decoration: none;
+    right:20px;
 `;
 
 const Pictures = styled.div`
@@ -89,15 +90,37 @@ const Throphys = styled.div`
 
 const ProfilHeader = styled.div`
     display:flex;
-    flex-direction:column;
+    flex-direction:wrap;
     justify-content: center;
     align-items: center;
     width:100%;
+    background:${({ background }) => `url(${background}.jpg)`};
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+`;
+
+const HeaderContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    min-height:300px;
 `;
 
 const Name = styled.p`
     font-size: 1.3em;
-    color:rgb(25,25,25);
+    color:white;
+    margin-top:20px;
+`;
+
+const FakeContent = styled.div`
+    display:flex;
+    width:100%;
+    min-height:45px;
+    border-radius:3px;
+    background-color:rgb(235,235,235);
 `;
 
 class Profil extends Component {
@@ -119,28 +142,32 @@ class Profil extends Component {
         <MainContainer>
             <Header displaySearchBar={false}/>
             <ProfilContainer>
-                <LinkStyled to={`/profil`}>
-                    <Icon className="fa fa-pencil" aria-hidden="true"/>
-                </LinkStyled>
-                <ProfilHeader>
-                    <Avatar user={user}/>
-                    <Name>{`${user.firstname} ${user.lastname}`}</Name>
-                        {user.sexe === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                <ProfilHeader background={user.picture[0]}>
+                    <HeaderContainer>
+                        <Avatar user={user}/>
+                        <Name>{`${upperFirst(user.firstname)} ${upperFirst(user.lastname)}`}</Name>
+                    </HeaderContainer>
                 </ProfilHeader>
                 <ProfilInfo>
                     <InlineBlock>
-                        <Text>Je recherche </Text>
+                        <LinkStyled to={`/profil`}>
+                            <Icon className="fa fa-pencil" aria-hidden="true"/>
+                        </LinkStyled>
+                    </InlineBlock>
+                    <Title>I'imlooking for</Title>
+                    <InlineBlock>
                         {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
                     </InlineBlock>
-                    <Title>Ma bio</Title>
+                    <Title>My biography</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>
+                        {!user.bio && <FakeContent/>}
                     </InlineBlock>
-                    <Title>Interêts: </Title>
+                    <Title>Interests</Title>
                     <InlineBlock>
                         {user.interest && map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
-                    <Title>Mes Photos: </Title>
+                    <Title>My pictures</Title>
                     <InlineBlock>
                         <Pictures>
                             {map(user.picture, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}

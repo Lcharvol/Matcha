@@ -24,12 +24,15 @@ const Container = styled(Link)`
         width:100%;
     }
     margin:0px;
+    &:hover {
+        text-decoration:none;
+    }
 `;
 
 const ProfilPicture = styled.div`
     position:relative;
     width:100%;
-    min-height:300px;
+    min-height:500px;
     background-color:rgb(225,225,225);
     background-image:${({ picture }) => `url('${picture}.jpg')`};
     background-size: cover;
@@ -49,7 +52,7 @@ const Shadow = styled.div`
     justify-content: center;
     align-items: center;
     width:100%;
-    min-height:300px;
+    min-height:500px;
     background-color:rgba(0,0,0,0.2);
 `;
 
@@ -57,6 +60,9 @@ const ShadowIcon = styled.i`
     color:rgba(255,255,255,0.7);
     font-size:3em;
     text-decoration:none '!important';
+    &:hover {
+        text-decoration:none;
+    }
 `;
 
 const formate = string => string.replace(/(^|\s|[\-\,\.])\w/g,function(cWrd){return cWrd.toUpperCase()});

@@ -63,6 +63,11 @@ const User = {
   delete(id) {
     return this.db.one('DELETE FROM users WHERE id=$1 RETURNING *', id);
   },
+  addSocket(newSocket, id) {
+    return this.db.any(`UPDATE users SET socket_id = array_cat(socket_id, '{${newSocket}}') WHERE id =${id}`);
+  },
+  deleteSocket(deleteSocket, id) {
+    return this.db.any(`UPDATE users SET socket_id = array_remove(socket_id, '${deleteSocket}') WHERE id =${id}`);
+  },
 };
-
 export default User;

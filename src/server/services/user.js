@@ -72,7 +72,7 @@ const service = {
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
-        res.io.to(_user.socket_id).emit('like', `${login} like you`);
+        // res.io.to(_user.socket_id).emit('like', `${login} like you`);
         req.userRequested = R.omit(['password'], _user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
@@ -182,7 +182,7 @@ const service = {
       const { blocked } = await User.load.bind({ db })(id);
       if (_.includes(_.split(blocked, ','), userSendLike)) return req.Err('cant like because b');
       const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
-      res.io.emit('notifs', 'julie allan ta liker');
+      // res.io.emit('notifs', 'julie allan ta liker');
       if (count > 0) {
         await Like.delete.bind({ db })(userSendLike, userReceiveLike);
         return res.json({ details: 'unlike' });

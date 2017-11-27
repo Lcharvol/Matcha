@@ -36,8 +36,7 @@ const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex:1;
-    margin-top:15px;
-    margin-bottom:25px;
+    min-height:300px;
 `;
 
 const LikeButton = styled.i`
@@ -123,10 +122,14 @@ const ProfilInfo = styled.div`
 
 const Pictures = styled.div`
     display:flex;
-    width:100%;
+    flex:1;
     flex-wrap: wrap;
+    width:100%;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    margin-top:65px;
+    margin-bottom:15px;
+    z-index:10;
 `;
 
 const User = ({ user, statusLike, handleStatusLike }) => {
@@ -135,7 +138,6 @@ const User = ({ user, statusLike, handleStatusLike }) => {
     }
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     const pictures = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && !isNil(picture));
-    console.log('pictures', pictures)
     return (
         <MainContainer>
             <Header
@@ -145,7 +147,7 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                 <ProfilHeader background={pictures[0]}>
                     <HeaderContainer>
                         {!isEmpty(statusLike) && <LikeButton
-                            color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}
+                            color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
                             className={`fa fa-heart${statusLike === 'like' ? '' : '-o'}`}
                             aria-hidden="true"
                             onClick={
@@ -171,26 +173,24 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                 </ProfilHeader>
                 <ProfilInfo>
                     <InlineBlock>
-                        <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Looking for</Title>
-                        {user.sexualorientation === 'man' ? <Icon className="fa fa-male" color="rgb(73,125,173)" aria-hidden="true"/> : <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
+                        <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Looking for</Title>
+                        {user.sexualorientation === 'man' ? <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/> : <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Bio</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Bio</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>
                         {!user.bio && <FakeContent/>}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Interêts: </Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Interêts: </Title>
                     <InlineBlock>
                         {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}>Mes Photos: </Title>
-                    <InlineBlock>
-                        <Pictures>
-                            {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
-                        </Pictures>
-                    </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Mes Photos: </Title>
                 </ProfilInfo>
             </ProfilContainer>
+            <Pictures>
+                {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
+            </Pictures>
         </MainContainer>
     )
 };

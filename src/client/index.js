@@ -12,7 +12,7 @@ import { getConnectedUsers } from './actions/users';
 
 const matchaToken = localStorage.getItem('matchaToken');
 const url = 'http://127.0.0.1:3004';
-const io = socketIO.connect(url, { query: matchaToken ? `matchaToken=${matchaToken}` : null });
+const io = socketIO.connect(url);
 
 // io.on('disconnect', () => console.log('socket.io disconnected ...'));
 // io.on('error', err => console.log(`socket.io error: ${err}`));

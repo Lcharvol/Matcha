@@ -24,6 +24,10 @@
     "url": "/connected"
   },
   "likeUser": {
+    "verb": "post",
+    "url": "/like"
+  },
+  "getLikeStatus": {
     "verb": "get",
     "url": "/like"
   }

@@ -5,7 +5,7 @@ import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 import { Header, Avatar, Picture, Tag } from '../widgets';
 import { Link } from 'react-router'
-import { reqGetUser, reqGetLike } from '../../request';
+import { reqGetUser, reqGetLike, reqGetLikeStatus } from '../../request';
 
 const MainContainer = styled.div`
     display:flex;
@@ -213,13 +213,10 @@ const enhance = compose(
         componentWillMount() {
             reqGetUser(Number(window.location.pathname.substr(6)))
             .then(user => {
-                reqGetLike(user.id)
+              reqGetLikeStatus(user.id)
                 .then(res => {
-										reqGetLike(user.id)
-										.then(res => {
 											this.props.handleStatusLike(res);
-										})
-                })
+                  })
                 this.props.loadUser(user);
             })
             .catch(err => {

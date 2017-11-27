@@ -23,6 +23,15 @@ export const reqGetUser = (id) => axios({
 }).catch(err => err);
 
 export const reqGetLike= (id) => axios({
+  method: 'post',
+  url:`user/like?id=${id}`,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data.details;
+}).catch(err => err);
+
+export const reqGetLikeStatus = (id) => axios({
   method: 'get',
   url:`user/like?id=${id}`,
 }).then(({ data, status }) => {

@@ -47,7 +47,7 @@ const ScoreContainer = styled.div`
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    margin-top:10px;
+    margin-top:20px;
 `;
 
 const Score = styled.p`

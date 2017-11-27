@@ -39,7 +39,6 @@ const PictureStyled = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  cursor:pointer;
 `;
 
 
@@ -125,11 +124,7 @@ const Picture = ({
   isOpen,
 }) => (
   <PictureContainer>
-      <PictureStyled
-        picture={picture}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+      <PictureStyled picture={picture}>
         {isHover &&
           <Shadow onClick={openPicture}>
             <ShadowIcon
@@ -139,7 +134,6 @@ const Picture = ({
           </Shadow>
         }
       </PictureStyled>
-    {isOpen && <PictureSighted picture={picture} closePicture={closePicture}/>}
   </PictureContainer>
 );
 

@@ -72,7 +72,7 @@ export const getFilterGeoAndInterest = (req, res, next) => {
       if (_.toUpper(req.sort[1]) === 'DESC') sortbyInterest = _.reverse(sortbyInterest);
       req.users = sortbyInterest;
     }
-    if (!byFilter) return res.json({ details: req.users });
+    if (!byFilter)
     if (byFilter === 'interest') {
       req.users = _.filter(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= Number(valueFilter));
     }
@@ -87,7 +87,7 @@ export const getFilterGeoAndInterest = (req, res, next) => {
         }),
       );
     }
-    return res.json({ details: req.users });
+    next();
   } catch (err) {
     req.Err({ details: 'Fail to get location and intereet sort and filter' }, err);
   }

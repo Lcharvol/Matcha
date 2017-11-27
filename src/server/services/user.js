@@ -72,10 +72,10 @@ const service = {
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
-        const socketIds = _user.socket_id ? _user.socket_id.split(',') : null;
-        socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
-        res.io.to(_user.socket_id).emit('like', `${login} like you`);
-        // req.userRequested = R.omit(['password'], _user);
+        // const socketIds = _user.socket_id ? _user.socket_id.split(',') : null;
+        // socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
+        // res.io.to(_user.socket_id).emit('like', `${login} like you`);
+        req.userRequested = R.omit(['password'], _user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
         return res.json({ details: R.omit(['password'], req.user) });

@@ -26,9 +26,12 @@ const store = configureStore(initialState, io);
   // reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))
 // };
 
-// io.on('like', (data) => {
-  // console.log(data);
-// });
+io.on('get', (data) => {
+  console.log(data);
+});
+io.on('like', (data) => {
+  console.log(data);
+});
 // setInterval(requestConnectedUsers, 1000);
 
 const root = (

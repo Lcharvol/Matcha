@@ -5,7 +5,7 @@ const pgp = pgpConnector({ capSQL: true });
 
 const User = {
   delete(userSendLike, userReceiveLike) {
-    return this.db.one(`DELETE FROM likes WHERE user_send_like = ${Number(userSendLike)} AND user_receive_like =  ${Number(userReceiveLike)} RETURNING *`);
+    return this.db.any(`DELETE FROM likes WHERE user_send_like = ${Number(userSendLike)} AND user_receive_like =  ${Number(userReceiveLike)} RETURNING *`);
   },
   add(userSendLike, userReceiveLike) {
     const data = { user_receive_like: userReceiveLike, user_send_like: userSendLike, date: new Date() };

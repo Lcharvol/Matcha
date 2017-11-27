@@ -68,6 +68,7 @@ const User = {
     return this.db.any(`UPDATE users SET socket_id = array_cat(socket_id, '{${newSocket}}') WHERE id =${id}`);
   },
   deleteSocket(deleteSocket, id) {
+    console.log('DELETEsOCKET');
     return this.db.any(`UPDATE users SET socket_id = array_remove(socket_id, '${deleteSocket}') WHERE id =${id}`);
   },
 };

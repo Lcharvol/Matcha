@@ -22,9 +22,9 @@ const initialState = {};
 
 const store = configureStore(initialState, io);
 
-// const requestConnectedUsers = () => {
-  // reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))
-// };
+const requestConnectedUsers = () => {
+  reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))
+};
 
 io.on('get', (data) => {
   console.log(data);
@@ -32,7 +32,7 @@ io.on('get', (data) => {
 io.on('like', (data) => {
   console.log(data);
 });
-// setInterval(requestConnectedUsers, 1000);
+setInterval(requestConnectedUsers, 1000);
 
 const root = (
   <App>

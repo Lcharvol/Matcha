@@ -21,5 +21,6 @@
     "array-callback-return": [0],
     "prefer-promise-reject-errors": [0],
     "no-shadow": [0],
+    "curly": [0]
   }
 }

@@ -72,12 +72,12 @@ const service = {
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
-        // const socketIds = _user.socket_id ? _user.socket_id.split(',') : null;
-        // socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
-        // res.io.to(_user.socket_id).emit('like', `${login} like you`);
+        const socketIds = !_.isEmpty(_user.socket_id) ? _.split(_user.socket_id, ',') : [];
+        socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
         req.userRequested = R.omit(['password'], _user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
+        console.log('MOI:', req.user.socket_id);
         return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
@@ -111,13 +111,6 @@ const service = {
       const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
       await User.update.bind({ db })({ connected: true, cotime: new Date(), ...range }, Number(user.id));
       if (!wasConnected) res.io.emit('userConnected', user.login);
-      // res.io.on('connection', async socket => {
-      //   await User.update.bind({ db })({ socket_id: socket.id }, Number(user.id));
-      //   socket.on('disconnect', async () => {
-      //     console.log('user disconnected');
-
-      //   });
-      // });
       res.json({ matchaToken: jwt.sign({ sub: user.id }, secretSentence, { expiresIn }) });
     } catch (err) {
       const message = err.message === 'invalid' ? 'wrong password' : 'failed to auth';
@@ -181,7 +174,7 @@ const service = {
       const userSendLike = req.user.id.toString();
       const userReceiveLike = id;
       if (userSendLike === userReceiveLike) return req.Err('can \'t liked yourself');
-      const { blocked } = await User.load.bind({ db })(id);
+      const { blocked, socket_id } = await User.load.bind({ db })(id);
       if (_.includes(_.split(blocked, ','), userSendLike)) return req.Err('cant like because b');
       const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
       if (count > 0) {
@@ -189,7 +182,24 @@ const service = {
         return res.json({ details: 'unlike' });
       }
       await Like.add.bind({ db })(userSendLike, userReceiveLike);
+      const socketIds = !_.isEmpty(socket_id) ? _.split(socket_id, ',') : [];
+      socketIds.forEach((socketId) => res.io.to(socketId).emit('like', `${req.user.login} like you`));
       return res.json({ details: 'like' });
+    } catch (err) {
+      console.log(err);
+      req.Err('failed to like the user');
+    }
+  },
+  async getLikeStatus(req, res) {
+    try {
+      const { query: { id }, ctx: { db } } = req;
+      const userSendLike = req.user.id.toString();
+      const userReceiveLike = id;
+      const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
+      if (count > 0) {
+        return res.json({ details: 'like' });
+      }
+      return res.json({ details: 'unlike' });
     } catch (err) {
       console.log(err);
       req.Err('failed to like the user');
@@ -208,6 +218,7 @@ const init = {
     put: [checkAuth, getInfoToUpdate],
     delete: [checkAuth],
     likeUser: [checkAuth],
+    getLikeStatus: [checkAuth],
     login: [validateLoginForm, checkIfConfirmedAndReturnUser],
     confirmEmail: [getUserFromToken],
     resetPassword: [checkToken],

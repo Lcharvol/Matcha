@@ -5,7 +5,7 @@ import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 import { Header, Avatar, Picture, Tag } from '../widgets';
 import { Link } from 'react-router'
-import { reqGetUser, reqGetLike, reqGetLikeStatus } from '../../request';
+import { reqGetUser, reqGetLike, reqGetLikeStatus, reqUpdateUser } from '../../request';
 
 const MainContainer = styled.div`
     display:flex;
@@ -43,6 +43,10 @@ const LikeButton = styled.i`
     font-size:5em;
     color: ${({ color  }) => color};
     cursor:pointer;
+    transition: all 260ms;
+    &:hover {
+        font-size:5.5em;
+    }
 `;
 
 const ProfilContainer = styled.div`
@@ -132,6 +136,16 @@ const Pictures = styled.div`
     z-index:10;
 `;
 
+const BlockButton = styled.i`
+    color:#e74c3c;
+    cursor:pointer;
+    font-size:4em;
+    transition: all 460ms ease;
+    &:hover {
+        transform: rotate(90deg);
+    }
+`;
+
 const User = ({ user, statusLike, handleStatusLike }) => {
     if (isEmpty(user)) {
         return null;
@@ -169,6 +183,7 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                         <Name>{`${user.firstname} ${user.lastname}`}</Name>
                     </HeaderContainer>
                     <HeaderContainer>
+                        <BlockButton className="fa fa-times" aria-hidden="true" onClick={() => reqUpdateUser({ blocked: user.id })}/>
                     </HeaderContainer>
                 </ProfilHeader>
                 <ProfilInfo>
@@ -176,21 +191,20 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                         <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Looking for</Title>
                         {user.sexualorientation === 'man' ? <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/> : <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Bio</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Biography</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>
                         {!user.bio && <FakeContent/>}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Interêts: </Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}> Interests</Title>
                     <InlineBlock>
                         {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
-                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Mes Photos: </Title>
                 </ProfilInfo>
+                <Pictures>
+                    {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
+                </Pictures>
             </ProfilContainer>
-            <Pictures>
-                {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
-            </Pictures>
         </MainContainer>
     )
 };

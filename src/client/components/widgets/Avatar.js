@@ -64,12 +64,12 @@ const Avatar = ({ user, size = 'big', top = '0px', bottom = '0px' }) => (
                 thickness={8}
                 mode={'determinate'}
                 value={user.popularity}
-                color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'}
+                color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
             />
             <AvatarStyled avatar={user.photo_5}/>
         </AvatarContainer>
         <ScoreContainer>
-            <ScoreIcon color={user.sexe === 'woman' ? '#EA5555' : 'rgb(73,125,173)'} className="fa fa-heart" aria-hidden="true"/>
+            <ScoreIcon color={user.sexe === 'woman' ? '#EA5555' : '#3498db'} className="fa fa-heart" aria-hidden="true"/>
             <Score>{user.popularity}</Score>
         </ScoreContainer>
     </Content>

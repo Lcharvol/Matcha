@@ -77,7 +77,7 @@ const service = {
         req.userRequested = R.omit(['password'], _user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
-        console.log('MOI:', req.user.socket_id);
+        // console.log('MOI:', req.user.socket_id);
         return res.json({ details: R.omit(['password'], req.user) });
       }
       next();
@@ -225,7 +225,7 @@ const init = {
   },
   after: {
     get: [checkIfNotBlocked],
-    getAll: [getFilterGeoAndInterest],
+    getAll: [getFilterGeoAndInterest, checkIfNotBlocked],
   },
 };
 

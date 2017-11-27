@@ -88,8 +88,7 @@ export const checkIfNotBlocked = async (req, res) => {
   try {
     const currentUser = req.user;
     const _users = req.users || [req.userRequested];
-    const users = _.filter(_users, (user) => !_.includes(user.blocked, currentUser.id));
-    console.log(users);
+    const users = _.filter(_users, (user) => !_.includes(user.blocked, currentUser.id) && !_.includes(req.user.blocked, user.id));
     if (_.isEmpty(users)) return req.Err('blocked');
     if (req.userRequested) return res.json({ details: users[0] });
     res.json({ details: users });

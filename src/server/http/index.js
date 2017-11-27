@@ -14,7 +14,7 @@ import addImg from './routes/addImg';
 
 const bindSocketIO = (io, currentSocketId, socketIdToDelete) => async (req, res, next) => {
   res.io = io;
-  if (!currentSocketId || !req.user) return next();
+  if (!currentSocketId[0] || !req.user) return next();
   const { db } = req.ctx;
   const { socket_id: socketId } = req.user;
   if (!socketId || (socketId && !_.includes(_.split(socketId, ','), currentSocketId[0])))

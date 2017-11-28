@@ -150,11 +150,11 @@ class Profil extends Component {
                 </ProfilHeader>
                 <ProfilInfo>
                     <InlineBlock>
-                        <LinkStyled to={`/profil`}>
+                        <LinkStyled to={`/editprofil`}>
                             <Icon className="fa fa-pencil" aria-hidden="true"/>
                         </LinkStyled>
                     </InlineBlock>
-                    <Title>I'imlooking for</Title>
+                    <Title>I'im looking for</Title>
                     <InlineBlock>
                         {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
                     </InlineBlock>

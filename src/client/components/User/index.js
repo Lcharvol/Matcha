@@ -4,8 +4,8 @@ import { map, isEmpty, isNil, upperFirst } from 'lodash';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
 import { Header, Avatar, Picture, Tag } from '../widgets';
-import { Link } from 'react-router'
-import { reqGetUser, reqGetLike, reqGetLikeStatus, reqUpdateUser } from '../../request';
+import { Link } from 'react-router';
+import { reqGetUser, reqGetLike, reqGetLikeStatus, reqUpdateUser, reqMe } from '../../request';
 
 const MainContainer = styled.div`
     display:flex;

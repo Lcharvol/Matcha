@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Header, Container, Avatar } from '../widgets';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
+import { map, isNil, upperFirst } from 'lodash';
 import { connect } from 'react-redux';
 import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
+import { reqMe } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import styled from 'styled-components';
 
+const MainContainer = styled.div`
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  background-color:rgb(240,240,240);
+`;
+
 const Content = styled.div`
-  max-width:1000px;
-  margin:auto;
+  margin-top:65px;
+  background-color:white;
+  border-radius:0px;
   display: grid;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
@@ -36,16 +46,21 @@ const EditProfilFormStyled  = styled.form`
 
 const FormHeader = styled.div`
   display:flex;
-  flex-direction:column;
+  flex-direction:wrap;
   justify-content: center;
   align-items: center;
+  width:100%;
+  background:${({ background }) => `url(${background}.jpg)`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const ContainerStyled = styled(Container)`
-width:100%;
-margin-top:10px;
-background-color:white;
-border-radius:0px;
+  width:100%;
+  margin-top:65px;
+  background-color:white;
+  border-radius:0px;
 `;
 
 const Title = styled.p`
@@ -117,39 +132,7 @@ const EditProfilForm = ({
   return (
     <EditProfilFormStyled  id="editProfil" onSubmit={handleSubmit}>
         <StyledFormField
-          field={getField('sexe')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-       <StyledFormField
-          field={getField('lookingFor')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-        <StyledFormField
           field={getField('bio')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-        <StyledFormField
-          field={getField('interest')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
-        <StyledFormField
-          field={getField('pictures')}
           values={values}
           errors={errors}
           touched={touched}
@@ -160,47 +143,65 @@ const EditProfilForm = ({
   );
 };
 
-const EditProfil= ({
-  values,
-  isSubmitting,
-  isValid,
-  dirty,
-  handleSubmit,
-  handleReset,
-  setFieldTouched,
-  setFieldValue,
-  isCancelDialogOpen,
-  showCancelDialog,
-  cancel,
-  requestCancel,
-  user,
-  ...props
-}) => (
-<div>
-  <Header />
-  <Content>
-    <ContainerStyled>
-      <FormHeader>
-        <Avatar user={user}/>
-        <Title>{`${user.firstName} ${user.lastName}`}</Title>
-      </FormHeader>
-      < EditProfilForm
-        type="add"
-        handleSubmit={handleSubmit}
-        values={values}
-        setFieldTouched={setFieldTouched}
-        setFieldValue={setFieldValue}
-        {...props}
-      />
-      <ButtonContainer>
-        <LinkStyled to={'/'}>
-          Update
-        </LinkStyled>
-      </ButtonContainer>
-    </ContainerStyled>
-  </Content>
-</div>
-);
+class EditProfil extends Component {
+  state = {
+    user: '',
+  };
+
+  async componentWillMount() {
+    const { details: user } = await reqMe();
+    this.setState({ user });
+  }
+  render () {
+    const {
+      values,
+      isSubmitting,
+      isValid,
+      dirty,
+      handleSubmit,
+      handleReset,
+      setFieldTouched,
+      setFieldValue,
+      isCancelDialogOpen,
+      showCancelDialog,
+      cancel,
+      requestCancel,
+      ...props
+    } = this.props;
+    const { user } = this.state;
+    if(!user) return null;
+    const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
+    user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
+    return (
+      <MainContainer>
+        <Header
+          displaySearchBar={false}
+        />
+        <Content>
+          <ContainerStyled>
+            <FormHeader>
+              <Avatar user={user}/>
+              <Title>{`${user.firstName} ${user.lastName}`}</Title>
+            </FormHeader>
+            < EditProfilForm
+              type="add"
+              handleSubmit={handleSubmit}
+              values={values}
+              setFieldTouched={setFieldTouched}
+              setFieldValue={setFieldValue}
+              {...props}
+            />
+            <ButtonContainer>
+              <LinkStyled to={'/'}>
+                Update
+              </LinkStyled>
+            </ButtonContainer>
+          </ContainerStyled>
+        </Content>
+      </MainContainer>
+    );
+  };
+};
 
 const mapStateToProps = state => ({
   user: state.user,

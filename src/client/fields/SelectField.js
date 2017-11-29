@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { compose, map } from 'ramda';
+import withTags from '../hoc/tags';
+import { propTransformer } from '../hoc';
 import { Field } from '../fields';
 import Select from 'react-select';
 
@@ -138,3 +140,12 @@ MultiSelectField.propTypes = {
   creatable: PropTypes.bool,
   clearable: PropTypes.bool,
 };
+
+export const TagsSelectField = compose(
+  withTags,
+  propTransformer(
+    'tags',
+    'domainValues',
+    map(tag => ({ id: tag, value: tag })),
+  ),
+)(MultiSelectField);

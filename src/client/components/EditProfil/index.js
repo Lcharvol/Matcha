@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Container, Avatar } from '../widgets';
+import { Header, Container, Avatar, InputButton } from '../widgets';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
 import { map, isNil, upperFirst } from 'lodash';
@@ -11,6 +11,7 @@ import { Link } from 'react-router';
 import { reqMe } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import styled from 'styled-components';
+import { getUser } from '../../selectors/user';
 
 const MainContainer = styled.div`
   display:flex;
@@ -20,7 +21,6 @@ const MainContainer = styled.div`
 `;
 
 const Content = styled.div`
-  margin-top:65px;
   background-color:white;
   border-radius:0px;
   display: grid;
@@ -34,17 +34,32 @@ const EditProfilFormStyled  = styled.form`
   margin: auto;
   margin-top: 25px;
   margin-bottom: 25px;
-  width: 90%;
+  width: 100%;
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
-  grid-template-areas: 'sexe' 'lookingFor' 'bio' 'interest' 'pictures';
+  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualOrientation' 'interest' 'bio';
   @media (min-width: 700px) {
-    grid-template-areas: 'sexe' 'lookingFor' 'bio' 'interest' 'pictures';
+    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualOrientation sexualOrientation' 'interest interest' 'bio bio';
   }
 `;
 
-const FormHeader = styled.div`
+const HeaderContainer = styled.div`
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex:1;
+  min-height:300px;
+`;
+
+const Name = styled.p`
+  font-size: 1.3em;
+  color:white;
+  margin-top:20px;
+`;
+
+const ProfilHeader = styled.div`
   display:flex;
   flex-direction:wrap;
   justify-content: center;
@@ -70,7 +85,7 @@ const Title = styled.p`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   @media (min-width: 700px) {
     margin: 25px;
@@ -131,27 +146,67 @@ const EditProfilForm = ({
 }) => {
   return (
     <EditProfilFormStyled  id="editProfil" onSubmit={handleSubmit}>
-        <StyledFormField
-          field={getField('bio')}
-          values={values}
-          errors={errors}
-          touched={touched}
-          setFieldTouched={setFieldTouched}
-          setFieldValue={setFieldValue}
-        />
+      <StyledFormField
+        field={getField('firstname')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('lastname')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('email')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('sexe')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('sexualOrientation')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('interest')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('bio')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
     </EditProfilFormStyled >
   );
 };
 
 class EditProfil extends Component {
-  state = {
-    user: '',
-  };
-
-  async componentWillMount() {
-    const { details: user } = await reqMe();
-    this.setState({ user });
-  }
   render () {
     const {
       values,
@@ -166,9 +221,9 @@ class EditProfil extends Component {
       showCancelDialog,
       cancel,
       requestCancel,
+      user,
       ...props
     } = this.props;
-    const { user } = this.state;
     if(!user) return null;
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
@@ -179,12 +234,14 @@ class EditProfil extends Component {
         />
         <Content>
           <ContainerStyled>
-            <FormHeader>
-              <Avatar user={user}/>
-              <Title>{`${user.firstName} ${user.lastName}`}</Title>
-            </FormHeader>
-            < EditProfilForm
-              type="add"
+            <ProfilHeader background={user.picture[0]}>
+              <HeaderContainer>
+                  <Avatar user={user}/>
+                  <Name>{`${upperFirst(user.firstname)} ${upperFirst(user.lastname)}`}</Name>
+              </HeaderContainer>
+            </ProfilHeader>
+            <EditProfilForm
+              type="edit"
               handleSubmit={handleSubmit}
               values={values}
               setFieldTouched={setFieldTouched}
@@ -192,9 +249,7 @@ class EditProfil extends Component {
               {...props}
             />
             <ButtonContainer>
-              <LinkStyled to={'/'}>
-                Update
-              </LinkStyled>
+              <InputButton type="submit" form="editProfil" value="Update" />
             </ButtonContainer>
           </ContainerStyled>
         </Content>
@@ -204,11 +259,10 @@ class EditProfil extends Component {
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
+  user: getUser(state),
 });
 
-const actions = {
-};
+const actions = {};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
@@ -217,14 +271,22 @@ export default compose(
   withFormik({
     handleSubmit: (
       {
-        login,
+        firstname,
+        lastname,
+        email,
+        sexe,
+        sexualOrientation,
+        bio,
       },
       { props },
     ) => {
-      console.log('Edit Profil')
+      console.log('Edit Profil');
     },
     validationSchema: getValidationSchema(),
-    mapPropsToValues: ({ user}) => ({
+    mapPropsToValues: ({ user }) => ({
+      ...user,
+      firstname: user.firstname,
+      lastname: user.lastname,
       sexe: user.sexe,
       lookingFor: user.sexualOrientation,
       bio: user.bio,

@@ -9,7 +9,7 @@ const Content = styled.div`
     flex:1;
     flex-wrap: wrap;
     width:100%;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-top:65px;
     margin-bottom:15px;

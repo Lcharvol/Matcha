@@ -13,10 +13,11 @@ import {
 } from '../../selectors/user';
 import {
     loadUsers,
+    loadUser,
     sortUsers,
     filterUsers,
 } from '../../actions/users';
-import { reqGetAll } from '../../request';
+import { reqGetAll, reqMe } from '../../request';
 import { Header, Container, Avatar } from '../widgets';
 import List from './List';
 import Profil from '../Profil';
@@ -37,8 +38,8 @@ const sortTypes = [
 ];
 
 const Home = ({
-    user,
-    users,
+    user = {},
+    users = [],
     filterUsers,
     onFilterChange,
     sortUsers,
@@ -68,8 +69,8 @@ const Home = ({
 );
 
 Home.propTypes = {
-    user: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired,
+    user: PropTypes.object,
+    users: PropTypes.array,
     filter: PropTypes.string,
     sort: PropTypes.object,
     filterUsers: PropTypes.func.isRequired,
@@ -77,7 +78,7 @@ Home.propTypes = {
     onFilterChange: PropTypes.func.isRequired,
 }
 
-const actions = { loadUsers, sortUsers, filterUsers, };
+const actions = { sortUsers, filterUsers, };
 
 const mapStateToProps = state => ({
   user: getUser(state),
@@ -90,14 +91,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
-    lifecycle({
-        componentWillMount() {
-          // const { filter, sort } = this.props;
-          // console.log(filter, sort);
-          reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
-        },
-
-    }),
     withHandlers({
         onFilterChange: ({ filterUsers }) => event =>
           filterUsers(event.target.value),

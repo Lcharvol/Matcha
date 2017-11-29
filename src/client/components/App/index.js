@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { compose } from 'ramda';
+import { lifecycle } from 'recompose';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadUser, loadUsers } from '../../actions/users';
+import { reqGetAll, reqMe } from '../../request';
 
 const AppStyled = styled.div`
   position:relative;
@@ -9,13 +14,27 @@ const AppStyled = styled.div`
   bottom:0px;
   font-family: 'PT Sans', sans-serif;
   overflow-x: hidden;
-  `;
+`;
 
-const App = props => (
-    <AppStyled>
-      {props.children}
-    </AppStyled>
+const App = (props) => (
+  <AppStyled>
+    {props.children}
+  </AppStyled>
 )
 
+const actions = { loadUsers, loadUser };
 
-export default App;
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+const enhance = compose(
+  connect(null, mapDispatchToProps),
+  lifecycle({
+      componentWillMount() {
+        reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
+        reqMe(this.props.loadUser);
+      },
+  }),
+)
+
+export default enhance(App);
+

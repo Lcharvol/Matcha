@@ -19,7 +19,7 @@ import {
     uniq,
   } from 'ramda';
   import { createSelector } from 'reselect';
-  import { getUser } from './user';
+  import { getUsers } from './user';
   
   export const getFilter = state => state.tags.filter;
   
@@ -43,6 +43,6 @@ import {
     compose(sortBy(identity), uniq)(mergeTags(lists));
   
   export const getTags = createSelector(
-    [getUser],
-    (user) => allTags(user),
+    [getUsers],
+    (users) => allTags(users),
   );

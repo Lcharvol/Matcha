@@ -35,16 +35,16 @@ io.on('like', (data) => {
 setInterval(requestConnectedUsers, 1000);
 
 const root = (
-  <App>
-    <MuiThemeProvider>
-      <Provider store={store}>
+  <MuiThemeProvider>
+    <Provider store={store}>
+      <App>
         <Router
           history={browserHistory}
           routes={routes}
         />
-      </Provider>
-    </MuiThemeProvider>
-  </App>
+      </App>
+    </Provider>
+  </MuiThemeProvider>
 );
 
 ReactDOM.render(root, document.getElementById('__MATCHA__'));

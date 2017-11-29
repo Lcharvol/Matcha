@@ -1,4 +1,5 @@
 export const LOAD_USERS = 'LOAD_USERS';
+export const LOAD_USER = 'LOAD_USER';
 export const CONNECTED_USER = 'CONNECTED_USER';
 export const DISCONNECT_USER = 'DISCONNECT_USER';
 export const FILTER_USERS = 'FILTER_USERS';
@@ -27,6 +28,10 @@ export const getConnectedUsers = usersConnected => {
 
 export const disconnectUser = () => {
   return { type: DISCONNECT_USER };
+};
+
+export const loadUser = user => {
+  return { type: LOAD_USER, user };
 };
 
 export const loadUsers = users => {

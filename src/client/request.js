@@ -1,5 +1,5 @@
 import * as Axios from 'axios';
-import { LOAD_USERS } from './actions/users';
+import { LOAD_USERS, LOAD_USER } from './actions/users';
 
 const matchaToken = localStorage.getItem('matchaToken');
 const axios = Axios.create({
@@ -82,12 +82,13 @@ export const reqGetAll = (loadUsers, query) => {
   }).catch(err => err);
 };
 
-export const reqMe = () => axios({
+export const reqMe = loadUser => axios({
   method: 'get',
   url: 'user',
 }).then(({ data, status }) => {
   if (status === 201)
-  throw data;
+    throw data;
+  loadUser(data);
   return data;
 }).catch(err => err);
 

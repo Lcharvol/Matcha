@@ -1,15 +1,13 @@
 import Yup from 'yup';
-import { InputField, TextAreaField  } from '../fields';
-// import {
-//   SelectField,
-// } from '../fields/SelectField';
+import { InputField, TextAreaField } from '../fields';
+import { SelectField, TagsSelectField } from '../fields/SelectField';
 import { MarkDownField } from '../fields/MarkDownField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 export const fields = {
   sexe: {
     label: 'Je suis',
-    // component: SelectField,
+    component: SelectField,
     domainValues: [
       { id: 'man', value: 'Un homme' },
       { id: 'woman', value: 'Une femme' },
@@ -19,7 +17,7 @@ export const fields = {
   },
   sexualOrientation: {
     label: 'Je suis',
-    // component: SelectField,
+    component: SelectField,
     domainValues: [
       { id: 'bisexual', value: 'Un Bisexuel' },
       { id: 'homosexual', value: 'Une Homosexuel' },
@@ -36,7 +34,7 @@ export const fields = {
   },
   interest: {
     label: 'Interêts',
-    component: InputField,
+    component: TagsSelectField,
     validate: Yup.string(),
     required: true,
   },

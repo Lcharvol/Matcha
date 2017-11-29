@@ -189,6 +189,21 @@ const mapStateToProps = state => ({
   loginErrors: getLoginErrors(state),
 });
 
+const validate = (values, props) => {
+  let errors = {};
+  if (!values.login) {
+    errors.login = 'Required';
+  } else if (!/^\w{3,30}$/.test(values.login)) {
+    errors.login = 'Invalid login';
+  }
+  if (!values.password) {
+    errors.password = 'Required';
+  } else if (!/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/.test(values.password)) {
+    errors.password = 'Invalid password';
+  }
+  return errors;
+};
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withFormik({
@@ -214,7 +229,8 @@ export default compose(
           errorLogin(err.details || 'Failed to Authenticate');
         })
     },
-    validationSchema: getValidationSchema(),
+    validate: validate,
+    validateOnBlur: true,
     mapPropsToValues: () => ({
       ...defaultValues,
       login: queryString.parse(location.search).user,

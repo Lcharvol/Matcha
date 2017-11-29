@@ -70,7 +70,6 @@ export const reqRegister= (user) => axios.post('user', {
 export const reqGetAll = (loadUsers, query) => {
   const cleanQuery = JSON.stringify(query);
   const params = `f=${cleanQuery}`;
-  console.log(params);
   return axios({
     method: 'get',
     url:`user/all?${params}`,
@@ -100,16 +99,22 @@ export const reqUpdateUser = (data) => axios.put('user', {
   return data;
 }).catch(err => err);
 
-// export const reqLostPassword = (data) => axios({
-  //   method: 'get',
-//   url:'http://127.0.0.1:3004/lost_password',
-//   data,
-// }).then(({ data, status }) => {
-//   if (status === 201)
-//     throw data;
-//   return data;
-// });
+export const reqLostPassword = (email) => axios({
+  method: 'get',
+  url:`user/lost?email=${email}`,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data.details;
+  return data.details;
+});
 
+export const reqResetPassword = (data) => axios.put('user/reset', {
+  ...data,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data;
+});
 // export const reqResetPassword = (data) => axios({
 //   method: 'post',
 //   url:'http://127.0.0.1:3004/reset_password',

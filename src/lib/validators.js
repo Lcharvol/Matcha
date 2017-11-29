@@ -2,7 +2,7 @@ import yup from 'yup';
 import _ from 'lodash';
 import { fields as fieldsRegister } from '../client/forms/register';
 import { fields as fieldsLogin } from '../client/forms/login';
-import { fields as fieldsEditProfil } from '../client/forms/editProfil';
+import { fields as fieldsEditProfil } from '../client/forms/editProfilForBack';
 
 export const schemaRegister = yup.object(_.reduce(fieldsRegister, (acc, item, key) => ({
   ...acc,

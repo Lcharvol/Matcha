@@ -156,7 +156,7 @@ const service = {
       );
       res.json({ details: 'Email sent thank you' });
     } catch (err) {
-      req.Err('Failed to authenticate');
+      req.Err('Pas bon mail');
     }
   },
   async getConnectedUser(req, res) {
@@ -201,7 +201,6 @@ const service = {
       }
       return res.json({ details: 'unlike' });
     } catch (err) {
-      console.log(err);
       req.Err('failed to like the user');
     }
   },

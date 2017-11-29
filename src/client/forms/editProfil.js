@@ -16,7 +16,7 @@ export const fields = {
     required: true,
   },
   sexualOrientation: {
-    label: 'Je suis',
+    label: 'Mon orientation sexuelle',
     component: SelectField,
     domainValues: [
       { id: 'bisexual', value: 'Un Bisexuel' },

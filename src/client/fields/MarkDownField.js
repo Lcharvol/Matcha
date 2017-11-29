@@ -24,7 +24,7 @@ const MarkDownLabel = styled.div`
 `;
 
 const MarkdownContainer = styled.div`
-  background-color: ${Colors.DARK_GRAY3};
+  background-color: rgb(250,250,250);
   padding: 25px;
   border-radius: 4px;
   min-height: 150px;

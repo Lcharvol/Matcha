@@ -1,5 +1,5 @@
 
-export const getUser = state => state.user;
+export const getUser = state => state.user.details;
 export const getUsers = state => state.users.details;
 export const getFilter = state => state.users.filter;
 export const getSort = state => state.users.sort;

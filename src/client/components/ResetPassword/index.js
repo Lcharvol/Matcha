@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import queryString from 'query-string';
-import { getValidationSchema, defaultValues, getField } from '../../forms/lost';
-import { reqLostPassword } from '../../request';
+import { getValidationSchema, defaultValues, getField } from '../../forms/reset';
+import { reqResetPassword } from '../../request';
 import { errorLogin, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
 import { push } from '../../history';
@@ -36,7 +36,7 @@ const LostFormStyled = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(100px, auto);
-  grid-template-areas: 'email';
+  grid-template-areas: 'password';
 `;
 
 const StyledFormField = styled(FormField)`
@@ -109,7 +109,7 @@ const LostForm = ({
     return (
       <LostFormStyled id="lost" onSubmit={handleSubmit}>
         <StyledFormField
-          field={getField('email')}
+          field={getField('password')}
           values={values}
           errors={errors}
           touched={touched}
@@ -130,7 +130,7 @@ const LostForm = ({
     touched: PropTypes.object.isRequired,
   };
 
-const Lost = ({
+const Login = ({
     values,
     isSubmitting,
     isValid,
@@ -163,7 +163,7 @@ const Lost = ({
             <LinkStyled to={`/login`}>
               Login
             </LinkStyled>
-            <InputButton  type="submit" form='lost' value="Send"/>
+            <InputButton  type="submit" form='lost' value="Reset Password"/>
           </ButtonContainer>
       </ContainerStyled>
       <FacebookLogin />
@@ -178,40 +178,32 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 const mapStateToProps = state => ({
   loginErrors: getLoginErrors(state),
 });
-
-const validate = (values, props) => {
-  let errors = {};
-
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-
-  return errors;
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  var results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withFormik({
     handleSubmit: (
       {
-        email,
+        password,
       },
       { props },
     ) => {
-      reqLostPassword(email).then((res) => {
-        push('/login');
-        resetLoginErrors();
+      const matchaToken = getUrlParameter('matchaToken');
+      reqResetPassword(({ matchaToken, password })).then((res) => {
+        alert('password reset ty');
+        // push('/login');
       }).catch(err => {
         alert('NON NON NON oui oui oui il y a encore des alert en 2017');
-        errorLogin(err.details || 'Failed to Authenticate');
       })
     },
-    validate: validate,
-    validateOnBlur: true,
+    validationSchema: getValidationSchema(),
     mapPropsToValues: () => ({
       ...defaultValues,
     }),
   }),
-)(Lost);
+)(Login);

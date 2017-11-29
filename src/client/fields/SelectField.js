@@ -134,7 +134,7 @@ MultiSelectField.propTypes = {
   error: PropTypes.string,
   required: PropTypes.bool.isRequired,
   domainValues: PropTypes.array,
-  value: PropTypes.array,
+  // value: PropTypes.array,
   setFieldValue: PropTypes.func,
   setFieldTouched: PropTypes.func,
   creatable: PropTypes.bool,

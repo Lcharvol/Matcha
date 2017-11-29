@@ -42,12 +42,15 @@ export const fields = {
     label: 'Mes photos',
     component: InputField,
     validate: Yup.string(),
+    required: true,
   },
   profilPicture: {
     label: 'Ma photo de profil',
     component: InputField,
     validate: Yup.string(),
-  },  login: {
+    required: true,
+  },
+  login: {
     label: 'Login',
     component: InputField,
     validate: Yup.string().min(3).max(30),
@@ -57,6 +60,7 @@ export const fields = {
     label: 'Email',
     component: InputField,
     validate: Yup.string().email(),
+    required: true,
   },
   firstname: {
     label: 'First Name',
@@ -70,11 +74,27 @@ export const fields = {
     validate: Yup.string().matches(/^[A-Za-z ]{2,30}$/, { message: 'not a good login', excludeEmptyString: true }),
     required: true,
   },
+  password: {
+    label: 'Password',
+    component: InputField,
+    validate: Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/, { message: 'not secure', excludeEmptyString: true }),
+    required: true,
+  },
   age: {
     label: 'Age',
     component: InputField,
     validate: Yup.number().integer().min(18).max(99),
     required: true,
+  },
+  blocked: {
+    label: 'Blocked',
+    component: InputField,
+    validate: Yup.number(),
+    required: true,
+  },
+  connected: {
+    label: 'connected',
+    component: InputField,
   },
 };
 

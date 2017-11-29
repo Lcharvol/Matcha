@@ -10,6 +10,7 @@ import Lost from './components/Lost';
 import Profil from './components/Profil';
 import Chat from './components/Chat';
 import User from './components/User';
+import ResetPassword from './components/ResetPassword';
 
 export default (
     <Switch>
@@ -17,6 +18,7 @@ export default (
         <Route exact path="/login" component={() => <Auth revertCheck={true} path="/login" ><Login /></Auth>}/>
         <Route exact path="/register" component={() => <Auth revertCheck={true} path="/register"><Register /></Auth>}/>
         <Route exact path="/lost" component={() => <Auth revertCheck={true} path="/lost"><Lost /></Auth>}/>
+        <Route exact path="/reset" component={() => <Auth revertCheck={true} path="/reset"><ResetPassword /></Auth>}/>
         <Route exact path="/editprofil" component={() => <Auth><EditProfil /></Auth>}/>
         <Route exact path="/profil" component={() => <Auth><Profil /></Auth>}/>
         <Route path="/user/:login" component={() => <Auth><User /></Auth>}/>

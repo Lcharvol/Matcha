@@ -8,7 +8,7 @@ import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
-import { reqMe } from '../../request';
+import { reqUpdateUser } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import styled from 'styled-components';
 import { getUser } from '../../selectors/user';
@@ -38,9 +38,9 @@ const EditProfilFormStyled  = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
-  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualOrientation' 'interest' 'bio';
+  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualorientation' 'interest' 'bio';
   @media (min-width: 700px) {
-    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualOrientation sexualOrientation' 'interest interest' 'bio bio';
+    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualorientation sexualorientation' 'interest interest' 'bio bio';
   }
 `;
 
@@ -179,7 +179,7 @@ const EditProfilForm = ({
         setFieldValue={setFieldValue}
       />
       <StyledFormField
-        field={getField('sexualOrientation')}
+        field={getField('sexualorientation')}
         values={values}
         errors={errors}
         touched={touched}
@@ -224,6 +224,7 @@ class EditProfil extends Component {
       user,
       ...props
     } = this.props;
+
     if(!user) return null;
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
@@ -269,29 +270,28 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withFormik({
-    handleSubmit: (
-      {
-        firstname,
-        lastname,
-        email,
-        sexe,
-        sexualOrientation,
-        interest,
-        bio,
-      },
+    handleSubmit: (user,
       { props },
     ) => {
-      console.log('Edit Profil');
+     const { bio, age, email, firstname, interest, lastname, lookingFor, sexualorientation } = user;
+      reqUpdateUser(({ bio, age, email, firstname, interest, lastname, lookingFor, sexualorientation })).then((res) => {
+        alert('info update see by yourself');
+        location.reload();
+      }).catch(err => {
+        console.log(err);
+      })
     },
     validationSchema: getValidationSchema(),
-    mapPropsToValues: ({ user }) => ({
+    mapPropsToValues: ({ user }) => {
+      return ({
       ...user,
       firstname: user.firstname,
       lastname: user.lastname,
       sexe: user.sexe,
-      lookingFor: { value: 'test', label: 'test' } ,
-      bio: user.bio,
-      interest: user.interest,
-    }),
+      lookingFor: user.sexualorientation,
+      bio: user.bio || '',
+      interest: user.interest || '',
+    })
+  },
   }),
 )(EditProfil);

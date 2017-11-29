@@ -7,6 +7,7 @@ import { reqAuth } from '../../request';
 import Login from '../Login';
 import Register from '../Register';
 import Lost from '../Lost';
+import ResetPassword from '../ResetPassword';
 
 // 2 - No response
 // 1 - bad
@@ -43,6 +44,7 @@ class Auth extends Component {
       if (path === '/login') return <Login />;
       if (path === '/register') return <Register />;
       if (path === '/lost') return <Lost />;
+      if (path === '/reset') return <ResetPassword />;
       if(!path) return <Login />;
     }
     if (authorized === 2)

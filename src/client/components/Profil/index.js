@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
 import styled from 'styled-components';
 import { reqMe } from '../../request';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
+import { getUser } from '../../selectors/user';
 
 const MainContainer = styled.div`
     display:flex;
@@ -70,6 +71,10 @@ const LinkStyled = styled(Link)`
     justify-content: flex-end;
     text-decoration: none;
     right:20px;
+    max-width:20px;
+    &:hover {
+        text-decoration:none;
+    }
 `;
 
 const Pictures = styled.div`
@@ -124,17 +129,8 @@ const FakeContent = styled.div`
 `;
 
 class Profil extends Component {
-  state = {
-    user: '',
-  }
-
-  async componentWillMount() {
-    const { details: user } = await reqMe();
-    this.setState({ user });
-  }
-
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
     if(!user) return null;
     const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
     user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
@@ -182,7 +178,9 @@ class Profil extends Component {
 
 const actions = {};
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    user: getUser(state),
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

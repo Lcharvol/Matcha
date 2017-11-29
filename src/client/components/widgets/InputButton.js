@@ -36,6 +36,9 @@ const InputButton = styled.input`
      transition: all 60ms ease;
       box-shadow: inset 5px 5px 2px rgba(0, 0, 0, 0.2);
     }
+    &:focus {
+        outline: none;
+    }
 `;
 
 export default InputButton;

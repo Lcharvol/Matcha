@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { withFormik } from 'formik';
 import { browserHistory } from 'react-router'
-import { compose } from 'ramda';
+import { compose, isNil } from 'ramda';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router'
 import queryString from 'query-string';
-
 import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';
@@ -203,9 +202,14 @@ export default compose(
       const { errorLogin, resetLoginErrors } = props;
       reqLogin(login, password)
         .then(({ matchaToken }) => {
-          localStorage.setItem('matchaToken', matchaToken);
-          resetLoginErrors();
-          location.reload();
+          if (isNil(matchaToken)) {
+            errorLogin(err.details || 'Failed to Authenticate');
+          }
+          else {
+            localStorage.setItem('matchaToken', matchaToken);
+            resetLoginErrors();
+            location.reload();
+          }
         }).catch(err => {
           errorLogin(err.details || 'Failed to Authenticate');
         })

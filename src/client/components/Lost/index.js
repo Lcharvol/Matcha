@@ -166,8 +166,6 @@ const Lost = ({
             <InputButton  type="submit" form='lost' value="Send"/>
           </ButtonContainer>
       </ContainerStyled>
-      <FacebookLogin />
-      <GoogleLogin />
     </Content>
 );
 

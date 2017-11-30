@@ -34,6 +34,7 @@ const Logo = styled.i`
 
 const Text = styled.p`
     color:white;
+    margin:0;
 `;
 
 const FacebookLogin = () => (

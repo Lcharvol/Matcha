@@ -87,7 +87,7 @@ export const MultiSelectField = ({
   setFieldTouched,
   setFieldValue,
   domainValues,
-  creatable = false,
+  creatable = true,
   clearable = false,
   ...props
 }) => {
@@ -134,7 +134,6 @@ MultiSelectField.propTypes = {
   error: PropTypes.string,
   required: PropTypes.bool.isRequired,
   domainValues: PropTypes.array,
-  // value: PropTypes.array,
   setFieldValue: PropTypes.func,
   setFieldTouched: PropTypes.func,
   creatable: PropTypes.bool,

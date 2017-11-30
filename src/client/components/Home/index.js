@@ -5,18 +5,9 @@ import { connect } from 'react-redux';
 import { compose, lifecycle, withHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import {
-    getUser,
-    getUsers,
-    getFilter,
-    getSort,
-} from '../../selectors/user';
-import {
-    loadUsers,
-    loadUser,
-    sortUsers,
-    filterUsers,
-} from '../../actions/users';
+
+import { getUser, getUsers, getFilter, getSort } from '../../selectors/user';
+import { loadUsers, loadUser, sortUsers, filterUsers } from '../../actions/users';
 import { reqGetAll, reqMe } from '../../request';
 import { Header, Container, Avatar } from '../widgets';
 import List from './List';

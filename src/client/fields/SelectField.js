@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { compose, map } from 'ramda';
+import Select from 'react-select';
+
 import withTags from '../hoc/tags';
 import { propTransformer } from '../hoc';
 import { Field } from '../fields';
-import Select from 'react-select';
 
 const SelectCreatableStyled = styled(Select.Creatable)``;
 const SelectStyled = styled(Select)``;

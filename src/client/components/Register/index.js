@@ -1,14 +1,15 @@
 import React from 'react';
-import { Logo, Container, InputButton, ErrorsContainer } from '../widgets';
-import styled from 'styled-components';
-import { reqRegister } from '../../request';
-import { FormField } from '../../fields';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withFormik } from 'formik';
 import { compose } from 'ramda';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+import { Logo, Container, InputButton, ErrorsContainer } from '../widgets';
+import { reqRegister } from '../../request';
+import { FormField } from '../../fields';
 import { getValidationSchema, defaultValues, getField } from '../../forms/register';
 import { errorRegister, resetRegisterErrors } from '../../actions/registerErrors';
 import { getRegisterErrors } from '../../selectors/registerErrors';

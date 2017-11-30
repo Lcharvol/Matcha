@@ -1,4 +1,5 @@
 import * as Axios from 'axios';
+
 import { LOAD_USERS, LOAD_USER } from './actions/users';
 
 const matchaToken = localStorage.getItem('matchaToken');

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { getTags } from '../selectors/tags';
 
 const mapStateToProps = (state, props) => ({

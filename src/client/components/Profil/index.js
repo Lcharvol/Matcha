@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux';
 import { map, isNil, upperFirst } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
 import styled from 'styled-components';
-import { reqMe } from '../../request';
 import { Link } from 'react-router';
+
+import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
+import { reqMe } from '../../request';
 import { getUser } from '../../selectors/user';
 
 const MainContainer = styled.div`

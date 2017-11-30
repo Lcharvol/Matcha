@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Header, Container, Avatar, InputButton } from '../widgets';
-import { FormField } from '../../fields';
 import { withFormik } from 'formik';
 import { isNil, upperFirst } from 'lodash';
 import { connect } from 'react-redux';
 import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { compose, map, join } from 'ramda';
+import styled from 'styled-components';
 import { Link } from 'react-router';
+
+import { Header, Container, Avatar, InputButton } from '../widgets';
+import { FormField } from '../../fields';
 import { reqUpdateUser } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
-import styled from 'styled-components';
 import { getUser } from '../../selectors/user';
 
 const MainContainer = styled.div`

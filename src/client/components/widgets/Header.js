@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
 import { disconnectUser } from '../../actions/users';

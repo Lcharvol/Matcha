@@ -18,25 +18,15 @@ export const updateSearchUsersValue = value => ({
   value,
 })
 
-export const searchUsers = () => {
-  return { type: SEARCH_USERS };
-};
+export const searchUsers = () => ({ type: SEARCH_USERS });
 
-export const getConnectedUsers = usersConnected => {
-  return { type: CONNECTED_USER, usersConnected };
-};
+export const getConnectedUsers = usersConnected => ({ type: CONNECTED_USER, usersConnected });
 
-export const disconnectUser = () => {
-  return { type: DISCONNECT_USER };
-};
+export const disconnectUser = () => ({ type: DISCONNECT_USER });
 
-export const loadUser = user => {
-  return { type: LOAD_USER, user };
-};
+export const loadUser = user => ({ type: LOAD_USER, user });
 
-export const loadUsers = users => {
-  return { type: LOAD_USERS, users };
-};
+export const loadUsers = users => ({ type: LOAD_USERS, users });
 
 export const sortUsers = sortBy => ({
   type: SORT_USERS,

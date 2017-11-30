@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import UserSugest from '../UserSugest';
 import { map } from 'ramda';
+
+import UserSugest from '../UserSugest';
 
 const Content = styled.div`
     display:flex;

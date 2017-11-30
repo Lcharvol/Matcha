@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import history from '../../history';
 import { reqAuth } from '../../request';
 import Login from '../Login';
@@ -9,9 +10,11 @@ import Register from '../Register';
 import Lost from '../Lost';
 import ResetPassword from '../ResetPassword';
 
-// 2 - No response
-// 1 - bad
-// 0 - good
+/*
+  2 - No response
+  1 - bad
+  0 - good
+*/
 class Auth extends Component {
 
   state = {

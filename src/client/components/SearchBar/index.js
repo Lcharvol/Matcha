@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 import { getSearch } from '../../selectors/user';
 import { updateSearchUsersType, updateSearchUsersValue, searchUsers } from '../../actions/users';
-import PropTypes from 'prop-types';
 import SortMenu from '../SortMenu';
 import { Spacer } from '../widgets';
 

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { map, isEmpty, isNil, upperFirst } from 'lodash';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
-import { Header, Avatar, Picture, Tag } from '../widgets';
 import { Link } from 'react-router';
+
+import { Header, Avatar, Picture, Tag } from '../widgets';
 import { reqGetUser, reqGetLike, reqGetLikeStatus, reqUpdateUser, reqMe } from '../../request';
 
 const MainContainer = styled.div`

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, RequiredTag } from '../fields';
 import styled from 'styled-components';
-import ReactMarkdown from 'react-markdown';
-import { Spacer } from '../components/widgets';
 import { Colors } from '@blueprintjs/core';
+import ReactMarkdown from 'react-markdown';
+
+import { Field, RequiredTag } from '../fields';
+import { Spacer } from '../components/widgets';
 
 const Buttons = styled.div`
   right: 0;

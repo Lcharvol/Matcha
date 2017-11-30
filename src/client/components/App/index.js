@@ -4,6 +4,7 @@ import { compose } from 'ramda';
 import { lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { loadUser, loadUsers } from '../../actions/users';
 import { reqGetAll, reqMe } from '../../request';
 

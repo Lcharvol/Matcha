@@ -66,7 +66,7 @@ const Avatar = ({ user, size = 'big', top = '0px', bottom = '0px' }) => (
                 value={user.popularity}
                 color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
             />
-            <AvatarStyled avatar={user.photo_5}/>
+            <AvatarStyled avatar={user.profile_picture}/>
         </AvatarContainer>
         <ScoreContainer>
             <ScoreIcon color={user.sexe === 'woman' ? '#EA5555' : '#3498db'} className="fa fa-heart" aria-hidden="true"/>

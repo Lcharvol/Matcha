@@ -127,13 +127,11 @@ class Profil extends Component {
   render() {
     const { user } = this.props;
     if(!user) return null;
-    const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
-    user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
     return (
         <MainContainer>
             <Header displaySearchBar={false}/>
             <ProfilContainer>
-                <ProfilHeader background={user.picture[0]}>
+                <ProfilHeader background={user.pictures[0]}>
                     <HeaderContainer>
                         <Avatar user={user}/>
                         <Name>{`${upperFirst(user.firstname)} ${upperFirst(user.lastname)}`}</Name>
@@ -157,12 +155,12 @@ class Profil extends Component {
                     </InlineBlock>
                     <Title>Interests</Title>
                     <InlineBlock>
-                        {user.interest && map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
+                        {map(user.interest, (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
                     <Title>My pictures</Title>
                     <InlineBlock>
                         <Pictures>
-                            {map(user.picture, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
+                            {map(user.pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
                         </Pictures>
                     </InlineBlock>
                 </ProfilInfo>

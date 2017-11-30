@@ -236,8 +236,6 @@ class EditProfil extends Component {
     } = this.props;
 
     if(!user) return null;
-    const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
-    user.picture = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && picture !== 'null' && !isNil(picture));
     return (
       <MainContainer>
         <Header
@@ -245,7 +243,7 @@ class EditProfil extends Component {
         />
         <Content>
           <ContainerStyled>
-            <ProfilHeader background={user.picture[0]}>
+            <ProfilHeader background={user.pictures[0]}>
               <HeaderContainer>
                   <Avatar user={user}/>
                   <Name>{`${upperFirst(user.firstname)} ${upperFirst(user.lastname)}`}</Name>
@@ -316,7 +314,7 @@ export default compose(
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: ({ user }) => {
-      const tags = user.interest ? user.interest.split(',') : '';
+      const tags = user.interest;
       return ({
       ...user,
       firstname: user.firstname,

@@ -18,6 +18,7 @@ import { validateRegisterForm,
 import { schemaLogin } from '../../lib/validators';
 import { checkAuth, getUserFromToken, checkToken } from './hooks/token';
 import { getFilterAndSort, getFilterGeoAndInterest } from './hooks/location';
+import { cleanUser } from '../function';
 
 const service = {
   // CRUD
@@ -74,11 +75,10 @@ const service = {
         const _user = await User.load.bind({ db })(idRequest);
         const socketIds = !_.isEmpty(_user.socket_id) ? _.split(_user.socket_id, ',') : [];
         socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
-        req.userRequested = R.omit(['password'], _user);
+        req.userRequested = cleanUser(_user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
-        // console.log('MOI:', req.user.socket_id);
-        return res.json({ details: R.omit(['password'], req.user) });
+        return res.json({ details: cleanUser(req.user) });
       }
       next();
     } catch (err) {
@@ -91,7 +91,7 @@ const service = {
     const { ctx: { db }, user: { id } } = req;
     try {
       const users = await User.getAll.bind({ db })(req.filterString, req.sortString);
-      req.users = users.filter((item) => item.id !== id).map(v => R.omit(['password'], v));
+      req.users = users.filter((item) => item.id !== id).map(v => cleanUser(v));
       next();
     } catch (err) {
       console.log(err);

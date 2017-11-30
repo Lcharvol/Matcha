@@ -146,15 +146,14 @@ const User = ({ user, statusLike, handleStatusLike }) => {
     if (isEmpty(user)) {
         return null;
     }
-    const { photo_1, photo_2, photo_3, photo_4, photo_5 } = user;
-    const pictures = [photo_1, photo_2, photo_3, photo_4, photo_5].filter(picture => picture !== 'undefined' && !isNil(picture));
+    console.log(user);
     return (
         <MainContainer>
             <Header
                 displaySearchBar={false}
             />
             <ProfilContainer>
-                <ProfilHeader background={pictures[0]}>
+                <ProfilHeader background={user.pictures[0]}>
                     <HeaderContainer>
                         {!isEmpty(statusLike) && <LikeButton
                             color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
@@ -194,11 +193,11 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                     </InlineBlock>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}> Interests</Title>
                     <InlineBlock>
-                        {map(user.interest.split(','), (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
+                        {map(user.interest, (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
                 </ProfilInfo>
                 <Pictures>
-                    {map(pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
+                    {map(user.pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
                 </Pictures>
             </ProfilContainer>
         </MainContainer>

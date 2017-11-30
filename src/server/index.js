@@ -5,7 +5,7 @@ import configClient from '../../config/client';
 
 import initHttp from './http';
 import initPostgresSQL from './postgreSQL';
-import { resetDb, loadUsers } from './scripts';
+import { resetDb, loadUsers } from './postgreSQL/scriptDb';
 
 const logger = debug('matcha:server/index.js');
 

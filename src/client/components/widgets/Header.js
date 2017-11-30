@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { Logo, Spacer } from '../widgets';
 import SearchBar from '../SearchBar';
+import Notifications from '../Notifications';
 import { disconnectUser } from '../../actions/users';
 
 const HeaderStyled = styled.div`
@@ -80,7 +80,7 @@ const Header = ({
         <Spacer size='3'/>
         { connectedPeople }
       </Container>
-      <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
+      <Notifications />
     <Link to={`/profil`}>
         <Icon className="fa fa-user" aria-hidden="true" title="Me"/>
       </Link>

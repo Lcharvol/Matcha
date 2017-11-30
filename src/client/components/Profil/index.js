@@ -35,7 +35,6 @@ const ProfilInfo = styled.div`
 
 const Icon = styled.i`
     color: rgba(244, 88, 65, 0.8);
-    margin-top:15px;
     margin-right:15px;
     font-size: 1.5em;
     cursor: pointer;
@@ -68,12 +67,15 @@ const Title = styled.p`
 const LinkStyled = styled(Link)`
     flex:1;
     display:flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
-    right:20px;
-    max-width:20px;
+    max-width:100px;
+    color:#EA5555;
+    margin-top:10px;
     &:hover {
         text-decoration:none;
+        color:#EA5555;
     }
 `;
 
@@ -83,14 +85,6 @@ const Pictures = styled.div`
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-`;
-
-const Throphys = styled.div`
-    display:flex;
-    width:100%;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
 `;
 
 const ProfilHeader = styled.div`
@@ -148,6 +142,7 @@ class Profil extends Component {
                     <InlineBlock>
                         <LinkStyled to={`/editprofil`}>
                             <Icon className="fa fa-pencil" aria-hidden="true"/>
+                            <Text>Edit my profil</Text>
                         </LinkStyled>
                     </InlineBlock>
                     <Title>I'im looking for</Title>

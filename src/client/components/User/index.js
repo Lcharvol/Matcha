@@ -57,7 +57,6 @@ const ProfilContainer = styled.div`
 `;
 
 const Icon = styled.i`
-    margin-top:-15px;
     margin-right:15px;
     font-size: 2em;
     margin-left: 10px;
@@ -183,8 +182,8 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                     </HeaderContainer>
                 </ProfilHeader>
                 <ProfilInfo>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Looking for</Title>
                     <InlineBlock>
-                        <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Looking for</Title>
                         {user.sexualorientation === 'man' ? <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/> : <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
                     </InlineBlock>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Biography</Title>

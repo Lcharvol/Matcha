@@ -87,6 +87,7 @@ const LinkStyled = styled(Link)`
   &:hover {
     transition: all 60ms ease;
     opacity: .8;
+    color: #fff;
   }
   &:active {
     transition: all 60ms ease;

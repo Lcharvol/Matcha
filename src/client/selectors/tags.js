@@ -21,7 +21,7 @@ import {
 import { createSelector } from 'reselect';
 import { getUsers } from './user';
 
-export const getFlattenTags = compose(flatten, map(), pluck('interest'),  values);
+export const getFlattenTags = compose(flatten, pluck('interest'),  values);
 
 export const mergeTags = compose(
   filter(identity),

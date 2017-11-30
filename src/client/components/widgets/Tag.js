@@ -20,7 +20,7 @@ const Tag = ({ name }) => (
   </TagStyled>
 );
 
-Tag.PropTypes = {
+Tag.propTypes = {
   name: PropTypes.string.isRequired,
 };
 

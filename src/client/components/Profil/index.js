@@ -73,6 +73,7 @@ const LinkStyled = styled(Link)`
     text-decoration: none;
     max-width:100px;
     color:#EA5555;
+    margin:auto;
     margin-top:10px;
     &:hover {
         text-decoration:none;

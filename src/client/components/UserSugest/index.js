@@ -77,7 +77,7 @@ const UserSugest = ({
         <ProfilPicture
             onMouseEnter={showShadow}
             onMouseLeave={hideShadow}
-            picture={user.photo_5}
+            picture={user.profile_picture}
         >
             {displayShadow &&
                 <Shadow>

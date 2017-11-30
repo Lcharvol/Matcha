@@ -6,6 +6,7 @@ import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { compose, map, join } from 'ramda';
 import styled from 'styled-components';
+import Dropzone from 'react-dropzone';
 import { Link } from 'react-router';
 
 import { Header, Container, Avatar, InputButton } from '../widgets';

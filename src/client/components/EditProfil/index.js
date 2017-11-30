@@ -14,6 +14,7 @@ import { FormField } from '../../fields';
 import { reqUpdateUser } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import { getUser } from '../../selectors/user';
+import validate from '../../forms/validator';
 
 const MainContainer = styled.div`
   display:flex;
@@ -312,7 +313,8 @@ export default compose(
         console.log(err);
       })
     },
-    validationSchema: getValidationSchema(),
+    validate: validate,
+    validateOnBlur: true,
     mapPropsToValues: ({ user }) => {
       const tags = user.interest;
       return ({

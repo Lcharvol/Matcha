@@ -14,6 +14,7 @@ import { getValidationSchema, defaultValues, getField } from '../../forms/regist
 import { errorRegister, resetRegisterErrors } from '../../actions/registerErrors';
 import { getRegisterErrors } from '../../selectors/registerErrors';
 import { push } from '../../history';
+import validate from '../../forms/validator';
 
 const Content = styled.div`
   position:relative;
@@ -237,46 +238,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 const mapStateToProps = state => ({
   registerErrors: getRegisterErrors(state),
 });
-
-const validate = (values, props) => {
-  let errors = {};
-  if (!values.login) {
-    errors.login = 'Required';
-  } else if (!/^\w{3,30}$/.test(values.login)) {
-    errors.login = 'Invalid login';
-  }
-  if (!values.lastname) {
-    errors.lastname = 'Required';
-  } else if (!/^[A-Za-z ]{2,30}$/.test(values.lastname)) {
-    errors.lastname = 'Invalid lastname';
-  }
-  if (!values.firstname) {
-    errors.firstname = 'Required';
-  } else if (!/^[A-Za-z ]{2,30}$/.test(values.firstname)) {
-    errors.firstname = 'Invalid firstname';
-  }
-  if (!values.password) {
-    errors.password = 'Required';
-  } else if (!/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/.test(values.password)) {
-    errors.password = 'Invalid password';
-  }
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-  if (!values.sexe) {
-    errors.sexe = 'Required';
-  } else if (!/^man|woman$/i.test(values.sexe)) {
-    errors.sexe = 'Invalid sexe';
-  }
-  if (!values.age) {
-    errors.age = 'Required';
-  } else if (!/^^[2-9][0-9]|[1][8-9]$/i.test(values.age)) {
-    errors.age = 'Invalid age';
-  }
-  return errors;
-};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

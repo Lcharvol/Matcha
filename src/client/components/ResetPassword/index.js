@@ -16,6 +16,7 @@ import { reqResetPassword } from '../../request';
 import { errorLogin, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
 import { push } from '../../history';
+import validate from '../../forms/validator';
 
 const Content = styled.div`
   position:relative;
@@ -202,7 +203,8 @@ export default compose(
         alert('NON NON NON oui oui oui il y a encore des alert en 2017');
       })
     },
-    validationSchema: getValidationSchema(),
+    validate: validate,
+    validateOnBlur: true,
     mapPropsToValues: () => ({
       ...defaultValues,
     }),

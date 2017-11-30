@@ -16,6 +16,7 @@ import { reqLostPassword } from '../../request';
 import { errorLogin, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
 import { push } from '../../history';
+import validate from '../../forms/validator';
 
 const Content = styled.div`
   position:relative;
@@ -175,18 +176,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 const mapStateToProps = state => ({
   loginErrors: getLoginErrors(state),
 });
-
-const validate = (values, props) => {
-  let errors = {};
-
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
-  }
-
-  return errors;
-};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

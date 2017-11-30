@@ -1,16 +1,17 @@
 import jwt from 'jsonwebtoken';
 import geoip from 'geoip-lite';
 import _ from 'lodash';
+import axios from 'axios';
 
 import mailer from '../../../lib/mailer';
-import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../lib/validators';
+import validate, { loginForm, registerForm, editProfilForm } from '../../../lib/validators';
 import User from '../../models/User'; // eslint-disable-line
 
 export const getInfoToUpdate = async (req, res, next) => {
   const inputUpdate = req.body;
   try {
-    await schemaEditProfil.validate(inputUpdate);
-    const infoCleaned = _.pick(inputUpdate, schemaEditProfil._nodes);
+    const err = validate(inputUpdate);
+    const infoCleaned = _.pick(inputUpdate, editProfilForm);
     if (_.isEmpty(infoCleaned)) {
       return req.Err('no one valid champ');
     }
@@ -24,7 +25,8 @@ export const getInfoToUpdate = async (req, res, next) => {
         req.infoToUpdate[index] = `{${inDb.toString()}}`;
       });
     }
-    req.infoToUpdate.interest = `{${req.infoToUpdate.interest.toString()}}`;
+    if (req.infoToUpdate.interest)
+      req.infoToUpdate.interest = `{${req.infoToUpdate.interest.toString()}}`;
     next();
   } catch (err) {
     req.Err(_.isEmpty(err.message) ? 'wrong data provided' : err.message);
@@ -34,22 +36,24 @@ export const getInfoToUpdate = async (req, res, next) => {
 export const validateRegisterForm = async (req, res, next) => {
   try {
     const user = req.body;
-    await schemaRegister.validate(user);
-    req.registerInputName = schemaRegister._nodes;
+    const err = validate(user);
+    if (err) throw err;
+    req.registerInputName = registerForm;
     next();
   } catch (err) {
-    req.Err(`${err.name} ${err.errors}`);
+    req.Err(`${err}`);
   }
 };
 
 export const validateLoginForm = async (req, res, next) => {
   try {
     const user = req.body;
-    await schemaLogin.validate(user);
-    req.registerInputName = schemaRegister._nodes;
+    const err = validate(user);
+    if (err) throw err;
+    req.registerInputName = loginForm;
     next();
   } catch (err) {
-    req.Err(err.errors);
+    req.Err(err);
   }
 };
 
@@ -105,11 +109,34 @@ export const getIp = (req, res, next) => {
   next();
 };
 
-export const getLocalisation = (req, res, next) => {
+export const getLocalisation = async (req, res, next) => {
   const { ip } = req.user;
-  const geo = geoip.lookup(ip);
-  const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
-  const userWithRange = Object.assign(req.user, range);
-  req.user = userWithRange;
-  next();
+  const {
+    config: {
+      optionGeocoder: {
+        apiKey,
+      },
+    },
+  } = req.ctx;
+  try {
+    const { data: { location } } = await axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`);
+    const range = { latitude: location.lat.toFixed(6), longitude: location.lng.toFixed(6) };
+    const userWithRange = Object.assign(req.user, range);
+    req.user = userWithRange;
+    const { data: { results } }= await axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${range.latitude},${range.longitude}`);
+    // console.log(results);
+    next();
+  } catch (err) {
+    const geo = geoip.lookup(ip);
+    const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
+    const userWithRange = Object.assign(req.user, range);
+    req.user = userWithRange;
+    next();
+  }
+      // .then((response) => console.log(response));
+  // const geo = geoip.lookup(ip);
+  // const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
+  // const userWithRange = Object.assign(req.user, range);
+  // req.user = userWithRange;
+  // next();
 };

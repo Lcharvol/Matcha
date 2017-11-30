@@ -16,6 +16,7 @@ import { getValidationSchema, defaultValues } from '../../forms/login';
 import { reqLogin } from '../../request';
 import { errorLogin, resetLoginErrors } from '../../actions/loginErrors';
 import { getLoginErrors } from '../../selectors/loginErrors';
+import validate from '../../forms/validator';
 
 const Content = styled.div`
   position:relative;
@@ -196,20 +197,6 @@ const mapStateToProps = state => ({
   loginErrors: getLoginErrors(state),
 });
 
-const validate = (values, props) => {
-  let errors = {};
-  if (!values.login) {
-    errors.login = 'Required';
-  } else if (!/^\w{3,30}$/.test(values.login)) {
-    errors.login = 'Invalid login';
-  }
-  if (!values.password) {
-    errors.password = 'Required';
-  } else if (!/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/.test(values.password)) {
-    errors.password = 'Invalid password';
-  }
-  return errors;
-};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

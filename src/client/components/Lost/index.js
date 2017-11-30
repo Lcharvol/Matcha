@@ -51,10 +51,7 @@ const ButtonContainer = styled.div`
   margin-bottom:30px;
   grid-gap: 25px;
   grid-auto-columns: minmax(150px, auto);
-  grid-template-areas: 'register inputbutton';
-  @media (max-width: 700px) {
-    grid-template-areas: 'inputbutton' 'register';
-  }
+  grid-template-areas: 'inputbutton' 'register';
 `;
 
 const ContainerStyled = styled(Container)`

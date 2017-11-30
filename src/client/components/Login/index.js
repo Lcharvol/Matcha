@@ -178,7 +178,7 @@ const Login = ({
               Register
             </LinkStyled>
             <InputButton  type='submit' form='login' value="Login" />
-            <LostLink to='/lost'>Forgot my password</LostLink>
+            <LostLink to={`/lost`}>Forgot my password</LostLink>
           </ButtonContainer>
       </ContainerStyled>
       <FacebookLogin />

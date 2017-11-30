@@ -22,7 +22,7 @@ const r = [
 const queryData = `
 INSERT INTO
 users
-(login, email, password, first_name, last_name, sexe, age, sexual_orientation, latitude, longitude, confirmed, pic1, pic2, pic3, pic4, profile_picture, popularity, interest)
+(login, email, password, firstname, lastname, sexe, age, sexualorientation, latitude, longitude, confirmed, pic1, pic2, pic3, pic4, profile_picture, popularity, interest)
 
 VALUES
 ('juliako','abarriel@student.42.fr','${p}','julia','liako','${w}','21','${h}',48.8537, 2.549, true, '${r[2]}', ' ${r[1]}', '/uploads/null', '/uploads/null', '${i[0]}', '5', '{football,parcour,enfant}'),

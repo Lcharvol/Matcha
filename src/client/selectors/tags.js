@@ -17,12 +17,11 @@ import {
   isEmpty,
   sortBy,
   uniq,
-  split,
 } from 'ramda';
 import { createSelector } from 'reselect';
 import { getUsers } from './user';
 
-export const getFlattenTags = compose(flatten, map(split(',')), pluck('interest'),  values);
+export const getFlattenTags = compose(flatten, map(), pluck('interest'),  values);
 
 export const mergeTags = compose(
   filter(identity),

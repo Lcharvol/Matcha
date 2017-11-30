@@ -24,10 +24,6 @@ const PictureContainer = styled.div`
   }
   margin:0px;
   z-index:0;
-  &:hover {
-      transition: all 0.3s;
-      box-shadow: 0 7px 15px rgba(0,0,0,0.17), 0 1px 2px rgba(0,0,0,0.17);
-  }
 `;
 
 const PictureStyled = styled.div`

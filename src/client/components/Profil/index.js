@@ -81,8 +81,8 @@ const Pictures = styled.div`
     display:flex;
     width:100%;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 `;
 
 const Throphys = styled.div`

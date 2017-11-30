@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Header, Container, Avatar, InputButton } from '../widgets';
 import { FormField } from '../../fields';
 import { withFormik } from 'formik';
-import { map, isNil, upperFirst } from 'lodash';
+import { isNil, upperFirst } from 'lodash';
 import { connect } from 'react-redux';
 import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
-import { compose } from 'ramda';
+import { compose, map, join } from 'ramda';
 import { Link } from 'react-router';
 import { reqUpdateUser } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
@@ -38,9 +38,9 @@ const EditProfilFormStyled  = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
-  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualorientation' 'interest' 'bio';
+  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualorientation' 'age' 'interest' 'bio';
   @media (min-width: 700px) {
-    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualorientation sexualorientation' 'interest interest' 'bio bio';
+    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualorientation age' 'interest interest' 'bio bio';
   }
 `;
 
@@ -187,6 +187,14 @@ const EditProfilForm = ({
         setFieldValue={setFieldValue}
       />
       <StyledFormField
+        field={getField('age')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
         field={getField('interest')}
         values={values}
         errors={errors}
@@ -267,22 +275,46 @@ const actions = {};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
+const formatInterest = compose(
+  map(tag => tag.value),
+);
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withFormik({
     handleSubmit: (user,
       { props },
     ) => {
-     const { bio, age, email, firstname, interest, lastname, lookingFor, sexualorientation } = user;
-      reqUpdateUser(({ bio, age, email, firstname, interest, lastname, lookingFor, sexualorientation })).then((res) => {
-        alert('info update see by yourself');
-        location.reload();
+     const {
+       bio,
+       age,
+       email,
+       firstname,
+       interest,
+       sexe,
+       lastname,
+       lookingFor,
+       sexualorientation
+      } = user;
+      reqUpdateUser(({
+        bio,
+        age,
+        email,
+        firstname,
+        sexe,
+        interest: formatInterest(interest).join() || '',
+        lastname,
+        lookingFor,
+        sexualorientation
+      })).then((res) => {
+        location.assign('/profil');
       }).catch(err => {
         console.log(err);
       })
     },
     validationSchema: getValidationSchema(),
     mapPropsToValues: ({ user }) => {
+      const tags = user.interest ? user.interest.split(',') : '';
       return ({
       ...user,
       firstname: user.firstname,
@@ -290,7 +322,7 @@ export default compose(
       sexe: user.sexe,
       lookingFor: user.sexualorientation,
       bio: user.bio || '',
-      interest: user.interest || '',
+      interest: map(tag => ({ value: tag, label: tag }), tags),
     })
   },
   }),

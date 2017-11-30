@@ -36,7 +36,7 @@ export const fields = {
     label: 'Interêts',
     component: TagsSelectField,
     validate: Yup.string(),
-    required: true,
+    required: false,
   },
   pictures: {
     label: 'Mes photos',

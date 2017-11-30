@@ -73,7 +73,7 @@ const service = {
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
-        const socketIds = !_.isEmpty(_user.socket_id) ? _.split(_user.socket_id, ',') : [];
+        const socketIds = _user.socket_id;
         socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
         req.userRequested = cleanUser(_user);
       } else {
@@ -175,14 +175,14 @@ const service = {
       const userReceiveLike = id;
       if (userSendLike === userReceiveLike) return req.Err('can \'t liked yourself');
       const { blocked, socket_id } = await User.load.bind({ db })(id);
-      if (_.includes(_.split(blocked, ','), userSendLike)) return req.Err('cant like because b');
+      if (_.includes(blocked, userSendLike)) return req.Err('cant like because b');
       const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
       if (count > 0) {
         await Like.delete.bind({ db })(userSendLike, userReceiveLike);
         return res.json({ details: 'unlike' });
       }
       await Like.add.bind({ db })(userSendLike, userReceiveLike);
-      const socketIds = !_.isEmpty(socket_id) ? _.split(socket_id, ',') : [];
+      const socketIds = socket_id;
       socketIds.forEach((socketId) => res.io.to(socketId).emit('like', `${req.user.login} like you`));
       return res.json({ details: 'like' });
     } catch (err) {

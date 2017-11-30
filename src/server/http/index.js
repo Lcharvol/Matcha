@@ -17,7 +17,7 @@ const bindSocketIO = (io, currentSocketId, socketIdToDelete) => async (req, res,
   if (!currentSocketId[0] || !req.user) return next();
   const { db } = req.ctx;
   const { socket_id: socketId } = req.user;
-  if (_.isEmpty(socketId) || (socketId.length > 0 && !_.includes(_.split(socketId, ','), currentSocketId[0])))
+  if (_.isEmpty(socketId) || (socketId.length > 0 && !_.includes(socketId, currentSocketId[0])))
     await User.addSocket.bind({ db })(currentSocketId[0], Number(req.user.id));
   if (socketIdToDelete[0])
     await User.deleteSocket.bind({ db })(socketIdToDelete[0], Number(req.user.id));

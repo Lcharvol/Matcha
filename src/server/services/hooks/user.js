@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import geoip from 'geoip-lite';
 import _ from 'lodash';
-import axios from 'axios';
 
 import mailer from '../../../lib/mailer';
 import { schemaRegister, schemaLogin, schemaEditProfil } from '../../../lib/validators';
@@ -16,16 +15,16 @@ export const getInfoToUpdate = async (req, res, next) => {
       return req.Err('no one valid champ');
     }
     req.infoToUpdate = infoCleaned;
-
     const contains = _.intersection(Object.keys(inputUpdate), ['blocked']);
     if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude'); // keep the ==
     if (contains.length > 0) {
       contains.forEach(index => {
-        const inDb = req.user[index] ? req.user[index].split(',') : [];
+        const inDb = req.user[index];
         inDb.push(req.infoToUpdate[index]);
-        req.infoToUpdate[index] = inDb.toString();
+        req.infoToUpdate[index] = `{${inDb.toString()}}`;
       });
     }
+    req.infoToUpdate.interest = `{${req.infoToUpdate.interest.toString()}}`;
     next();
   } catch (err) {
     req.Err(_.isEmpty(err.message) ? 'wrong data provided' : err.message);

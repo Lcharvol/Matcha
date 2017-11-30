@@ -25,7 +25,7 @@ users
 (login, email, password, firstname, lastname, sexe, age, sexualorientation, latitude, longitude, confirmed, pic1, pic2, pic3, pic4, profile_picture, popularity, interest)
 
 VALUES
-('juliako','abarriel@student.42.fr','${p}','julia','liako','${w}','21','${h}',48.8537, 2.549, true, '${r[2]}', ' ${r[1]}', '/uploads/null', '/uploads/null', '${i[0]}', '5', '{football,parcour,enfant}'),
+('juliako','abarriel@student.42.fr','${p}','julia','liako','${w}','21','${h}',48.8537, 2.549, true, '${r[2]}', '${r[1]}', '/uploads/null', '/uploads/null', '${i[0]}', '5', '{football,parcour,enfant}'),
 ('jpascal','jpascal${_}','${p}','julie','pascal','${w}','45','${h}',48.8856123, 2.3236024, true, '${r[4]}', '${r[6]}', '/uploads/null', '/uploads/null', '${i[1]}', '15', '{football,parcour,rugby}'),
 ('marnaud','marnaud${_}','${p}','mariana','arnaud','${w}','35','${h}',48.8724036, 2.3315904, true, '${r[7]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[2]}', '25', '{football,maquillage,tennis}'),
 ('mquesada','mquesada${_}','${p}','marina','quesada','${w}','19','${b}',48.8724036, 2.3315904, true, '${r[8]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[3]}', '35', '{football,enfant,tenis}'),

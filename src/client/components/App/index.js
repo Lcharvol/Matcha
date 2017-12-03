@@ -4,9 +4,9 @@ import { compose } from 'ramda';
 import { lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import { loadNotifications } from '../../actions/notifications';
 import { loadUser, loadUsers } from '../../actions/users';
-import { reqGetAll, reqMe } from '../../request';
+import { reqGetAll, reqMe, reqGetNotifs } from '../../request';
 
 const AppStyled = styled.div`
   position:relative;
@@ -23,7 +23,7 @@ const App = (props) => (
   </AppStyled>
 )
 
-const actions = { loadUsers, loadUser };
+const actions = { loadUsers, loadUser, loadNotifications };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
@@ -32,7 +32,16 @@ const enhance = compose(
   lifecycle({
       componentDidMount() {
         reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
+        .catch(err => {
+            console.log('zbob', err);
+        });
         reqMe(this.props.loadUser);
+        reqGetNotifs()
+        .then(notifications => {
+          this.props.loadNotifications(notifications)
+        })
+        .catch(err => {
+        });
       },
   }),
 )

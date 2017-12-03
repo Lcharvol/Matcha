@@ -1,5 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { map } from 'ramda';
+import { resetUnreadNotifications } from '../../actions/notifications';
+import { bindActionCreators } from 'redux';
+import { getNotifications, getUnreadNotifications } from '../../selectors/notifications';
 import { Button, Intent, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
 import Notification from './Notification';
 
@@ -22,6 +29,7 @@ const IconContainer = styled.div`
 
 const Text = styled.p`
     margin:0;
+    margin-left:5px;
 `;
 
 const Title = styled.p`
@@ -34,6 +42,8 @@ const Title = styled.p`
 
 const Content = styled.div`
     width:300px;
+    max-height:500px;
+    overflow: scroll;
 `;
 
 const TitleContainer = styled.div`
@@ -45,24 +55,47 @@ const TitleContainer = styled.div`
     height:40px;
 `;
 
-const Notifications = () => (
+const Notifications = ({ notifications = [], unreadNotifications = [], resetUnreadNotifications}) => (
     <Popover
         interactionKind={PopoverInteractionKind.CLICK}
         position={Position.BOTTOM_RIGHT}
     >
         <IconContainer>
-            <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
-            <Text>0</Text>
+            <Icon onClick={
+                () => resetUnreadNotifications()
+            }className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
+            <Text>{unreadNotifications.length}</Text>
         </IconContainer>
         <Content>
             <TitleContainer>
                 <Title>Notification</Title>
             </TitleContainer>
-            <Notification />
-            <Notification />
-            <Notification />
+            {map(notification => 
+                <Notification
+                    key={notification.id}
+                    notification={notification}
+                />
+            , notifications)}
         </Content>
     </Popover>
 );
 
-export default Notifications;
+Notification.propTypes = {
+    notifications: PropTypes.array,
+    unreadNotifications: PropTypes.array,
+    resetUnreadNotifications: PropTypes.func.isRequired,
+}
+const actions = { resetUnreadNotifications };
+
+const mapStateToProps = state => ({
+  notifications: getNotifications(state),
+  unreadNotifications: getUnreadNotifications(state),
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+const enhance = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+)
+
+export default enhance(Notifications);

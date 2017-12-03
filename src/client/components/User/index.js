@@ -156,7 +156,6 @@ const User = ({ me, user, statusLike, handleStatusLike }) => {
     if (isEmpty(user)) {
         return null;
     }
-    console.log(user);
     return (
         <MainContainer>
             <Header

@@ -28,14 +28,20 @@ const Avatar = styled.div`
     background-repeat: no-repeat;
 `;
 
-const Notification = ({ user = {}}) => (
+const Text = styled.p`
+    margin:0;
+    margin-left:10px;
+`;
+
+const Notification = ({ notification = {}}) => (
     <NotificationContainer>
         <Avatar picture={'https://cdn.intra.42.fr/users/medium_lcharvol.jpg'}/>
+        <Text>{notification.details}</Text>
     </NotificationContainer>
 );
 
 Notification.propTypes = {
-    user: PropTypes.object,
+    notification: PropTypes.object,
 };
 
 export default Notification;

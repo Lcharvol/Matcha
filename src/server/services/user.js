@@ -180,15 +180,21 @@ const service = {
       if (userSendLike === userReceiveLike) return req.Err('can \'t liked yourself');
       const { blocked, socket_id } = await User.load.bind({ db })(id);
       if (_.includes(blocked, userSendLike)) return req.Err('cant like because b');
-      const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
-      if (count > 0) {
-        await Like.delete.bind({ db })(userSendLike, userReceiveLike);
-        return res.json({ details: 'unlike' });
+      console.log(userSendLike, userReceiveLike);
+      const isAlreadyLike = await Notif.getSome.bind({ db })(userSendLike, userReceiveLike, 'like');
+      let detailsLike = '';
+      let booleanLike = true;
+      if (Number(isAlreadyLike.count) > 0) {
+        await Notif.deleteLike.bind({ db })(userSendLike, userReceiveLike);
+        detailsLike = `${req.user.login} don't like you anymore`;
+        booleanLike = false;
+      } else {
+        await Notif.add.bind({ db })(userSendLike, userReceiveLike, `${req.user.login} like your profile`, 'like');
+        detailsLike = `${req.user.login} like your profile`;
       }
-      await Like.add.bind({ db })(userSendLike, userReceiveLike);
       const socketIds = socket_id;
-      socketIds.forEach((socketId) => res.io.to(socketId).emit('like', `${req.user.login} like you`));
-      return res.json({ details: 'like' });
+      socketIds.forEach((socketId) => res.io.to(socketId).emit('like', detailsLike));
+      return res.json({ details: booleanLike ? 'like' : 'unlike' });
     } catch (err) {
       console.log(err);
       req.Err('failed to like the user');

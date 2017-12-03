@@ -12,6 +12,7 @@ import FacebookLogin from './FacebookLogin';
 import GoogleLogin from './GoogleLogin';
 import InputButton from './InputButton';
 import ErrorsContainer from './ErrorsContainer';
+import ConnectedInfo from './ConnectedInfo';
 
 export {
   Logo,
@@ -28,4 +29,5 @@ export {
   GoogleLogin,
   InputButton,
   ErrorsContainer,
+  ConnectedInfo,
 };

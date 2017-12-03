@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { map, isEmpty, isNil, upperFirst } from 'lodash';
 import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
+import { getUser } from '../../selectors/user';
 import { Header, Avatar, Picture, Tag } from '../widgets';
 import { reqGetUser, reqGetLike, reqGetLikeStatus, reqUpdateUser, reqMe } from '../../request';
 
@@ -142,7 +143,7 @@ const BlockButton = styled.i`
     }
 `;
 
-const User = ({ user, statusLike, handleStatusLike }) => {
+const User = ({ me, user, statusLike, handleStatusLike }) => {
     if (isEmpty(user)) {
         return null;
     }
@@ -155,7 +156,7 @@ const User = ({ user, statusLike, handleStatusLike }) => {
             <ProfilContainer>
                 <ProfilHeader background={user.pictures[0]}>
                     <HeaderContainer>
-                        {!isEmpty(statusLike) && <LikeButton
+                        {!isEmpty(statusLike) && me.profile_picture !== '/uploads/null' && <LikeButton
                             color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
                             className={`fa fa-heart${statusLike === 'like' ? '' : '-o'}`}
                             aria-hidden="true"
@@ -206,9 +207,15 @@ const User = ({ user, statusLike, handleStatusLike }) => {
 
 User.propTypes = {
     user: PropTypes.object.isRequired,
+    me: PropTypes.object.isRequired,
 }
 
+const mapStateToProps = state => ({
+    me: getUser(state),
+});
+
 const enhance = compose(
+    connect(mapStateToProps),
     withState('user', 'loadUser', {}),
     withStateHandlers(
         {

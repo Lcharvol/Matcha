@@ -1,4 +1,4 @@
-const server = { host: '127.0.0.1', port: 3000 };
+const server = { host: '0.0.0.0', port: 3000 };
 const serverUrl = `http://${server.host}:${server.port}`;
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -10,13 +10,8 @@ module.exports = {
     hot: true,
     inline: true,
     stats: 'errors-only',
-    host: '127.0.0.1',
+    host: '0.0.0.0',
+    disableHostCheck: true,
     port: 3000,
-    proxy: {
-      '/api': {
-        target: serverUrl,
-        secure: false,
-      }
-    },
   },
 }

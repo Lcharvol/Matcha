@@ -1,5 +1,5 @@
 /* eslint-disable */
-const queryDrop = 'DROP TABLE users';
+const queryDrop = 'DROP TABLE users, likes';
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;
 
 export const resetDb = async (db) => db.none(queryDrop).then(() => process.exit());
@@ -44,7 +44,7 @@ VALUES
 ('lcharvol','lcharvl${_}','${p}','lucals','charvol','man','52','${b}',48.8882574, 2.3168467, true, '${r[1]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[15]}', '25', '{football,rugby}', '75017', 'Paris'),
 ('tferrari','tferrari${_}','${p}','tony','ferrari','man','65','${b}',48.8852991, 2.339703, true, '${r[5]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[16]}', '45', '{football,parcour}', '75017', 'Paris'),
 ('tboivin','tboivin${_}','${p}','thibault','boivin','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}', '75017', 'Paris'),
-('abarriell','allan.barrielle${_}','${p}','allan','barrielle','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}', '75017', 'Paris'),
+('abarriel','allan.barrielle${_}','${p}','allan','barrielle','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}', '75017', 'Paris'),
 ('aboudjmen','aboudjmen${_}','${p}','adams','boudj','man','19','${b}',48.770936, 2.5586286, true, '${r[6]}', '${r[1]}', '${r[9]}', '${r[3]}', '${i[18]}', '23', '{football,parcour}', '75017', 'Paris'),
 ('lduval','lduval${_}','${p}','lucas','duval','man','37','${h}',47.8889781, 2.1386827, true, '${r[7]}', '${r[2]}', '${r[3]}', '${r[4]}', '${i[19]}', '56', '{football,rugby}', '75017', 'Paris'),
 ('paulokok','paul.barrielle${_}','${p}','paul','ribaut','${w}','20','${h}',43.3453801,5.4707066, true, '${r[4]}', '${r[9]}', '${r[1]}', '${r[2]}', '${i[20]}', '87', '{tennis,enfant,football}', '75017', 'Paris'),

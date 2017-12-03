@@ -123,20 +123,16 @@ export const getLocalisation = async (req, res, next) => {
     const range = { latitude: location.lat.toFixed(6), longitude: location.lng.toFixed(6) };
     const userWithRange = Object.assign(req.user, range);
     req.user = userWithRange;
-    const { data: { results } }= await axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${range.latitude},${range.longitude}`);
-    // console.log(results);
+    const { data: { results } } = await axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${range.latitude},${range.longitude}`);
+    const { long_name: postal_code } = results[0].address_components[6];
+    const { long_name: city } = results[0].address_components[3];
+    req.user = Object.assign(req.user, { postal_code, city });
     next();
   } catch (err) {
     const geo = geoip.lookup(ip);
     const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
     const userWithRange = Object.assign(req.user, range);
-    req.user = userWithRange;
+    req.user = Object.assign(userWithRange, { postal_code: '75017', city: 'Paris' });
     next();
   }
-      // .then((response) => console.log(response));
-  // const geo = geoip.lookup(ip);
-  // const range = { latitude: geo.ll[0], longitude: geo.ll[1] };
-  // const userWithRange = Object.assign(req.user, range);
-  // req.user = userWithRange;
-  // next();
 };

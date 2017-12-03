@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 
 import { Header, Container, Avatar, InputButton } from '../widgets';
 import { FormField } from '../../fields';
-import { reqUpdateUser } from '../../request';
+import { reqUpdateUser, reqDeleteUser } from '../../request';
 import { getValidationSchema, defaultValues, getField } from '../../forms/editProfil';
 import { getUser } from '../../selectors/user';
 import validate from '../../forms/validator';
@@ -137,6 +137,9 @@ const StyledFormField = styled(FormField)`
   grid-area: ${({ field }) => field.name};
 `;
 
+const LostLink = styled(Link)`
+margin:auto;
+`;
 
 const EditProfilForm = ({
   handleSubmit,
@@ -217,6 +220,19 @@ const EditProfilForm = ({
   );
 };
 
+const handleDeleteAccount =  (evt) => {
+  evt.preventDefault();
+  const resp = confirm("Press Ok if you sure you want to delete your account");
+  if (resp) {
+    reqDeleteUser()
+      .then(resp => {
+        localStorage.removeItem('matchaToken');
+        location.reload();
+      }).catch(err => {
+        console.log('err');
+      });
+  }
+};
 class EditProfil extends Component {
   render () {
     const {
@@ -258,6 +274,8 @@ class EditProfil extends Component {
               setFieldValue={setFieldValue}
               {...props}
             />
+            <LostLink to={`/lost`}>Change my password</LostLink>
+            <LostLink onClick={handleDeleteAccount}>Delete My account</LostLink>
             <ButtonContainer>
               <InputButton type="submit" form="editProfil" value="Update" />
             </ButtonContainer>

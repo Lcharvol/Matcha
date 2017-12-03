@@ -14,6 +14,11 @@ export const reqAuth = () => axios({
   url: 'user',
 }).catch(err => err);
 
+export const reqDeleteUser = () => axios({
+  method: 'delete',
+  url: 'user',
+});
+
 export const reqGetUser = (id) => axios({
   method: 'get',
   url:`user?id=${id}`,
@@ -100,9 +105,9 @@ export const reqUpdateUser = (data) => axios.put('user', {
   return data;
 }).catch(err => err);
 
-export const reqLostPassword = (email) => axios({
+export const reqLostPassword = (login) => axios({
   method: 'get',
-  url:`user/lost?email=${email}`,
+  url:`user/lost?login=${login}`,
 }).then(({ data, status }) => {
   if (status === 201)
     throw data.details;

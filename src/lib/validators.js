@@ -55,7 +55,17 @@ const validate = (values, props) => {
   }
   if (_.includes(keys, 'blocked') && !values.blocked) {
     errors.blocked = 'Required';
-  } else if (values.blocked && !/\d$/i.test(values.blocked)) {
+  } else if (values.blocked && !/\d.*$/i.test(values.blocked)) {
+    errors.blocked = 'Invalid blocked';
+  }
+  if (_.includes(keys, 'postal_code') && !values.blocked) {
+    errors.blocked = 'Required';
+  } else if (values.blocked && !/\d.*$/i.test(values.blocked)) {
+    errors.blocked = 'Invalid blocked';
+  }
+  if (_.includes(keys, 'city') && !values.blocked) {
+    errors.blocked = 'Required';
+  } else if (values.blocked && !/\w.*$/i.test(values.blocked)) {
     errors.blocked = 'Invalid blocked';
   }
   if (_.isEmpty(errors)) return false;

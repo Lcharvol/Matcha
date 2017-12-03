@@ -13,7 +13,7 @@ const NotificationContainer = styled.div`
     cursor: pointer;
     transition: all 0.3s ease;
     &:hover {
-        padding-left:25px; 
+        padding-left:10px; 
     }
 `;
 
@@ -28,10 +28,14 @@ const Avatar = styled.div`
     background-repeat: no-repeat;
 `;
 
-const Notification = () => (
+const Notification = ({ user = {}}) => (
     <NotificationContainer>
         <Avatar picture={'https://cdn.intra.42.fr/users/medium_lcharvol.jpg'}/>
     </NotificationContainer>
 );
+
+Notification.propTypes = {
+    user: PropTypes.object,
+};
 
 export default Notification;

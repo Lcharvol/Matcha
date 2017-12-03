@@ -51,7 +51,9 @@ const Notifications = () => (
         position={Position.BOTTOM_RIGHT}
     >
         <IconContainer>
-            <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
+            <Icon onClick={
+                () => console.log('reset notif')
+            }className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
             <Text>0</Text>
         </IconContainer>
         <Content>

@@ -3,8 +3,8 @@ import { SelectField }from '../fields/SelectField';
 import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 export const fields = {
-  email: {
-    label: 'Email',
+  login: {
+    label: 'login',
     component: InputField,
     validate: false,
     required: true,

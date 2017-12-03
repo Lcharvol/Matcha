@@ -18,7 +18,6 @@ const whichSexe = (sexe, orientation) => {
 export const getFilterAndSort = async (req, res, next) => {
   try {
     req.f = {};
-
     const { sort, filter } = JSON.parse(req.query.f);
     req.filter = filter;
     req.sort = sort.split(',');
@@ -68,13 +67,13 @@ export const getFilterGeoAndInterest = (req, res, next) => {
       req.users = _.map(sortby, (userSorted, index) => ({ ...userSorted, distance: usersSortbyDistance[index].distance }));
     }
     if (req.sort[0] === 'interest') {
-      let sortbyInterest = _.sortBy(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length);
+      let sortbyInterest = _.sortBy(req.users, ({ interest }) => _.intersection(interest, myInterest).length);
       if (_.toUpper(req.sort[1]) === 'DESC') sortbyInterest = _.reverse(sortbyInterest);
       req.users = sortbyInterest;
     }
     if (!byFilter)
     if (byFilter === 'interest') {
-      req.users = _.filter(req.users, ({ interest }) => _.intersection(interest.split(','), myInterest.split(',')).length >= Number(valueFilter));
+      req.users = _.filter(req.users, ({ interest }) => _.intersection(interest, myInterest).length >= Number(valueFilter));
     }
     if (byFilter === 'location') {
       req.users = _.filter(

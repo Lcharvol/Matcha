@@ -35,6 +35,7 @@ const service = {
       sendConfirmEmail(newUser, req.ctx);
       res.json({ details: 'Succesfully register, please check your mail' });
     } catch (err) {
+      console.log(err);
       req.Err('User already register');
     }
   },
@@ -145,9 +146,9 @@ const service = {
   },
   async lostPassword(req, res) {
     const { config: { routes: { resetPassword }, urlClient }, db } = req.ctx;
-    const { email } = req.query;
+    const { login } = req.query;
     try {
-      const user = await User.EmailVerif.bind({ db })(email);
+      const user = await User.getByLogin.bind({ db })(login);
       const token = jwt.sign({ sub: user.id }, user.password);
       mailer(
         user.email,
@@ -156,7 +157,7 @@ const service = {
       );
       res.json({ details: 'Email sent thank you' });
     } catch (err) {
-      req.Err('Pas bon mail');
+      req.Err(err);
     }
   },
   async getConnectedUser(req, res) {

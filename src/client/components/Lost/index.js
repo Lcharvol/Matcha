@@ -38,7 +38,7 @@ const LostFormStyled = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(100px, auto);
-  grid-template-areas: 'email';
+  grid-template-areas: 'login';
 `;
 
 const StyledFormField = styled(FormField)`
@@ -109,7 +109,7 @@ const LostForm = ({
     return (
       <LostFormStyled id="lost" onSubmit={handleSubmit}>
         <StyledFormField
-          field={getField('email')}
+          field={getField('login')}
           values={values}
           errors={errors}
           touched={touched}
@@ -182,12 +182,14 @@ export default compose(
   withFormik({
     handleSubmit: (
       {
-        email,
+        login,
       },
       { props },
     ) => {
-      reqLostPassword(email).then((res) => {
+      reqLostPassword(login).then((res) => {
         push('/login');
+        localStorage.removeItem('matchaToken');
+        alert('check your mail');
         resetLoginErrors();
       }).catch(err => {
         alert('NON NON NON oui oui oui il y a encore des alert en 2017');

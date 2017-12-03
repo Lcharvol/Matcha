@@ -55,7 +55,7 @@ const searchTypes = [
     { key: 'age', label: 'Search by age'},
     { key: 'popularity', label: 'Search by popularity'},
     { key: 'location', label: 'Search by location'},
-    { key: 'tags', label: 'Search by commun tags'},
+    { key: 'interest', label: 'Search by commun tags'},
 ];
 
 const searchValue = {

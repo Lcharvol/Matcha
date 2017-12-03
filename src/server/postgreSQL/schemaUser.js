@@ -23,6 +23,7 @@ const query = `CREATE TABLE IF NOT EXISTS users (
   confirmed BOOLEAN DEFAULT FALSE,
   connected BOOLEAN DEFAULT FALSE,
   postal_code INTEGER,
+  city VARCHAR,
   socket_id TEXT[] DEFAULT '{}',
   cotime TIMESTAMPTZ
 );`;

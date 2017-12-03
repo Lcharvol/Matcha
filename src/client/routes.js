@@ -18,7 +18,7 @@ export default (
     <Route exact path="/" component={() => <Auth><Home /></Auth>}/>
     <Route exact path="/login" component={() => <Auth revertCheck={true} path="/login" ><Login /></Auth>}/>
     <Route exact path="/register" component={() => <Auth revertCheck={true} path="/register"><Register /></Auth>}/>
-    <Route exact path="/lost" component={() => <Auth revertCheck={true} path="/lost"><Lost /></Auth>}/>
+    <Route exact path="/lost" component={() => <Lost />}/>
     <Route exact path="/reset" component={() => <Auth revertCheck={true} path="/reset"><ResetPassword /></Auth>}/>
     <Route exact path="/editprofil" component={() => <Auth><EditProfil /></Auth>}/>
     <Route exact path="/profil" component={() => <Auth><Profil /></Auth>}/>

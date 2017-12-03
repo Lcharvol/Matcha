@@ -41,10 +41,10 @@ VALUES
 ('mariab','maria.barrielle${_}','${p}','maria','barrielle','${w}','31','${h}',48.8871477, 2.2541669, true, '${r[1]}', '${r[2]}', '${r[7]}', '${r[4]}', '${i[13]}', '5', '{enfant}'),
 ('zoeb','zoe.barrielle${_}','${p}','zoe','barrielle','${w}','18','${h}',48.902219, 2.3513199, true, '${r[8]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[14]}', '5', '{tennis,passion}'),
 
-('lcharvoll','lcharvl${_}','${p}','lucals','charvol','man','52','${b}',48.8882574, 2.3168467, true, '${r[1]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[15]}', '25', '{football,rugby}'),
+('lcharvol','lcharvl${_}','${p}','lucals','charvol','man','52','${b}',48.8882574, 2.3168467, true, '${r[1]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[15]}', '25', '{football,rugby}'),
 ('tferrari','tferrari${_}','${p}','tony','ferrari','man','65','${b}',48.8852991, 2.339703, true, '${r[5]}', '/uploads/null', '/uploads/null', '/uploads/null', '${i[16]}', '45', '{football,parcour}'),
 ('tboivin','tboivin${_}','${p}','thibault','boivin','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}'),
-('abarriel','allan.barrielle${_}','${p}','allan','barrielle','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}'),
+('abarriell','allan.barrielle${_}','${p}','allan','barrielle','man','22','${h}',48.8249724, 2.4423883, true, '${r[4]}', '${r[1]}', '${r[5]}', '${r[4]}', '${i[17]}', '21', '{football,enfant,parcour,tennis,maquillage,sexe}'),
 ('aboudjmen','aboudjmen${_}','${p}','adams','boudj','man','19','${b}',48.770936, 2.5586286, true, '${r[6]}', '${r[1]}', '${r[9]}', '${r[3]}', '${i[18]}', '23', '{football,parcour}'),
 ('lduval','lduval${_}','${p}','lucas','duval','man','37','${h}',47.8889781, 2.1386827, true, '${r[7]}', '${r[2]}', '${r[3]}', '${r[4]}', '${i[19]}', '56', '{football,rugby}'),
 ('paulokok','paul.barrielle${_}','${p}','paul','ribaut','${w}','20','${h}',43.3453801,5.4707066, true, '${r[4]}', '${r[9]}', '${r[1]}', '${r[2]}', '${i[20]}', '87', '{tennis,enfant,football}'),

@@ -142,6 +142,15 @@ const BlockButton = styled.i`
     }
 `;
 
+const LostLink = styled(Link)`
+margin:auto;
+display:auto;
+`;
+
+const handleReportFake = () => {
+  alert('Thank you user reported');
+};
+
 const User = ({ user, statusLike, handleStatusLike }) => {
     if (isEmpty(user)) {
         return null;
@@ -199,6 +208,7 @@ const User = ({ user, statusLike, handleStatusLike }) => {
                 <Pictures>
                     {map(user.pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}
                 </Pictures>
+                <LostLink onClick={handleReportFake}>Report User</LostLink>
             </ProfilContainer>
         </MainContainer>
     )

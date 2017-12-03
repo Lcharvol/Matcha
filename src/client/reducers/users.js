@@ -32,6 +32,7 @@ const reducer = (state = initialState, action) => {
           value: valueFilter,
         }
       }
+      console.log('SEARCH_USERS: ', query);
       reqGetAll((users) => action.asyncDispatch(loadUsers(users)), query);
       return state;
     }
@@ -42,11 +43,17 @@ const reducer = (state = initialState, action) => {
       return {...state, search: { ...state.search, value: action.value }};
     }
     case SORT_USERS: {
+      const { by: byFilter, value: valueFilter } = state.search;
       const { by, order } = state.sort;
       const newOrder = by === action.sortBy && order === 'asc' ? 'desc' : 'asc';
       const query = {
-        sort: `${action.sortBy},${newOrder}`,
+        sort: `${by},${order}`,
+        filter: {
+          by: byFilter,
+          value: valueFilter,
+        }
       }
+      console.log('SORT_USERS: ', query);
       reqGetAll((users) => action.asyncDispatch(loadUsers(users)), query);
       return { ...state, sort: { by: action.sortBy, order: newOrder } };
     }

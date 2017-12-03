@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withStateHandlers } from 'recompose';
 import PropTypes from 'prop-types';
+import { ConnectedInfo } from '../widgets';
 import { Link } from 'react-router';
 
 const Container = styled(Link)`
@@ -48,6 +49,7 @@ const Name = styled.p`
 `;
 
 const Shadow = styled.div`
+    position:relative;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -81,6 +83,7 @@ const UserSugest = ({
         >
             {displayShadow &&
                 <Shadow>
+                    <ConnectedInfo user={user}/>
                     <ShadowIcon className="fa fa-search" aria-hidden="true" style={{ textDecoration: 'none !important'}}/>
                 </Shadow>
             }

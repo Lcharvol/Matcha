@@ -253,7 +253,7 @@ const enhance = compose(
         },
     ),
     lifecycle({
-        componentWillMount() {
+        componentDidMount() {
             reqGetUser(Number(window.location.pathname.substr(6)))
             .then(user => {
               reqGetLikeStatus(user.id)

@@ -26,25 +26,42 @@ const Text = styled.p`
 
 const Title = styled.p`
     margin-bottom:10px;
-    font-size:1.5em;
+    font-size:1.3em;
+    color:rgba(244, 92, 67, 0.85);
+    margin:0;
+    margin-left:15px;
+`;
+
+const Content = styled.div`
+    width:300px;
+`;
+
+const TitleContainer = styled.div`
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color:white;
+    box-shadow:inset 0 0 0.4px rgb(180,180,180);
+    height:40px;
 `;
 
 const Notifications = () => (
     <Popover
         interactionKind={PopoverInteractionKind.CLICK}
-        popoverClassName="pt-popover-content-sizing"
         position={Position.BOTTOM_RIGHT}
     >
         <IconContainer>
             <Icon className="fa fa-bell-o" aria-hidden="true" title="Notification"/>
             <Text>0</Text>
         </IconContainer>
-        <div>
-            <Title>Notification</Title>
+        <Content>
+            <TitleContainer>
+                <Title>Notification</Title>
+            </TitleContainer>
             <Notification />
             <Notification />
             <Notification />
-        </div>
+        </Content>
     </Popover>
 );
 

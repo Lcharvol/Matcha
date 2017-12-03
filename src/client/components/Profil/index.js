@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router';
+import axios from 'axios';
+import FormData from 'form-data';
 
 import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
 import { reqMe, reqAddImg } from '../../request';
@@ -124,6 +126,7 @@ const FakeContent = styled.div`
     background-color:rgb(235,235,235);
 `;
 
+const imgToString = ['profile_picture', 'pic1', 'pic2', 'pic3', 'pic4'];
 class Profil extends Component {
 
 state = {
@@ -135,14 +138,19 @@ handleFileUpload(e, id) {
     this.setState({ files: this.state.files });
 }
 
-handleChangeFile(id) {
+async handleChangeFile(id) {
     if (isNil(this.state.files[id])) {
         console.log('pas de fichier')
     }
     else {
-        reqAddImg({ pic1: this.state.files[id] })
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
+      const form = new FormData();
+      form.append(imgToString[id], this.state.files[id], this.state.files[id].name);
+      const matchaToken = localStorage.getItem('matchaToken');
+      axios.post(`http://127.0.0.1:3004/api/user/add_img?matchaToken=${matchaToken}`, form, {
+        headers: { 'content-type': 'multipart/form-data' }
+      }).then(result => {
+        location.reload();
+      }).catch(err => alert('Failed to upload img'));
     }
 }
 
@@ -193,31 +201,31 @@ handleChangeFile(id) {
                         <InlineBlock>
                             <Text>Profil picture</Text>
                             <Spacer />
-                            <input type="file" onChange={event => this.handleFileUpload(event, 0)} />
+                            <input type="file" accept="image/*" onChange={event => this.handleFileUpload(event, 0)} />
                             <button onClick={() => this.handleChangeFile(0)}>Change</button>
                         </InlineBlock>
                         <InlineBlock>
                             <Text>Picture 1</Text>
                             <Spacer />
-                            <input type="file" onChange={event => this.handleFileUpload(event, 1)} />
+                            <input type="file" accept="image/*" onChange={event => this.handleFileUpload(event, 1)} />
                             <button onClick={() => this.handleChangeFile(1)}>Change</button>
                         </InlineBlock>
                         <InlineBlock>
                             <Text>Picture 2</Text>
                             <Spacer />
-                            <input type="file" onChange={event => this.handleFileUpload(event, 2)} />
+                            <input type="file" accept="image/*" onChange={event => this.handleFileUpload(event, 2)} />
                             <button onClick={() => this.handleChangeFile(2)}>Change</button>
                         </InlineBlock>
                         <InlineBlock>
                             <Text>Picture 3</Text>
                             <Spacer />
-                            <input type="file" onChange={event => this.handleFileUpload(event, 3)} />
+                            <input type="file" accept="image/*" onChange={event => this.handleFileUpload(event, 3)} />
                             <button onClick={() => this.handleChangeFile(3)}>Change</button>
                         </InlineBlock>
                         <InlineBlock>
                             <Text>Picture 4</Text>
                             <Spacer />
-                            <input type="file" onChange={event => this.handleFileUpload(event, 4)} />
+                            <input type="file" accept="image/*" onChange={event => this.handleFileUpload(event, 4)} />
                             <button onClick={() => this.handleChangeFile(4)}>Change</button>
                         </InlineBlock>
                     </InlineBlock>

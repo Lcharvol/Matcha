@@ -9,6 +9,7 @@ const axios = Axios.create({
   headers: {'Authorization': "Bearer " + matchaToken},
 })
 
+
 export const reqAuth = () => axios({
   method: 'get',
   url: 'user',
@@ -122,13 +123,6 @@ export const reqResetPassword = (data) => axios.put('user/reset', {
   return data;
 });
 
-export const reqAddImg = (data) => axios.post('user/add_img', {
-  ...data,
-}).then(({ data, status }) => {
-  if (status === 201)
-    throw data;
-  return data;
-});
 
 // export const reqResetPassword = (data) => axios({
 //   method: 'post',

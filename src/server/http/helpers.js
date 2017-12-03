@@ -40,8 +40,18 @@ export const bindLogger = (req, res, next) => {
   };
   next();
 };
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../../../public/uploads/'));
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, `${Date.now()}${Math.random().toString()}.jpg`);
+  },
+});
 
 const upload = multer({
+  storage,
   dest: path.join(__dirname, '../../../public/uploads/'),
   limits: {
     fileSize: 2000000,
@@ -52,7 +62,7 @@ const upload = multer({
   { name: 'pic2', maxCount: 1 },
   { name: 'pic3', maxCount: 1 },
   { name: 'pic4', maxCount: 1 },
-  { name: 'profile_picture', maxCount: 1 }
+  { name: 'profile_picture', maxCount: 1 },
 ]);
 
 export const uploadImage = (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next());

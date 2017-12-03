@@ -8,10 +8,9 @@ export const addImg = async (req, res) => {
     const { user: { id }, ctx: { db } } = req;
     const { profile_picture, pic1, pic2, pic3, pic4 } = req.files;
     const [[pictures]] = _.filter(req.files, (picture) => picture !== undefined);
-
     if (!pictures) return req.Err('Failed to upload image');
     const obj = {};
-    obj[pictures.fieldname] = `/upload/${pictures.filename}`;
+    obj[pictures.fieldname] = `/uploads/${pictures.filename.slice(0,-4)}`;
     const user = await User.update.bind({ db })(obj, Number(id));
     res.json({ details: 'Succesfully update your picutre' });
   }

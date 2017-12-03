@@ -9,6 +9,13 @@ import User from '../../models/User'; // eslint-disable-line
 
 export const getInfoToUpdate = async (req, res, next) => {
   const inputUpdate = req.body;
+  const {
+    config: {
+      optionGeocoder: {
+        apiKey,
+      },
+    },
+  } = req.ctx;
   try {
     const err = validate(inputUpdate);
     const infoCleaned = _.pick(inputUpdate, editProfilForm);
@@ -27,6 +34,13 @@ export const getInfoToUpdate = async (req, res, next) => {
     }
     if (req.infoToUpdate.interest)
       req.infoToUpdate.interest = `{${req.infoToUpdate.interest.toString()}}`;
+    if (req.infoToUpdate.postal_code) {
+      const { data: { results } } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=04200+FR&key=${apiKey}`);
+      const { location: { lat: latitude, lng: longitude } } = results[0].geometry;
+      if (latitude && longitude)
+        req.infoToUpdate = Object.assign(req.infoToUpdate, { latitude, longitude });
+    }
+    console.log(req.infoToUpdate);
     next();
   } catch (err) {
     req.Err(_.isEmpty(err.message) ? 'wrong data provided' : err.message);
@@ -56,7 +70,6 @@ export const validateLoginForm = async (req, res, next) => {
     req.Err(err);
   }
 };
-
 
 export const checkIfConfirmedAndReturnUser = async (req, res, next) => {
   const { login } = req.body;

@@ -1,26 +1,22 @@
 /* eslint-disable */
-import R from 'ramda';
+import _ from 'lodash';
 
 import User from '../../models/User';
 
 export const addImg = async (req, res) => {
-  const imgs = {};
-  const { user: { id }, ctx: { db } } = req;
-  const { profile_picture } = req.files;
-  let path = null;
-  if (req.files.pictures) {
-    req.files.pictures.forEach((img, index) => {
-      imgs[`photo_${index + 1}`] = `/uploads/${img.filename}`;
-    });
-  }
-  if (profile_picture) {
-    path = `/uploads/${req.files.profile_picture[0].filename}`;
-  }
   try {
-    const imgsPath = await User.addImg.bind({ db })(imgs, path, id);
-    res.json({ details: R.pick(['photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5'], imgsPath) });
-  } catch (err) {
-    req.Err('Failed to authenticate');
+    const { user: { id }, ctx: { db } } = req;
+    const { profile_picture, pic1, pic2, pic3, pic4 } = req.files;
+    const [[pictures]] = _.filter(req.files, (picture) => picture !== undefined);
+
+    if (!pictures) return req.Err('Failed to upload image');
+    const obj = {};
+    obj[pictures.fieldname] = `/upload/${pictures.filename}`;
+    const user = await User.update.bind({ db })(obj, Number(id));
+    res.json({ details: 'Succesfully update your picutre' });
+  }
+  catch(err) {
+    req.Err('Failed to upload image');
   }
 };
 export default addImg;

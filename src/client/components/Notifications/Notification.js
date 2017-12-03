@@ -1,21 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const NotificationContainer = styled.div`
     display:flex;
-    width:250px;
-    min-height:60px;
-    border-radius: 2px;
-    background-color:rgb(240,240,240);
+    justify-content: flex-start;
+    align-items: center;
+    width:100%;
+    min-height:75px;
+    background-color:white;
+    box-shadow:inset 0 0 0.4px rgb(180,180,180);
     cursor: pointer;
-    margin-top:10px;
+    transition: all 0.3s ease;
     &:hover {
-        box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
+        padding-left:25px; 
     }
+`;
+
+const Avatar = styled.div`
+    width:50px;
+    height:50px;
+    border-radius:100%;
+    background-image:${({ picture }) => `url('${picture}')`};
+    background-size: cover;
+    margin-left:15px;
+    background-position: center;
+    background-repeat: no-repeat;
 `;
 
 const Notification = () => (
     <NotificationContainer>
+        <Avatar picture={'https://cdn.intra.42.fr/users/medium_lcharvol.jpg'}/>
     </NotificationContainer>
 );
 

@@ -58,15 +58,15 @@ const validate = (values, props) => {
   } else if (values.blocked && !/\d.*$/i.test(values.blocked)) {
     errors.blocked = 'Invalid blocked';
   }
-  if (_.includes(keys, 'postal_code') && !values.blocked) {
-    errors.blocked = 'Required';
-  } else if (values.blocked && !/\d.*$/i.test(values.blocked)) {
-    errors.blocked = 'Invalid blocked';
+  if (_.includes(keys, 'postal_code') && !values.postal_code) {
+    errors.postal_code = 'Required';
+  } else if (values.postal_code && !/^(([0-8][0-9])|(9[0-5])|(2[ab]))[0-9]{3}$/i.test(values.postal_code)) {
+    errors.postal_code = 'Invalid postl code';
   }
-  if (_.includes(keys, 'city') && !values.blocked) {
-    errors.blocked = 'Required';
-  } else if (values.blocked && !/\w.*$/i.test(values.blocked)) {
-    errors.blocked = 'Invalid blocked';
+  if (_.includes(keys, 'city') && !values.city) {
+    errors.city = 'Required';
+  } else if (values.city && !/\w.*$/i.test(values.city)) {
+    errors.city = 'Invalid city';
   }
   if (_.isEmpty(errors)) return false;
   return errors;
@@ -74,5 +74,5 @@ const validate = (values, props) => {
 
 export const loginForm = ['login', 'password'];
 export const registerForm = ['email', 'login', 'firstname', 'lastname', 'password', 'age', 'sexe'];
-export const editProfilForm = ['bio', 'email', 'login', 'firstname', 'lastname', 'sexualorientation', 'blocked', 'interest', 'age', 'sexe'];
+export const editProfilForm = ['bio', 'email', 'login', 'firstname', 'lastname', 'sexualorientation', 'blocked', 'interest', 'age', 'sexe', 'postal_code', 'city'];
 export default validate;

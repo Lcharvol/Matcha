@@ -45,8 +45,14 @@ const upload = multer({
   dest: path.join(__dirname, '../../../public/uploads/'),
   limits: {
     fileSize: 2000000,
-    files: 5,
+    files: 1,
   },
-}).fields([{ name: 'pictures', maxCount: 4 }, { name: 'profile_picture', maxCount: 1 }]);
+}).fields([
+  { name: 'pic1', maxCount: 1 },
+  { name: 'pic2', maxCount: 1 },
+  { name: 'pic3', maxCount: 1 },
+  { name: 'pic4', maxCount: 1 },
+  { name: 'profile_picture', maxCount: 1 }
+]);
 
 export const uploadImage = (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next());

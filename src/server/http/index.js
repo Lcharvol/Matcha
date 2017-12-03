@@ -61,7 +61,7 @@ const init = async ctx => {
 
   await app
     .use('/api', switchEvent)
-    .post('/add_img', uploadImage, getToken, checkAuth, addImg);
+    .post('/api/user/add_img', getToken, checkAuth, uploadImage, addImg);
   return ({ ...ctx, http: httpServer });
 };
 

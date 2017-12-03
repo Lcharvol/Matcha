@@ -48,6 +48,7 @@ const service = {
         if (typeof single === 'object' && single.length !== 0) return true;
         if (typeof single === 'string' && single !== '') return true;
         if (typeof single === 'boolean') return true;
+        if (typeof single === 'number') return true;
       }, infoToUpdate);
       if (info.password) {
         info.password = await bcrypt.hash(info.password, 10);

@@ -51,13 +51,6 @@ const User = {
     console.log(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
     return this.db.any(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
   },
-  addImg(imgs, imgProfile, id) {
-    if (!imgProfile && !imgs.photo_1) return Promise.reject('no files');
-    if (!imgProfile) return this.db.one(`${pgp.helpers.update(imgs, null, 'users')} WHERE id=${id} RETURNING *`);
-    const data = { ...imgs, photo_5: imgProfile };
-    const query = `${pgp.helpers.update(data, null, 'users')} WHERE id=${id} RETURNING *`;
-    return this.db.one(query);
-  },
   delete(id) {
     return this.db.one('DELETE FROM users WHERE id=$1 RETURNING *', id);
   },

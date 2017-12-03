@@ -205,6 +205,14 @@ const User = ({ me, user, statusLike, handleStatusLike }) => {
                         )
                         }
                     </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>City</Title>
+                    <InlineBlock>
+                        <Text>{user.city}</Text>
+                    </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Zip Code</Title>
+                    <InlineBlock>
+                        <Text>{user.postal_code}</Text>
+                    </InlineBlock>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Biography</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>

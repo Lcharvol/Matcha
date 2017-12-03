@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
-import { isNil, upperFirst } from 'lodash';
+import { isEmpty, isNil, upperFirst } from 'lodash';
 import { connect } from 'react-redux';
 import { withHandlers, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
@@ -41,9 +41,9 @@ const EditProfilFormStyled  = styled.form`
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
-  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'sexualorientation' 'age' 'interest' 'bio';
+  grid-template-areas: 'firstname' 'lastname' 'email' 'sexe' 'zipcode' 'sexualorientation' 'age' 'interest' 'bio';
   @media (min-width: 700px) {
-    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualorientation age' 'interest interest' 'bio bio';
+    grid-template-areas: 'firstname lastname' 'email sexe' 'sexualorientation age' 'zipcode interest' 'bio bio';
   }
 `;
 
@@ -170,6 +170,14 @@ const EditProfilForm = ({
       />
       <StyledFormField
         field={getField('email')}
+        values={values}
+        errors={errors}
+        touched={touched}
+        setFieldTouched={setFieldTouched}
+        setFieldValue={setFieldValue}
+      />
+      <StyledFormField
+        field={getField('zipcode')}
         values={values}
         errors={errors}
         touched={touched}
@@ -313,7 +321,9 @@ export default compose(
        sexe,
        lastname,
        lookingFor,
-       sexualorientation
+       sexualorientation,
+       city,
+       zipcode,
       } = user;
       reqUpdateUser(({
         bio,
@@ -324,7 +334,9 @@ export default compose(
         interest: formatInterest(interest).join() || '',
         lastname,
         lookingFor,
-        sexualorientation
+        sexualorientation,
+        city,
+        postal_code: zipcode,        
       })).then((res) => {
         location.assign('/profil');
       }).catch(err => {
@@ -333,8 +345,11 @@ export default compose(
     },
     validate: validate,
     validateOnBlur: true,
-    mapPropsToValues: ({ user }) => {
+    mapPropsToValues: ({ user = {} }) => {
       const tags = user.interest;
+      if ( isEmpty(user) || isNil(user)) {
+        return ({});
+      }
       return ({
       ...user,
       firstname: user.firstname,
@@ -342,6 +357,8 @@ export default compose(
       sexe: user.sexe,
       lookingFor: user.sexualorientation,
       bio: user.bio || '',
+      city: user.city,
+      zipcode: user.postal_code,      
       interest: map(tag => ({ value: tag, label: tag }), tags),
     })
   },

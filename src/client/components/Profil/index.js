@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router';
 
 import { Avatar, Spacer, Tag, Score, Picture, Throphy, Header } from '../widgets';
-import { reqMe } from '../../request';
+import { reqMe, reqAddImg } from '../../request';
 import { getUser } from '../../selectors/user';
 
 const MainContainer = styled.div`
@@ -125,8 +125,30 @@ const FakeContent = styled.div`
 `;
 
 class Profil extends Component {
+
+state = {
+    files: [null,null,null,null,null],
+}
+
+handleFileUpload(e, id) {
+    this.state.files[id]= e.target.files[0];
+    this.setState({ files: this.state.files });
+}
+
+handleChangeFile(id) {
+    if (isNil(this.state.files[id])) {
+        console.log('pas de fichier')
+    }
+    else {
+        reqAddImg({ pic1: this.state.files[id] })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    }
+}
+
   render() {
     const { user } = this.props;
+    const { files } = this.state;
     if(!user) return null;
     return (
         <MainContainer>
@@ -145,20 +167,61 @@ class Profil extends Component {
                             <Text>Edit my profil</Text>
                         </LinkStyled>
                     </InlineBlock>
-                    <Title>I'im looking for</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>I'im looking for</Title>
                     <InlineBlock>
                         {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
                     </InlineBlock>
-                    <Title>My biography</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>My biography</Title>
                     <InlineBlock>
                         <Text>{user.bio}</Text>
                         {!user.bio && <FakeContent/>}
                     </InlineBlock>
-                    <Title>Interests</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>City</Title>
+                    <InlineBlock>
+                        <Text>{user.city}</Text>
+                    </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Zip Code</Title>
+                    <InlineBlock>
+                        <Text>{user.postal_code}</Text>
+                    </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Interests</Title>
                     <InlineBlock>
                         {map(user.interest, (tag, index) => <Tag key={`${tag}${index}`} name={tag}/>)}
                     </InlineBlock>
-                    <Title>My pictures</Title>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Change pictures</Title>
+                    <InlineBlock>
+                        <InlineBlock>
+                            <Text>Profil picture</Text>
+                            <Spacer />
+                            <input type="file" onChange={event => this.handleFileUpload(event, 0)} />
+                            <button onClick={() => this.handleChangeFile(0)}>Change</button>
+                        </InlineBlock>
+                        <InlineBlock>
+                            <Text>Picture 1</Text>
+                            <Spacer />
+                            <input type="file" onChange={event => this.handleFileUpload(event, 1)} />
+                            <button onClick={() => this.handleChangeFile(1)}>Change</button>
+                        </InlineBlock>
+                        <InlineBlock>
+                            <Text>Picture 2</Text>
+                            <Spacer />
+                            <input type="file" onChange={event => this.handleFileUpload(event, 2)} />
+                            <button onClick={() => this.handleChangeFile(2)}>Change</button>
+                        </InlineBlock>
+                        <InlineBlock>
+                            <Text>Picture 3</Text>
+                            <Spacer />
+                            <input type="file" onChange={event => this.handleFileUpload(event, 3)} />
+                            <button onClick={() => this.handleChangeFile(3)}>Change</button>
+                        </InlineBlock>
+                        <InlineBlock>
+                            <Text>Picture 4</Text>
+                            <Spacer />
+                            <input type="file" onChange={event => this.handleFileUpload(event, 4)} />
+                            <button onClick={() => this.handleChangeFile(4)}>Change</button>
+                        </InlineBlock>
+                    </InlineBlock>
+                    <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>My pictures</Title>
                     <InlineBlock>
                         <Pictures>
                             {map(user.pictures, (picture, index) => <Picture key={`${picture}${index})}`} picture={picture} />)}

@@ -5,7 +5,7 @@ import { getDefaultValues, getOneValidationSchema, getOneField } from './utils';
 
 export const fields = {
   sexe: {
-    label: 'Je suis',
+    label: 'i am',
     component: SelectField,
     domainValues: [
       { id: 'man', value: 'Un homme' },
@@ -14,7 +14,7 @@ export const fields = {
     required: true,
   },
   sexualorientation: {
-    label: 'Mon orientation sexuelle',
+    label: 'Sexual orientation',
     component: SelectField,
     domainValues: [
       { id: 'bisexual', value: 'Un Bisexuel' },
@@ -28,17 +28,22 @@ export const fields = {
     component: MarkDownField,
     required: true,
   },
+  zipcode: {
+    label: 'ZipCode',
+    component: InputField,
+    required: true,
+  },
   interest: {
     label: 'Interêts',
     component: TagsSelectField,
     required: false,
   },
   pictures: {
-    label: 'Mes photos',
+    label: 'Pictures',
     component: InputField,
   },
   profilPicture: {
-    label: 'Ma photo de profil',
+    label: 'Profil picture',
     component: InputField,
   },
   login: {

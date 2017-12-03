@@ -2,6 +2,7 @@
 import pgp from 'pg-promise';
 import UserSchema from './schemaUser';
 import LikeSchema from './schemaLike';
+import NotifSchema from './schemaNotif';
 
 const pingUserConnected = async (db) => {
   await db.any(`UPDATE users SET connected = false WHERE now() - cotime > interval '60 sec'`);
@@ -14,6 +15,7 @@ const init = async (ctx) => {
   const client = await db.connect();
   await UserSchema(client);
   await LikeSchema(client);
+  await NotifSchema(client);
   setInterval(() => pingUserConnected(db), 1000); // 10000
   return { ...ctx, db: client };
 };

@@ -12,11 +12,13 @@ import { getUrl, bindError, bindLogger, bindCtx, uploadImage } from './helpers';
 import { getToken, checkAuth, getUserFromTokenWithoutErr } from '../services/hooks/token';
 import addImg from './routes/addImg';
 
-const bindSocketIO = (io, currentSocketId, socketIdToDelete) => async (req, res, next) => {
+const bindSocketIO = (io, currentSocketId, socketIdToDelete, tmp) => async (req, res, next) => {
   res.io = io;
-  if (!currentSocketId[0] || !req.user) return next();
+  if (!currentSocketId[0] || !req.user || req.originalUrl === '/api/user/connected' || tmp[0] === currentSocketId[0]) return next();
   const { db } = req.ctx;
   const { socket_id: socketId } = req.user;
+  console.log(req.user.login, currentSocketId[0]);
+  tmp[0] = currentSocketId[0];
   if (_.isEmpty(socketId) || (socketId.length > 0 && !_.includes(socketId, currentSocketId[0])))
     await User.addSocket.bind({ db })(currentSocketId[0], Number(req.user.id));
   if (socketIdToDelete[0])
@@ -36,9 +38,11 @@ const init = async ctx => {
   const io = socketIo(httpServer);
   const currentSocketId = [];
   const socketIdToDelete = [];
+  const tmp = [];
   io.on('connection', async socket => {
     if (!socket.handshake.query.matchaToken) return null;
     currentSocketId[0] = socket.id;
+    console.log('tmp', tmp);
     console.log('user connected   ', socket.id);
     socket.on('disconnect', async () => {
       console.log('user disconnected', socket.id);
@@ -56,7 +60,7 @@ const init = async ctx => {
     .use(bindLogger)
     .use(getToken)
     .use(getUserFromTokenWithoutErr)
-    .use(bindSocketIO(io, currentSocketId, socketIdToDelete))
+    .use(bindSocketIO(io, currentSocketId, socketIdToDelete, tmp))
     .use(bindError);
 
   await app

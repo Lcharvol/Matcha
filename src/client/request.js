@@ -28,6 +28,23 @@ export const reqGetUser = (id) => axios({
     throw data.details;
   return data.details;
 });
+export const reqGetNotifs = () => axios({
+  method: 'get',
+  url: 'user/notifs',
+}).then(({ data, status }) => {
+  if (status === 201)
+  throw data;
+  return data;
+})
+
+export const reqSeenNotifs = () => axios({
+  method: 'put',
+  url: 'user/notifs',
+}).then(({ data, status }) => {
+  if (status === 201)
+  throw data;
+  return data;
+})
 
 export const reqGetLike= (id) => axios({
   method: 'post',

@@ -27,6 +27,14 @@
     "verb": "post",
     "url": "/like"
   },
+  "getNotifs": {
+    "verb": "get",
+    "url": "/notifs"
+  },
+  "seenNotifs": {
+    "verb": "put",
+    "url": "/notifs"
+  },
   "getLikeStatus": {
     "verb": "get",
     "url": "/like"

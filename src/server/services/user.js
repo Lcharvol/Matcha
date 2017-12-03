@@ -7,6 +7,8 @@ import _ from 'lodash';
 import mailer from '../../lib/mailer';
 import User from '../models/User';
 import Like from '../models/Likes';
+import Notif from '../models/Notif';
+
 import { validateRegisterForm,
   validateLoginForm,
   checkIfConfirmedAndReturnUser,
@@ -77,6 +79,7 @@ const service = {
         const _user = await User.load.bind({ db })(idRequest);
         const socketIds = _user.socket_id;
         socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
+        await Notif.add.bind({ db })(id, idRequest, `${login} see you profile`, 'get');
         req.userRequested = cleanUser(_user);
       } else {
         await User.update.bind({ db })({ connected: true, cotime: new Date() }, Number(id));
@@ -96,7 +99,6 @@ const service = {
       req.users = users.filter((item) => item.id !== id).map(v => cleanUser(v));
       next();
     } catch (err) {
-      console.log(err);
       req.Err('Failed to get the user');
     }
   },
@@ -206,6 +208,24 @@ const service = {
       req.Err('failed to like the user');
     }
   },
+  async getNotifs(req, res) {
+    try {
+      const { ctx: { db }, user: { id } } = req;
+      const notifs = await Notif.get.bind({ db })(Number(id));
+      res.json({ details: notifs });
+    } catch (err) {
+      req.Err('failed to get notifs');
+    }
+  },
+  async seenNotifs(req, res) {
+    try {
+      const { ctx: { db }, user: { id } } = req;
+      await Notif.seen.bind({ db })(Number(id));
+      res.json({ details: 'succes !' });
+    } catch (err) {
+      req.Err('failed to get notifs');
+    }
+  },
 };
 
 // getAll: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
@@ -220,6 +240,8 @@ const init = {
     delete: [checkAuth],
     likeUser: [checkAuth],
     getLikeStatus: [checkAuth],
+    getNotifs: [checkAuth],
+    seenNotifs: [checkAuth],
     login: [validateLoginForm, checkIfConfirmedAndReturnUser],
     confirmEmail: [getUserFromToken],
     resetPassword: [checkToken],

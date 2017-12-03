@@ -1,5 +1,5 @@
 /* eslint-disable */
-const queryDrop = 'DROP TABLE users, likes';
+const queryDrop = 'DROP TABLE users, likes, notifs';
 // ALTER SEQUENCE users_id_seq RESTART WITH 1`;
 
 export const resetDb = async (db) => db.none(queryDrop).then(() => process.exit());

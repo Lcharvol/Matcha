@@ -121,6 +121,15 @@ export const reqResetPassword = (data) => axios.put('user/reset', {
     throw data;
   return data;
 });
+
+export const reqAddImg = (data) => axios.post('user/add_img', {
+  ...data,
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data;
+});
+
 // export const reqResetPassword = (data) => axios({
 //   method: 'post',
 //   url:'http://127.0.0.1:3004/reset_password',

@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 const enhance = compose(
   connect(null, mapDispatchToProps),
   lifecycle({
-      componentWillMount() {
+      componentDidMount() {
         reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
         reqMe(this.props.loadUser);
       },

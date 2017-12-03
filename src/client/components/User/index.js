@@ -226,7 +226,7 @@ const User = ({ me, user, statusLike, handleStatusLike }) => {
 
 User.propTypes = {
     user: PropTypes.object.isRequired,
-    me: PropTypes.object.isRequired,
+    me: PropTypes.object,
 }
 
 const mapStateToProps = state => ({

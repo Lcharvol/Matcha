@@ -5,7 +5,6 @@ import { LOAD_USERS, LOAD_USER } from './actions/users';
 const matchaToken = localStorage.getItem('matchaToken');
 const axios = Axios.create({
   baseURL: 'http://127.0.0.1:3004/api/',
-  timeout: 3000,
   headers: {'Authorization': "Bearer " + matchaToken},
 })
 

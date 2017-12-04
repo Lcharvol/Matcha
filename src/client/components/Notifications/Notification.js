@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getUsers } from '../../selectors/user';
+import { getProfilPictureById } from '../../selectors/user';
 import PropTypes from 'prop-types';
 
 const NotificationContainer = styled(Link)`
@@ -26,7 +27,7 @@ const Avatar = styled.div`
     width:50px;
     height:50px;
     border-radius:100%;
-    background-image:${({ picture }) => `url('${picture}')`};
+    background-image:${({ picture }) => `url('${picture}.jpg')`};
     background-size: cover;
     margin-left:15px;
     background-position: center;
@@ -40,14 +41,14 @@ const Text = styled.p`
 
 const Notification = ({ notification = {}, users }) => (
     <NotificationContainer to={`/user/${notification.user_send}`}>
-        <Avatar picture={getProfilPictureById(users, id)}/>
+        <Avatar picture={getProfilPictureById(users, notification.user_send)}/>
         <Text>{notification.details}</Text>
     </NotificationContainer>
 );
 
 Notification.propTypes = {
     notification: PropTypes.object,
-    users: PropTypes.object,
+    users: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({

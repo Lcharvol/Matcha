@@ -32,7 +32,7 @@ export const getFilterAndSort = async (req, res, next) => {
     });
     filterSexe = filterSexe.slice(0, -1).concat("}'::text[])");
     if (by === 'age' || by === 'popularity')
-      req.filterString = `WHERE ${filterSexe} AND ${by} > ${Number(value)}`;
+      req.filterString = `WHERE ${filterSexe} AND ${by} ${by === 'age' && Number(value) === 99? '<' : '>'} ${Number(value)}`;
     else {
       req.filterString = `WHERE ${filterSexe}`;
     }
@@ -71,7 +71,7 @@ export const getFilterGeoAndInterest = (req, res, next) => {
       if (_.toUpper(req.sort[1]) === 'DESC') sortbyInterest = _.reverse(sortbyInterest);
       req.users = sortbyInterest;
     }
-    if (!byFilter)
+    // if (!byFilter)
     if (byFilter === 'interest') {
       req.users = _.filter(req.users, ({ interest }) => _.intersection(interest, myInterest).length >= Number(valueFilter));
     }

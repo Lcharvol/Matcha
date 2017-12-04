@@ -48,7 +48,6 @@ const User = {
     return this.db.one('SELECT * FROM users WHERE login = $1', login);
   },
   getAll(filterString, sortBy) {
-    // console.log(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
     return this.db.any(`SELECT * FROM users ${filterString} AND confirmed = true ${sortBy}`);
   },
   delete(id) {

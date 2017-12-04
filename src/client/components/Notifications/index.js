@@ -6,7 +6,7 @@ import { lifecycle } from 'recompose';
 import { map, compose } from 'ramda';
 import { bindActionCreators } from 'redux';
 import { getNotifications, getUnreadNotifications } from '../../selectors/notifications';
-import { reqGetNotifs, reqGetUnseenNotifs } from '../../request';
+import { reqGetNotifs, reqGetUnseenNotifs, reqSeenNotifs  } from '../../request';
 import { loadNotifications, resetUnreadNotifications, setUnreadNotifications } from '../../actions/notifications';
 import { Button, Intent, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
 import Notification from './Notification';
@@ -56,7 +56,12 @@ const TitleContainer = styled.div`
     height:40px;
 `;
 
-const Notifications = ({ notifications = [], unreadNotifications = 0}) => (
+const Notifications = ({
+    notifications = [],
+    unreadNotifications = 0,
+    loadNotifications,
+    resetUnreadNotifications,
+}) => (
     <Popover
         interactionKind={PopoverInteractionKind.CLICK}
         position={Position.BOTTOM_RIGHT}
@@ -64,7 +69,14 @@ const Notifications = ({ notifications = [], unreadNotifications = 0}) => (
         <IconContainer>
             <Icon 
                 onClick={
-                    () => console.log('reset undreadNotifications')
+                    () => reqGetNotifs()
+                    .then(notifications => {
+                      loadNotifications(notifications)
+                      return reqSeenNotifs();
+                    })
+                    .then((res) => {
+                        resetUnreadNotifications();
+                    })
                 }
                 className="fa fa-bell-o" aria-hidden="true" title="Notification"
             />
@@ -87,8 +99,10 @@ const Notifications = ({ notifications = [], unreadNotifications = 0}) => (
 Notification.propTypes = {
     notifications: PropTypes.array,
     unreadNotifications: PropTypes.number,
+    loadNotifications: PropTypes.func,
+    resetUnreadNotifications: PropTypes.func,
 }
-const actions = { loadNotifications, setUnreadNotifications };
+const actions = { loadNotifications, setUnreadNotifications, resetUnreadNotifications };
 
 const mapStateToProps = state => ({
   notifications: getNotifications(state),

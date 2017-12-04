@@ -6,9 +6,8 @@ import { compose, isNil } from 'ramda';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import queryString from 'query-string';
-
 import { Logo, Container, FacebookLogin, GoogleLogin, InputButton, ErrorsContainer } from '../widgets';
 import { FormField } from '../../fields';
 import { getField } from '../../forms/login';

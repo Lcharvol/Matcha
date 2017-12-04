@@ -115,12 +115,6 @@ const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     lifecycle({
         componentDidMount() {
-        //   reqGetNotifs()
-        //   .then(notifications => {
-        //     this.props.loadNotifications(notifications)
-        //   })
-        //   .catch(err => {
-        //   });
           reqGetUnseenNotifs()
           .then(unreadNotifications => {
             this.props.setUnreadNotifications(unreadNotifications.details)

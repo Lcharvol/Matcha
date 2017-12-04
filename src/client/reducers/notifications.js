@@ -13,7 +13,7 @@ const reducer = (state = { details: [], unreadNotifications: 0}, action) => {
         return {...state, details: action.notifications.details };
       }
       case RESET_UNREAD_NOTIFICATIONS: {
-          return {...state, undreadNotifications: 0}
+          return {...state, unreadNotifications: 0}
       }
       case SET_UNREAD_NOTIFICATIONS: {
         return {...state, unreadNotifications: action.unreadNotifications}

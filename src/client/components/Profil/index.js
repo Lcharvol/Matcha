@@ -179,7 +179,23 @@ async handleChangeFile(id) {
                     </InlineBlock>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>I'im looking for</Title>
                     <InlineBlock>
-                        {user.sexualorientation === 'man' ? <Icon className="fa fa-mars" aria-hidden="true"/> : <Icon className="fa fa-venus" aria-hidden="true"/>}
+                        {user.sexualorientation === 'heterosexual' && user.sexe === 'woman' &&
+                        <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/>}
+                        {user.sexualorientation === 'heterosexual' && user.sexe === 'man' &&
+                        <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
+                        {user.sexualorientation === 'homosexual' && user.sexe === 'woman' &&
+                        <Icon className="fa fa-female" color="#3498db" aria-hidden="true"/>}
+                        {user.sexualorientation === 'homosexual' && user.sexe === 'man' &&
+                        <Icon className="fa fa-male" color="#EA5555" aria-hidden="true"/>}
+                        {user.sexualorientation === 'woman' && <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
+                        {user.sexualorientation === 'bisexual' &&
+                        (
+                            <div>
+                                <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/>
+                                <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>
+                            </div>
+                        )
+                        }
                     </InlineBlock>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>My biography</Title>
                     <InlineBlock>

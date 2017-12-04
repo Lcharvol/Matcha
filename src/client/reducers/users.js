@@ -32,7 +32,6 @@ const reducer = (state = initialState, action) => {
           value: valueFilter,
         }
       }
-      console.log('SEARCH_USERS: ', query);
       reqGetAll((users) => action.asyncDispatch(loadUsers(users)), query);
       return state;
     }

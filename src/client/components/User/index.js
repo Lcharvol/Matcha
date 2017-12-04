@@ -144,15 +144,31 @@ const BlockButton = styled.i`
 `;
 
 const LostLink = styled(Link)`
-margin:auto;
-display:auto;
+    margin:auto;
+    display:auto;
+`;
+
+const ChatIcon = styled.i`
+    color:#EA5555;
+    font-size:4em;
+    cursor:pointer;
+    transition: all 260ms;
+    &:hover {
+        font-size:4.5em;
+    }
+`;
+
+const ChatLink = styled(Link)`
+    position:absolute;
+    top:90px;
+    right:25px;
 `;
 
 const handleReportFake = () => {
   alert('Thank you user reported');
 };
 
-const User = ({ me, user, statusLike, handleStatusLike }) => {
+const User = ({ me, user, statusLike, handleStatusLike, mutualLike }) => {
     if (isEmpty(user) || isEmpty(me)) {
         return null;
     }
@@ -164,6 +180,7 @@ const User = ({ me, user, statusLike, handleStatusLike }) => {
             <ProfilContainer>
                 <ProfilHeader background={user.pictures[0]}>
                     <HeaderContainer>
+                        {mutualLike && <ChatLink to={'/'}><ChatIcon className="fa fa-comments" aria-hidden="true"/></ChatLink>}
                         {!isEmpty(statusLike) && me.profile_picture !== '/uploads/null' && <LikeButton
                             color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
                             className={`fa fa-heart${statusLike === 'like' ? '' : '-o'}`}
@@ -253,9 +270,11 @@ const enhance = compose(
     withStateHandlers(
         {
             statusLike: '',
+            mutualLike: false,
         },
         {
             handleStatusLike: () => (statusLike) => ({ statusLike }),
+            handleMutualLike: () => (mutualLike) => ({ mutualLike }),
         },
     ),
     lifecycle({
@@ -265,12 +284,12 @@ const enhance = compose(
               reqGetLikeStatus(user.id)
                 .then(res => {
                     this.props.handleStatusLike(res.details);
+                    this.props.handleMutualLike(res.isMutualLike);
                 })
                 this.props.loadUser(user);
             })
             .catch(err => {
                 // redirection sur le history
-                console.log('zbob', err);
             });
         },
     }),

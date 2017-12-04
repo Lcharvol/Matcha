@@ -28,19 +28,19 @@ const service = {
     try {
       const user = { ...R.pick(req.registerInputName, req.body), ...req.user };
       const newUser = await bcrypt
-        .hash(req.body.password, 10)
-        .then(hashedPassword =>
-          User.add.bind({ db })(R.assoc('password', hashedPassword, user)));
-      req.user = newUser;
-      await User.scoring.bind({ db })(req.user);
-      sendConfirmEmail(newUser, req.ctx);
-      res.json({ details: 'Succesfully register, please check your mail' });
-    } catch (err) {
-      console.log(err);
-      req.Err('User already register');
-    }
-  },
-  async put(req, res) {
+      .hash(req.body.password, 10)
+      .then(hashedPassword =>
+        User.add.bind({ db })(R.assoc('password', hashedPassword, user)));
+        req.user = newUser;
+        await User.scoring.bind({ db })(req.user);
+        sendConfirmEmail(newUser, req.ctx);
+        res.json({ details: 'Succesfully register, please check your mail' });
+      } catch (err) {
+        console.log(err);
+        req.Err('User already register');
+      }
+    },
+    async put(req, res) {
     try {
       const { id } = req.user;
       const { infoToUpdate } = req;
@@ -54,10 +54,12 @@ const service = {
       if (info.password) {
         info.password = await bcrypt.hash(info.password, 10);
       }
+      if (info.blocked) await Notif.deleteAllNotif.bind({ db })(id, req.blockedClean);
       const user = await User.update.bind({ db })(info, Number(id));
       await User.scoring.bind({ db })(user);
       res.json({ details: 'Succesfully update your info', more: Object.keys(info) });
     } catch (err) {
+      console.log(err);
       req.Err('Failed To upload your info');
     }
   },

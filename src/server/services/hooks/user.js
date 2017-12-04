@@ -27,6 +27,7 @@ export const getInfoToUpdate = async (req, res, next) => {
     if (req.infoToUpdate.blocked == req.user.id) return req.Err('can\'t blocked yourself dude'); // keep the ==
     if (contains.length > 0) {
       contains.forEach(index => {
+        req.blockedClean = Number(req.infoToUpdate.blocked);
         const inDb = req.user[index];
         inDb.push(req.infoToUpdate[index]);
         req.infoToUpdate[index] = `{${inDb.toString()}}`;
@@ -40,7 +41,6 @@ export const getInfoToUpdate = async (req, res, next) => {
       if (latitude && longitude)
         req.infoToUpdate = Object.assign(req.infoToUpdate, { latitude, longitude });
     }
-    console.log(req.infoToUpdate);
     next();
   } catch (err) {
     req.Err(_.isEmpty(err.message) ? 'wrong data provided' : err.message);

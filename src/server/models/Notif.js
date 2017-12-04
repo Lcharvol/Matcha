@@ -30,6 +30,9 @@ const Notif = {
   deleteLike(userSend, userReceive) {
     return this.db.any(`DELETE FROM notifs WHERE "user_send" = ${Number(userSend)} AND "user_receive" = ${Number(userReceive)} AND type = 'like' RETURNING *`);
   },
+  deleteAllNotif(userSend, userReceive) {
+    return this.db.any(`DELETE FROM notifs WHERE (user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)}) OR (user_send = ${Number(userReceive)} AND user_receive = ${Number(userSend)}) RETURNING *`);
+  },
   seen(id) {
     return this.db.any('UPDATE notifs SET push = true WHERE user_receive = $1', id);
   },

@@ -225,6 +225,15 @@ const service = {
       req.Err('failed to get notifs');
     }
   },
+  async getUnseenNotifs(req, res) {
+    try {
+      const { ctx: { db }, user: { id } } = req;
+      const notifs = await Notif.getUnseenNotifs.bind({ db })(Number(id));
+      res.json({ details: notifs });
+    } catch (err) {
+      req.Err('failed to get notifs');
+    }
+  },
   async seenNotifs(req, res) {
     try {
       const { ctx: { db }, user: { id } } = req;
@@ -249,6 +258,7 @@ const init = {
     likeUser: [checkAuth],
     getLikeStatus: [checkAuth],
     getNotifs: [checkAuth],
+    getUnseenNotifs: [checkAuth],
     seenNotifs: [checkAuth],
     login: [validateLoginForm, checkIfConfirmedAndReturnUser],
     confirmEmail: [getUserFromToken],

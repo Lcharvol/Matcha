@@ -31,6 +31,10 @@
     "verb": "get",
     "url": "/notifs"
   },
+  "getUnseenNotifs": {
+    "verb": "get",
+    "url": "/unseenNotifs"
+  },
   "seenNotifs": {
     "verb": "put",
     "url": "/notifs"

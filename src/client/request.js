@@ -37,6 +37,14 @@ export const reqGetNotifs = () => axios({
   return data;
 })
 
+export const reqGetUnseenNotifs = () => axios({
+  method: 'get',
+  url: 'user/unseenNotifs',
+}).then(({ data, status }) => {
+  if (status === 201)
+  throw data;
+  return data;
+})
 export const reqSeenNotifs = () => axios({
   method: 'put',
   url: 'user/notifs',

@@ -18,6 +18,9 @@ const Notif = {
   get(id) {
     return this.db.any('SELECT * FROM notifs WHERE user_receive = $1', id);
   },
+  getUnseenNotifs(id) {
+    return this.db.one('SELECT count(*) FROM notifs WHERE user_receive = $1 AND push = false', id).then(res => Number(res.count));
+  },
   ifMutualLike(userSend, userReceive) {
     return this.db.one(`SELECT count(*) FROM notifs WHERE (user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)} AND type = 'like') OR (user_send = ${Number(userReceive)} AND user_receive =  ${Number(userSend)} AND type = 'like')`).then(res => Number(res.count) === 2);
   },

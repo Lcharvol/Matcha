@@ -45,12 +45,12 @@ const validate = (values, props) => {
   }
   if (_.includes(keys, 'bio') && !values.bio) {
     errors.bio = 'bio Required';
-  } else if (values.bio && !/\w*{5,100}$/i.test(values.bio)) {
+  } else if (values.bio && !/\w{5,100}$/i.test(values.bio)) {
     errors.bio = 'Invalid bio';
   }
   if (_.includes(keys, 'interest') && !values.interest) {
     errors.interest = 'interest Required';
-  } else if (values.interest && !/\w*{,20}$/i.test(values.interest)) {
+  } else if (values.interest && !/\w{1,20}$/i.test(values.interest)) {
     errors.interest = 'Invalid interest';
   }
   if (_.includes(keys, 'blocked') && !values.blocked) {

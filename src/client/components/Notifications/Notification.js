@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { getUsers } from '../../selectors/user';
 import PropTypes from 'prop-types';
 
 const NotificationContainer = styled(Link)`
@@ -36,15 +38,21 @@ const Text = styled.p`
     margin-left:10px;
 `;
 
-const Notification = ({ notification = {}}) => (
+const Notification = ({ notification = {}, users }) => (
     <NotificationContainer to={`/user/${notification.user_send}`}>
-        <Avatar picture={'https://cdn.intra.42.fr/users/medium_lcharvol.jpg'}/>
+        <Avatar picture={getProfilPictureById(users, id)}/>
         <Text>{notification.details}</Text>
     </NotificationContainer>
 );
 
 Notification.propTypes = {
     notification: PropTypes.object,
+    users: PropTypes.object,
 };
 
-export default Notification;
+const mapStateToProps = state => ({
+    users: getUsers(state),
+});
+
+
+export default connect(mapStateToProps)(Notification);

@@ -57,6 +57,26 @@ const TitleContainer = styled.div`
     height:40px;
 `;
 
+const EmptyIcon = styled.i`
+    color: rgba(244, 92, 67, 0.85);
+    margin:0;
+`;
+
+const EmptyNotifications = styled.div`
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:5px;
+    margin-bottom:15px;
+`;
+
+const EmptyText = styled.p`
+    color: rgba(244, 92, 67, 0.85);
+    margin:0;
+    margin-right:10px;
+    font-size:0.9em;
+`;
+
 const Notifications = ({
     notifications = [],
     unseenNotifications = 0,
@@ -86,7 +106,7 @@ const Notifications = ({
         </IconContainer>
         <Content>
             <TitleContainer>
-                <Title>Notification</Title>
+                <Title>Notifications</Title>
             </TitleContainer>
             {map(notification =>
                 <Notification
@@ -94,6 +114,12 @@ const Notifications = ({
                     notification={notification}
                 />
             , notifications)}
+            {notifications.length === 0 && 
+                <EmptyNotifications>
+                    <EmptyText>0 notifications</EmptyText>
+                    <EmptyIcon className="fa fa-exclamation" aria-hidden="true" />
+                </EmptyNotifications>
+            }
         </Content>
     </Popover>
 );

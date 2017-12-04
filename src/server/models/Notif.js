@@ -16,7 +16,7 @@ const Notif = {
     return this.db.one(`${query} RETURNING *`);
   },
   get(id) {
-    return this.db.any('SELECT * FROM notifs WHERE user_receive = $1', id);
+    return this.db.any('SELECT * FROM notifs WHERE user_receive = $1 ORDER BY date DESC', id);
   },
   getUnseenNotifs(id) {
     return this.db.one('SELECT count(*) FROM notifs WHERE user_receive = $1 AND push = false', id).then(res => Number(res.count));

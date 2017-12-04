@@ -76,6 +76,8 @@ const service = {
     try {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
+        const usersBlocked = _.filter([_user], (user) => !_.includes(user.blocked, id.toString()) && !_.includes(req.user.blocked, user.id.toString()));
+        if (_.isEmpty(usersBlocked)) return req.Err('blocked');
         const socketIds = _user.socket_id;
         socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { msg: `${login} see you profile`, type: 'get' }));
         await Notif.add.bind({ db })(id, idRequest, `${login} see you profile`, 'get');

@@ -153,7 +153,7 @@ const handleReportFake = () => {
 };
 
 const User = ({ me, user, statusLike, handleStatusLike }) => {
-    if (isEmpty(user)) {
+    if (isEmpty(user) || isEmpty(me)) {
         return null;
     }
     return (
@@ -193,7 +193,14 @@ const User = ({ me, user, statusLike, handleStatusLike }) => {
                 <ProfilInfo>
                     <Title color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}>Looking for</Title>
                     <InlineBlock>
-                        {user.sexualorientation === 'man' && <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/>}
+                        {user.sexualorientation === 'heterosexual' && user.sexe === 'woman' &&
+                        <Icon className="fa fa-male" color="#3498db" aria-hidden="true"/>}
+                        {user.sexualorientation === 'heterosexual' && user.sexe === 'man' &&
+                        <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
+                        {user.sexualorientation === 'homosexual' && user.sexe === 'woman' &&
+                        <Icon className="fa fa-female" color="#3498db" aria-hidden="true"/>}
+                        {user.sexualorientation === 'homosexual' && user.sexe === 'man' &&
+                        <Icon className="fa fa-male" color="#EA5555" aria-hidden="true"/>}
                         {user.sexualorientation === 'woman' && <Icon className="fa fa-female" color="#EA5555" aria-hidden="true"/>}
                         {user.sexualorientation === 'bisexual' &&
                         (
@@ -257,8 +264,8 @@ const enhance = compose(
             .then(user => {
               reqGetLikeStatus(user.id)
                 .then(res => {
-				    this.props.handleStatusLike(res);
-                  })
+				        this.props.handleStatusLike(res.details);
+                })
                 this.props.loadUser(user);
             })
             .catch(err => {

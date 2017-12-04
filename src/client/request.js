@@ -69,7 +69,7 @@ export const reqGetLikeStatus = (id) => axios({
 }).then(({ data, status }) => {
   if (status === 201)
     throw data;
-  return data.details;
+  return data;
 }).catch(err => err);
 
 export const reqConnectedUsers = (getConnectedUsers) => axios({

@@ -6,7 +6,6 @@ import _ from 'lodash';
 
 import mailer from '../../lib/mailer';
 import User from '../models/User';
-import Like from '../models/Likes';
 import Notif from '../models/Notif';
 
 import { validateRegisterForm,
@@ -78,7 +77,7 @@ const service = {
       if (idRequest) {
         const _user = await User.load.bind({ db })(idRequest);
         const socketIds = _user.socket_id;
-        socketIds.forEach((socketId) => res.io.to(socketId).emit('get', `${login} see you profile`));
+        socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { msg: `${login} see you profile`, type: 'get' }));
         await Notif.add.bind({ db })(id, idRequest, `${login} see you profile`, 'get');
         req.userRequested = cleanUser(_user);
       } else {
@@ -194,7 +193,7 @@ const service = {
       const isMutualLike = await Notif.ifMutualLike.bind({ db })(userSendLike, userReceiveLike);
       if (isMutualLike) detailsLike = `${req.user.login} like you back`;
       const socketIds = socket_id;
-      socketIds.forEach((socketId) => res.io.to(socketId).emit('like', detailsLike));
+      socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { msg: detailsLike, type: 'like' }));
       return res.json({ details: booleanLike ? 'like' : 'unlike' });
     } catch (err) {
       console.log(err);
@@ -211,7 +210,7 @@ const service = {
       if (isLike) {
         return res.json({ details: 'like', isMutualLike });
       }
-      return res.json({ details: 'unlike' });
+      return res.json({ details: 'unlike', isMutualLike });
     } catch (err) {
       req.Err('failed to like the user');
     }

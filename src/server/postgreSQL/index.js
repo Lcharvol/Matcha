@@ -1,7 +1,6 @@
 /* eslint-disable */
 import pgp from 'pg-promise';
 import UserSchema from './schemaUser';
-import LikeSchema from './schemaLike';
 import NotifSchema from './schemaNotif';
 
 const pingUserConnected = async (db) => {
@@ -14,7 +13,6 @@ const init = async (ctx) => {
   const db = await pgConnector(config);
   const client = await db.connect();
   await UserSchema(client);
-  await LikeSchema(client);
   await NotifSchema(client);
   setInterval(() => pingUserConnected(db), 1000); // 10000
   return { ...ctx, db: client };

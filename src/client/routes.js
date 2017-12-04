@@ -9,7 +9,7 @@ import Register from './components/Register';
 import EditProfil from './components/EditProfil';
 import Lost from './components/Lost';
 import Profil from './components/Profil';
-import Chat from './components/Chat';
+import Chat from './components/Chat'
 import User from './components/User';
 import ResetPassword from './components/ResetPassword';
 

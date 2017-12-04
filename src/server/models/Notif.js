@@ -18,12 +18,14 @@ const Notif = {
   get(id) {
     return this.db.any('SELECT * FROM notifs WHERE user_receive = $1', id);
   },
+  ifMutualLike(userSend, userReceive) {
+    return this.db.one(`SELECT count(*) FROM notifs WHERE (user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)} AND type = 'like') OR (user_send = ${Number(userReceive)} AND user_receive =  ${Number(userSend)} AND type = 'like')`).then(res => Number(res.count) === 2);
+  },
   getSome(userSend, userReceive, type) {
-    console.log(`SELECT count(*) FROM notifs WHERE user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)} AND type = '${type}'`);
-    return this.db.one(`SELECT count(*) FROM notifs WHERE user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)} AND type = $1`, type).catch(err => console.log(err));
+    return this.db.one(`SELECT count(*) FROM notifs WHERE "user_send" = ${Number(userSend)} AND "user_receive" = ${Number(userReceive)} AND type = $1`, type).then(res => Number(res.count) > 0);
   },
   deleteLike(userSend, userReceive) {
-    return this.db.any(`DELETE FROM likes WHERE user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)} AND type = 'like' RETURNING *`);
+    return this.db.any(`DELETE FROM notifs WHERE "user_send" = ${Number(userSend)} AND "user_receive" = ${Number(userReceive)} AND type = 'like' RETURNING *`);
   },
   seen(id) {
     return this.db.any('UPDATE notifs SET push = true WHERE user_receive = $1', id);

@@ -17,7 +17,6 @@ const bindSocketIO = (io, currentSocketId, socketIdToDelete, tmp) => async (req,
   if (!currentSocketId[0] || !req.user || req.originalUrl === '/api/user/connected' || tmp[0] === currentSocketId[0]) return next();
   const { db } = req.ctx;
   const { socket_id: socketId } = req.user;
-  console.log(req.user.login, currentSocketId[0]);
   tmp[0] = currentSocketId[0];
   if (_.isEmpty(socketId) || (socketId.length > 0 && !_.includes(socketId, currentSocketId[0])))
     await User.addSocket.bind({ db })(currentSocketId[0], Number(req.user.id));
@@ -42,10 +41,9 @@ const init = async ctx => {
   io.on('connection', async socket => {
     if (!socket.handshake.query.matchaToken) return null;
     currentSocketId[0] = socket.id;
-    console.log('tmp', tmp);
-    console.log('user connected   ', socket.id);
+    // console.log('user connected   ', socket.id);
     socket.on('disconnect', async () => {
-      console.log('user disconnected', socket.id);
+      // console.log('user disconnected', socket.id);
       socketIdToDelete[0] = socket.id;
     });
   });

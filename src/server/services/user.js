@@ -180,11 +180,10 @@ const service = {
       if (userSendLike === userReceiveLike) return req.Err('can \'t liked yourself');
       const { blocked, socket_id } = await User.load.bind({ db })(id);
       if (_.includes(blocked, userSendLike)) return req.Err('cant like because b');
-      console.log(userSendLike, userReceiveLike);
       const isAlreadyLike = await Notif.getSome.bind({ db })(userSendLike, userReceiveLike, 'like');
       let detailsLike = '';
       let booleanLike = true;
-      if (Number(isAlreadyLike.count) > 0) {
+      if (isAlreadyLike) {
         await Notif.deleteLike.bind({ db })(userSendLike, userReceiveLike);
         detailsLike = `${req.user.login} don't like you anymore`;
         booleanLike = false;
@@ -192,6 +191,8 @@ const service = {
         await Notif.add.bind({ db })(userSendLike, userReceiveLike, `${req.user.login} like your profile`, 'like');
         detailsLike = `${req.user.login} like your profile`;
       }
+      const isMutualLike = await Notif.ifMutualLike.bind({ db })(userSendLike, userReceiveLike);
+      if (isMutualLike) detailsLike = `${req.user.login} like you back`;
       const socketIds = socket_id;
       socketIds.forEach((socketId) => res.io.to(socketId).emit('like', detailsLike));
       return res.json({ details: booleanLike ? 'like' : 'unlike' });
@@ -205,9 +206,10 @@ const service = {
       const { query: { id }, ctx: { db } } = req;
       const userSendLike = req.user.id.toString();
       const userReceiveLike = id;
-      const { count } = await Like.getLike.bind({ db })(userSendLike, userReceiveLike);
-      if (count > 0) {
-        return res.json({ details: 'like' });
+      const isLike = await Notif.getSome.bind({ db })(userSendLike, userReceiveLike, 'like');
+      const isMutualLike = await Notif.ifMutualLike.bind({ db })(userSendLike, userReceiveLike);
+      if (isLike) {
+        return res.json({ details: 'like', isMutualLike });
       }
       return res.json({ details: 'unlike' });
     } catch (err) {

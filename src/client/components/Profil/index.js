@@ -170,6 +170,8 @@ async handleChangeFile(id) {
                 </ProfilHeader>
                 <ProfilInfo>
                     <InlineBlock>
+                    </InlineBlock>
+                    <InlineBlock>
                         <LinkStyled to={`/editprofil`}>
                             <Icon className="fa fa-pencil" aria-hidden="true"/>
                             <Text>Edit my profil</Text>

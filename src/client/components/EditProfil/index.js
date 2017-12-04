@@ -24,6 +24,9 @@ const MainContainer = styled.div`
 `;
 
 const Content = styled.div`
+  min-height:100%;
+  width:100%;
+  margin-top:65px;
   background-color:white;
   border-radius:0px;
   display: grid;
@@ -37,7 +40,7 @@ const EditProfilFormStyled  = styled.form`
   margin: auto;
   margin-top: 25px;
   margin-bottom: 25px;
-  width: 100%;
+  width: 80%;
   grid-gap: 20px;
   grid-auto-columns: minmax(70px, auto);
   grid-auto-rows: minmax(70px, auto);
@@ -72,13 +75,6 @@ const ProfilHeader = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-`;
-
-const ContainerStyled = styled(Container)`
-  width:100%;
-  margin-top:65px;
-  background-color:white;
-  border-radius:0px;
 `;
 
 const Title = styled.p`
@@ -138,7 +134,8 @@ const StyledFormField = styled(FormField)`
 `;
 
 const LostLink = styled(Link)`
-margin:auto;
+  margin:auto;
+  color: rgba(244, 92, 67, 0.85);
 `;
 
 const EditProfilForm = ({
@@ -267,7 +264,6 @@ class EditProfil extends Component {
           displaySearchBar={false}
         />
         <Content>
-          <ContainerStyled>
             <ProfilHeader background={user.pictures[0]}>
               <HeaderContainer>
                   <Avatar user={user}/>
@@ -287,7 +283,6 @@ class EditProfil extends Component {
             <ButtonContainer>
               <InputButton type="submit" form="editProfil" value="Update" />
             </ButtonContainer>
-          </ContainerStyled>
         </Content>
       </MainContainer>
     );

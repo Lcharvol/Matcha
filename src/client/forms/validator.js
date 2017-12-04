@@ -50,8 +50,11 @@ const validate = (values, props) => {
   }
   if (_.includes(keys,'interest') && !values.interest) {
     errors.interest = 'Required';
-  } else if (values.interest && !/\w{,20}$/i.test(values.interest)) {
-    errors.interest = 'Invalid interest';
+  } else if (values.interest) {
+    values.interest.map(int => {
+      if (!/\w{1,20}$/i.test(int.value))
+        errors.interest = 'Invalid interest';
+    });
   }
   return errors;
 };

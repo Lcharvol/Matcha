@@ -264,7 +264,7 @@ const enhance = compose(
             .then(user => {
               reqGetLikeStatus(user.id)
                 .then(res => {
-				        this.props.handleStatusLike(res.details);
+                    this.props.handleStatusLike(res.details);
                 })
                 this.props.loadUser(user);
             })

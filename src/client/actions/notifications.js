@@ -1,15 +1,20 @@
-export const LOAD_NOTIFICATIONS = 'LOAD_NOTIFICATIONS';
-export const RESET_UNREAD_NOTIFICATIONS = 'RESET_UNREAD_NOTIFICATIONS';
-export const SET_UNREAD_NOTIFICATIONS = 'SET_UNREAD_NOTIFICATIONS';
+export const LOAD_ALL_NOTIFICATIONS = 'LOAD_ALL_NOTIFICATIONS';
+export const RESET_NOTIF_COMPTEUR = 'RESET_NOTIF_COMPTEUR';
+export const DISPLAY_NOTIF_COMPTEUR = 'DISPLAY_NOTIF_COMPTEUR';
+export const ADD_NEW_NOTIF = 'ADD_NEW_NOTIF';
 
-export const loadNotifications = (notifications) => {
-  return { type: LOAD_NOTIFICATIONS, notifications};
+export const loadAllNotifications = (notifications) => {
+  return { type: LOAD_ALL_NOTIFICATIONS, notifications };
 };
 
-export const resetUnreadNotifications = () => {
-  return { type: RESET_UNREAD_NOTIFICATIONS};
+export const resetNotifCompteur = () => {
+  return { type: RESET_NOTIF_COMPTEUR};
 };
 
-export const setUnreadNotifications = (unreadNotifications) => {
-  return { type: SET_UNREAD_NOTIFICATIONS, unreadNotifications };
+export const displayNotifCompteur = (unseenNotifications) => {
+  return { type: DISPLAY_NOTIF_COMPTEUR, unseenNotifications };
+}
+
+export const addNewNotification = () => {
+  return { type: ADD_NEW_NOTIF };
 }

@@ -1,22 +1,19 @@
 import { filter } from 'ramda';
-export const LOAD_NOTIFICATIONS = 'LOAD_NOTIFICATIONS';
-export const RESET_UNREAD_NOTIFICATIONS = 'RESET_UNREAD_NOTIFICATIONS';
-export const SET_UNREAD_NOTIFICATIONS = 'SET_UNREAD_NOTIFICATIONS';
+import { LOAD_ALL_NOTIFICATIONS, RESET_NOTIF_COMPTEUR, DISPLAY_NOTIF_COMPTEUR, ADD_NEW_NOTIF } from '../actions/notifications';
 
-const isFalse = notification => !notification.push;
-
-const getUnreadNotifications= notifications => filter(isFalse, notifications);
-
-const reducer = (state = { details: [], unreadNotifications: 0}, action) => {
+const reducer = (state = { details: [], unseenNotifications: 0}, action) => {
   switch (action.type) {
-      case LOAD_NOTIFICATIONS: {
-        return {...state, details: action.notifications.details };
+      case LOAD_ALL_NOTIFICATIONS: {
+        return {...state, allNotifs: action.notifications.details };
       }
-      case RESET_UNREAD_NOTIFICATIONS: {
-          return {...state, unreadNotifications: 0}
+      case RESET_NOTIF_COMPTEUR: {
+          return {...state, unseenNotifications: 0}
       }
-      case SET_UNREAD_NOTIFICATIONS: {
-        return {...state, unreadNotifications: action.unreadNotifications}
+      case DISPLAY_NOTIF_COMPTEUR: {
+        return {...state, unseenNotifications: action.unseenNotifications}
+      }
+      case ADD_NEW_NOTIF: {
+        return {...state, unseenNotifications: state.unseenNotifications + 1}
       }
       default:
         return state;

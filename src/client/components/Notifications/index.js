@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { lifecycle } from 'recompose';
 import { map, compose } from 'ramda';
 import { bindActionCreators } from 'redux';
-import { getNotifications, getUnreadNotifications } from '../../selectors/notifications';
+
+import { getAllNotifsDetails, getUnseenNotificationCompteur } from '../../selectors/notifications';
 import { reqGetNotifs, reqGetUnseenNotifs, reqSeenNotifs  } from '../../request';
-import { loadNotifications, resetUnreadNotifications, setUnreadNotifications } from '../../actions/notifications';
+import { loadAllNotifications, resetNotifCompteur, displayNotifCompteur } from '../../actions/notifications';
 import { Button, Intent, Popover, PopoverInteractionKind, Position } from '@blueprintjs/core';
 import Notification from './Notification';
 
@@ -58,35 +59,36 @@ const TitleContainer = styled.div`
 
 const Notifications = ({
     notifications = [],
-    unreadNotifications = 0,
-    loadNotifications,
-    resetUnreadNotifications,
+    unseenNotifications = 0,
+    loadAllNotifications,
+    resetNotifCompteur,
+    socket
 }) => (
     <Popover
         interactionKind={PopoverInteractionKind.CLICK}
         position={Position.BOTTOM_RIGHT}
     >
         <IconContainer>
-            <Icon 
+            <Icon
                 onClick={
                     () => reqGetNotifs()
                     .then(notifications => {
-                      loadNotifications(notifications)
+                      loadAllNotifications(notifications)
                       return reqSeenNotifs();
                     })
                     .then((res) => {
-                        resetUnreadNotifications();
+                        resetNotifCompteur();
                     })
                 }
                 className="fa fa-bell-o" aria-hidden="true" title="Notification"
             />
-            <Text>{unreadNotifications === 0 ? '' : unreadNotifications}</Text>
+            <Text>{unseenNotifications === 0 ? '' : unseenNotifications}</Text>
         </IconContainer>
         <Content>
             <TitleContainer>
                 <Title>Notification</Title>
             </TitleContainer>
-            {map(notification => 
+            {map(notification =>
                 <Notification
                     key={notification.id}
                     notification={notification}
@@ -98,15 +100,15 @@ const Notifications = ({
 
 Notification.propTypes = {
     notifications: PropTypes.array,
-    unreadNotifications: PropTypes.number,
-    loadNotifications: PropTypes.func,
-    resetUnreadNotifications: PropTypes.func,
+    unseenNotifications: PropTypes.number,
+    loadAllNotifications: PropTypes.func,
+    resetNotifCompteur: PropTypes.func,
 }
-const actions = { loadNotifications, setUnreadNotifications, resetUnreadNotifications };
+const actions = { loadAllNotifications, displayNotifCompteur, resetNotifCompteur };
 
 const mapStateToProps = state => ({
-  notifications: getNotifications(state),
-  unreadNotifications: getUnreadNotifications(state),
+  notifications: getAllNotifsDetails(state),
+  unseenNotifications: getUnseenNotificationCompteur(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
@@ -116,11 +118,9 @@ const enhance = compose(
     lifecycle({
         componentDidMount() {
           reqGetUnseenNotifs()
-          .then(unreadNotifications => {
-            this.props.setUnreadNotifications(unreadNotifications.details)
-          })
-          .catch(err => {
-          });
+          .then(({ details: unseenNotifications }) => {
+            this.props.displayNotifCompteur(unseenNotifications)
+          }).catch(err => err);
         },
     }),
 )

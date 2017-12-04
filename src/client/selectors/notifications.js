@@ -1,3 +1,3 @@
 
-export const getNotifications= state => state.notifications.details;
-export const getUnreadNotifications = state => state.notifications.unreadNotifications;
+export const getAllNotifsDetails = state => state.notifications.allNotifs;
+export const getUnseenNotificationCompteur = state => state.notifications.unseenNotifications;

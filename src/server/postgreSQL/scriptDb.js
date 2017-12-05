@@ -55,5 +55,47 @@ VALUES
 // 14 filles
 // 9 homme
 
+const queryDataChat = `
+INSERT INTO
+chat
+(user_send, user_receive, date, msg)
 
-export const loadUsers = async (db) => db.none(queryData).then(() => process.exit()).catch(err => console.log(err));
+VALUES
+(2, 19, '2017-12-05 19:05:34 +0000', 'Hello'),
+(2, 19, '2017-12-05 19:05:39 +0000', 'Hello'),
+(19, 2, '2017-12-05 19:06:52 +0000', 'oui est toi'),
+(19, 2, '2017-12-05 19:07:09 +0000', 'tkl'),
+(19, 2, '2017-12-05 19:07:40 +0000', 'si si je suis juste entrain de pisser'),
+(19, 2, '2017-12-05 19:10:22 +0000', 'si si je suis juste entrain de pisser'),
+(19, 2, '2017-12-05 19:10:24 +0000', 'si si je suis juste entrain de pisser?'),
+(2, 19, '2017-12-05 19:10:43 +0000', 'daccord je pense pas?'),
+(2, 19, '2017-12-05 19:10:47 +0000', 'daccord je pense pas?!8'),
+(2, 19, '2017-12-05 19:12:11 +0000', 'daccord je pense pas?!8'),
+(19, 2, '2017-12-05 19:12:19 +0000', 'si si je suis juste entrain de pisser?'),
+(19, 2, '2017-12-05 19:12:22 +0000', '1'),
+(2, 19, '2017-12-05 19:12:27 +0000', '2'),
+(19, 2, '2017-12-05 19:12:32 +0000', '3'),
+(2, 19, '2017-12-05 19:12:36 +0000', '4'),
+(19, 2, '2017-12-05 19:13:06 +0000', '5'),
+(2, 19, '2017-12-05 19:13:09 +0000', '456'),
+(19, 2, '2017-12-05 19:13:17 +0000', 'je c plsu quoi dire'),
+(2, 19, '2017-12-05 19:13:23 +0000', 'bah di rien alors'),
+(19, 2, '2017-12-05 19:13:29 +0000', 'ok je di plus rien'),
+(2, 19, '2017-12-05 19:13:38 +0000', 'tu tapplees comment?'),
+(19, 2, '2017-12-05 19:13:52 +0000', 'je mapelle abarriel'),
+(2, 19, '2017-12-05 19:14:01 +0000', 't une belle fille'),
+(19, 2, '2017-12-05 19:14:07 +0000', 'non je suis nun garcon');
+`;
+
+const queryDataLike = `
+INSERT INTO
+notifs
+(user_send, user_receive, date, push, type, details)
+
+VALUES
+(19, 2, '2017-12-05 18:05:48 +0000', true, 'like', 'abarriel like your profile'),
+(2, 19, '2017-12-05 18:44:54 +0000', true, 'like', 'jpascal like you back');
+`;
+export const loadUsers = async (db) => db.none(queryData).catch(err => console.log(err));
+export const loadChat = async (db) => db.none(queryDataChat).catch(err => console.log(err));
+export const loadLike = async (db) => db.none(queryDataLike).catch(err => console.log(err));

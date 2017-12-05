@@ -60,7 +60,7 @@ const validate = (values, props) => {
   // chat msg validation
   if (_.includes(keys,'msg') && !values.msg) {
     errors.msg = 'Required';
-  } else if (values.msg && !/^[a-zA-Z0-9 ?!]{1,150}$/i.test(values.msg)) {
+  } else if (values.msg && !/^[a-zA-Z0-9 ?!'àèéêá]{1,150}$/i.test(values.msg)) {
     errors.msg = 'Invalid msg';
   }
   return errors;

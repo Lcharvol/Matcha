@@ -36,6 +36,23 @@ export const reqGetNotifs = () => axios({
   return data;
 })
 
+export const reqGetAllConversation = () => axios({
+  method: 'get',
+  url: 'user/getAllMsg',
+}).then(({ data, status }) => {
+  if (status === 201)
+  throw data;
+  return data;
+})
+
+export const reqAddMsg = (data) => axios.post('user/addMsg', {
+  ...data
+}).then(({ data, status }) => {
+  if (status === 201)
+    throw data;
+  return data.details;
+}).catch(err => err);
+
 export const reqGetUnseenNotifs = () => axios({
   method: 'get',
   url: 'user/unseenNotifs',

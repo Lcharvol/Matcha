@@ -10,7 +10,7 @@ import routes from './routes';
 import configureStore from './store';
 import { reqConnectedUsers } from './request';
 import { getConnectedUsers } from './actions/users';
-import { addNewNotification } from './actions/notifications';
+import { addNewNotification,addNewNotificationDetails } from './actions/notifications';
 
 const matchaToken = localStorage.getItem('matchaToken');
 const url = 'http://127.0.0.1:3004';
@@ -22,6 +22,7 @@ const store = configureStore(initialState, io);
 
 io.on('notif', (data) => {
   store.dispatch(addNewNotification(data));
+  store.dispatch(addNewNotificationDetails(data));
 });
 const requestConnectedUsers = () => {
   reqConnectedUsers((details) => store.dispatch(getConnectedUsers(details)))

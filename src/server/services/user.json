@@ -42,5 +42,13 @@
   "getLikeStatus": {
     "verb": "get",
     "url": "/like"
+  },
+  "addMsg": {
+    "verb": "post",
+    "url": "/addMsg"
+  },
+  "getAllMessages": {
+    "verb": "get",
+    "url": "/getAllMsg"
   }
 }

@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import mailer from '../../lib/mailer';
 import User from '../models/User';
+import Chat from '../models/Chat';
 import Notif from '../models/Notif';
 
 import { validateRegisterForm,
@@ -81,7 +82,7 @@ const service = {
         const usersBlocked = _.filter([_user], (user) => !_.includes(user.blocked, id.toString()) && !_.includes(req.user.blocked, user.id.toString()));
         if (_.isEmpty(usersBlocked)) return req.Err('blocked');
         const socketIds = _user.socket_id;
-        socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { msg: `${login} see you profile`, type: 'get' }));
+        socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', {date: new Date(), user_receive: idRequest, user_send: id, details: `${login} see you profile`, type: 'get' }));
         await Notif.add.bind({ db })(id, idRequest, `${login} see you profile`, 'get');
         req.userRequested = cleanUser(_user);
       } else {
@@ -191,13 +192,14 @@ const service = {
         detailsLike = `${req.user.login} don't like you anymore`;
         booleanLike = false;
       } else {
-        await Notif.add.bind({ db })(userSendLike, userReceiveLike, `${req.user.login} like your profile`, 'like');
+        const isMutualLike = await Notif.getSome.bind({ db })(userReceiveLike, userSendLike, 'like');
+        detailsLike = `${req.user.login} like your profile`;
+        if (isMutualLike) detailsLike = `${req.user.login} like you back`;
+        await Notif.add.bind({ db })(userSendLike, userReceiveLike, detailsLike, 'like');
         detailsLike = `${req.user.login} like your profile`;
       }
-      const isMutualLike = await Notif.ifMutualLike.bind({ db })(userSendLike, userReceiveLike);
-      if (isMutualLike) detailsLike = `${req.user.login} like you back`;
       const socketIds = socket_id;
-      socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { msg: detailsLike, type: 'like' }));
+      socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { date: new Date(), user_receive: userReceiveLike, user_send: userSendLike, details: detailsLike, type: 'like' }));
       return res.json({ details: booleanLike ? 'like' : 'unlike' });
     } catch (err) {
       console.log(err);
@@ -246,9 +248,34 @@ const service = {
       req.Err('failed to get notifs');
     }
   },
+  async addMsg(req, res) {
+    try {
+      const { ctx: { db } } = req;
+      const { msg, id } = req.body;
+      const isMutualLike = await Notif.ifMutualLike.bind({ db })(req.user.id.toString(), id);
+      console.log('body', req.body);
+      console.log('isMutualLike', isMutualLike);
+      if (_.isEmpty(msg) || !/\w{1,150}$/i.test(msg)) return req.Err('try to send a bad msg');
+      if (!isMutualLike) return req.Err('can\t send it');
+      await Chat.add.bind({ db })(Number(req.user.id), Number(id), msg);
+      res.json({ details: 'succes !' });
+    } catch (err) {
+      console.log(err);
+      req.Err('failed to get send message');
+    }
+  },
+  async getAllMessages(req, res) {
+    try {
+      const { ctx: { db } } = req;
+      const { msg, id } = req.body;
+      // await Notif.seen.bind({ db })(Number(req.user.id), Number);
+      res.json({ details: 'succes !' });
+    } catch (err) {
+      req.Err('failed to send message');
+    }
+  },
 };
 
-// getAll: [checkAuth, loadProfil, filterBySexeAge, cleanUser, sortGeoLoc, reduceUsers, buildUsers],
 const init = {
   name: 'user',
   service,
@@ -266,6 +293,8 @@ const init = {
     login: [validateLoginForm, checkIfConfirmedAndReturnUser],
     confirmEmail: [getUserFromToken],
     resetPassword: [checkToken],
+    addMsg: [checkAuth],
+    getAllMessages: [checkAuth],
   },
   after: {
     get: [checkIfNotBlocked],

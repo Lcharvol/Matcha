@@ -24,8 +24,8 @@ const ChatContainer = styled.div`
     margin:auto;
     margin-top:100px;
     width:100%;
-    max-width:500px;
-    min-height:80vh;
+    max-width:400px;
+    height:80vh;
     background-color:white;
     border-radius:3px;
 `;
@@ -38,6 +38,8 @@ const ChatElems = styled.div`
 
 const ChatMenu = styled.div`
     display:flex;
+    justify-content: center;
+    align-items: center;
     bottom:0;
     width:100%;
     height:70px;
@@ -46,20 +48,26 @@ const ChatMenu = styled.div`
     background-color:white;
 `;
 
+const ButtonStyled = styled.button`
+    margin-left:15px;
+`;
+
 const Chat = ({ messages = [], user = {}, users = [],
 }) => (
     <MainContainer>
-        {console.log('messages: ', messages)}
         <Header
             displaySearchBar={false}
         />
         <ChatContainer>
             {!isEmpty(user) && !isEmpty(users) && <ChatElems>
                 {map(message =>
-                    <ChatElem key={message.date} message={message} user={user} users={users}/>
+                    <ChatElem key={message.id} message={message} user={user} users={users}/>
                     , messages)}
             </ChatElems>}
-            <ChatMenu />
+            <ChatMenu>
+                <input className="pt-input pt-round" type="text" placeholder="Aa" dir="auto" />
+                <ButtonStyled type="button" className="pt-button">Send</ButtonStyled>
+            </ChatMenu>
         </ChatContainer>
     </MainContainer>
 );

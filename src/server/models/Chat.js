@@ -16,7 +16,7 @@ const Notif = {
   },
   getAllConversation(userSend, userReceive) {
     // i have to order by date
-    return this.db.one(`SELECT * FROM chat WHERE (user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)}) OR (user_send = ${Number(userReceive)} AND user_receive = ${Number(userSend)})`);
+    return this.db.any(`SELECT * FROM chat WHERE (user_send = ${Number(userSend)} AND user_receive = ${Number(userReceive)}) OR (user_send = ${Number(userReceive)} AND user_receive = ${Number(userSend)}) ORDER BY date DESC`);
   },
 };
 

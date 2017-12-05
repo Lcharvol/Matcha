@@ -36,9 +36,9 @@ export const reqGetNotifs = () => axios({
   return data;
 })
 
-export const reqGetAllConversation = () => axios({
+export const reqGetAllConversation = (id) => axios({
   method: 'get',
-  url: 'user/getAllMsg',
+  url: `user/getAllMsg?id=${id}`,
 }).then(({ data, status }) => {
   if (status === 201)
   throw data;

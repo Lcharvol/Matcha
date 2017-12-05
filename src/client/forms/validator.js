@@ -56,6 +56,13 @@ const validate = (values, props) => {
         errors.interest = 'Invalid interest';
     });
   }
+
+  // chat msg validation
+  if (_.includes(keys,'msg') && !values.msg) {
+    errors.msg = 'Required';
+  } else if (values.msg && !/^[a-zA-Z0-9 ?!]{1,150}$/i.test(values.msg)) {
+    errors.msg = 'Invalid msg';
+  }
   return errors;
 };
 

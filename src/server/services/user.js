@@ -255,7 +255,7 @@ const service = {
       const isMutualLike = await Notif.ifMutualLike.bind({ db })(req.user.id.toString(), id);
       console.log('body', req.body);
       console.log('isMutualLike', isMutualLike);
-      if (_.isEmpty(msg) || !/\w{1,150}$/i.test(msg)) return req.Err('try to send a bad msg');
+      if (_.isEmpty(msg) || !/^[a-zA-Z0-9 ?!'àèéêá]{1,150}$/i.test(msg)) return req.Err('try to send a bad msg');
       if (!isMutualLike) return req.Err('can\t send it');
       await Chat.add.bind({ db })(Number(req.user.id), Number(id), msg);
       res.json({ details: 'succes !' });
@@ -267,11 +267,12 @@ const service = {
   async getAllMessages(req, res) {
     try {
       const { ctx: { db } } = req;
-      const { msg, id } = req.body;
-      // await Notif.seen.bind({ db })(Number(req.user.id), Number);
-      res.json({ details: 'succes !' });
+      const { id } = req.query;
+      const allConversation = await Chat.getAllConversation.bind({ db })(Number(req.user.id), Number(id));
+      res.json({ details: allConversation });
     } catch (err) {
-      req.Err('failed to send message');
+      console.log(err);
+      req.Err('failed to get message');
     }
   },
 };

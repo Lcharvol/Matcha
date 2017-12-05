@@ -63,7 +63,8 @@ const init = async ctx => {
 
   await app
     .use('/api', switchEvent)
-    .post('/api/user/add_img', getToken, checkAuth, uploadImage, addImg);
+    .post('/api/user/add_img', getToken, checkAuth, uploadImage, addImg)
+    .use((err, req, res, next) => req.Err('upload failed'));
   return ({ ...ctx, http: httpServer });
 };
 

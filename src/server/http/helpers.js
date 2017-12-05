@@ -1,6 +1,7 @@
 import debug from 'debug';
 import multer from 'multer';
 import path from 'path';
+import fileType from 'file-type';
 
 export const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 
@@ -45,7 +46,6 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '../../../public/uploads/'));
   },
   filename: (req, file, cb) => {
-    console.log(file);
     cb(null, `${Date.now()}${Math.random().toString()}.jpg`);
   },
 });
@@ -53,6 +53,20 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   dest: path.join(__dirname, '../../../public/uploads/'),
+  // fileFilter: (req, file, cb) => {
+  //   var Canvas = require("canvas");
+  //   global.Image = Canvas.Image;
+  //   const image = new Image();
+  //   console.log('fileFiler');
+  //   image.onload = function load() {
+  //     if (this.width) {
+  //       console.log('Image has width, I think it is real image');
+  //       return cb(null, true);
+  //     }
+  //     cb("Error: File upload only supports the following filetypes - " + filetypes);
+  //   };
+  //   image.src = URL.createObjectURL(file);
+  // },
   limits: {
     fileSize: 2000000,
     files: 1,
@@ -66,3 +80,4 @@ const upload = multer({
 ]);
 
 export const uploadImage = (req, res, next) => upload(req, res, next, (err) => err ? req.Err({ details: 'Max count reach', err }) : next());
+

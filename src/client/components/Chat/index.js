@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { map, isEmpty } from 'ramda';
+import { connect } from 'react-redux';
+import { compose, lifecycle, withState, withStateHandlers } from 'recompose';
 
+import { getUser, getUsers } from '../../selectors/user';
 import ChatElem from './ChatElem';
+import { reqGetAllConversation } from '../../request';
 import { Header } from '../widgets';
 
 const MainContainer = styled.div`
@@ -40,22 +46,56 @@ const ChatMenu = styled.div`
     background-color:white;
 `;
 
-const Chat = () => (
-<MainContainer>
-    <Header
-        displaySearchBar={false}
-    />
-    <ChatContainer>
-        <ChatElems>
-            <ChatElem />
-            <ChatElem />
-            <ChatElem />
-            <ChatElem />
-            <ChatElem />
-        </ChatElems>
-        <ChatMenu />
-    </ChatContainer>
-</MainContainer>
+const Chat = ({ messages = [], user = {}, users = [],
+}) => (
+    <MainContainer>
+        {console.log('messages: ', messages)}
+        <Header
+            displaySearchBar={false}
+        />
+        <ChatContainer>
+            {!isEmpty(user) && !isEmpty(users) && <ChatElems>
+                {map(message =>
+                    <ChatElem key={message.date} message={message} user={user} users={users}/>
+                    , messages)}
+            </ChatElems>}
+            <ChatMenu />
+        </ChatContainer>
+    </MainContainer>
 );
 
-export default Chat;
+Chat.propTypes = {
+    messages: PropTypes.array,
+    user: PropTypes.object,
+    users: PropTypes.array,
+}
+
+const mapStateToProps = state => ({
+    user: getUser(state),
+    users: getUsers(state),
+});
+
+const enhance = compose(
+    connect(mapStateToProps),
+    withStateHandlers(
+        {
+            messages: [],
+        },
+        {
+            handleSetMessages: () => (messages) => ({ messages}),
+        },
+    ),
+    lifecycle({
+        componentDidMount() {
+            reqGetAllConversation(Number(window.location.pathname.substr(6)))
+            .then(res => {
+                this.props.handleSetMessages(res.details);
+            })
+            .catch(err => {
+                // redirection sur le history
+            });
+        },
+    }),
+);
+
+export default enhance(Chat);

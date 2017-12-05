@@ -1,7 +1,6 @@
 import debug from 'debug';
 import multer from 'multer';
 import path from 'path';
-import fileType from 'file-type';
 
 export const getUrl = server => `http://${server.address().address}:${server.address().port}`;
 

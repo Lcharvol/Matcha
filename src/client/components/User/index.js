@@ -180,7 +180,7 @@ const User = ({ me, user, statusLike, handleStatusLike, mutualLike }) => {
             <ProfilContainer>
                 <ProfilHeader background={user.pictures[0]}>
                     <HeaderContainer>
-                        {mutualLike && <ChatLink to={'/chat'}><ChatIcon className="fa fa-comments" aria-hidden="true"/></ChatLink>}
+                        {mutualLike && <ChatLink to={`/chat/${user.id}`}><ChatIcon className="fa fa-comments" aria-hidden="true"/></ChatLink>}
                         {!isEmpty(statusLike) && me.profile_picture !== '/uploads/null' && <LikeButton
                             color={user.sexe === 'woman' ? '#EA5555' : '#3498db'}
                             className={`fa fa-heart${statusLike === 'like' ? '' : '-o'}`}

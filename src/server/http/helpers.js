@@ -13,15 +13,15 @@ export const bindError = (req, res, next) => {
   req.Err = (msg, er) => {
     const { stack } = new Error();
     try {
-      const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
-      const matches = regex.exec(stack.split('\n')[2]);
-      const [, file, line] = matches;
-      const log = debug(`matcha:${file}:${line}`);
-      log(`DETAILS: ${msg} ${er}`);
+      // const regex = /\(.*[Mm]atcha\/src\/server\/(.*):(\d*):(\d*)\)/igm;
+      // const matches = regex.exec(stack.split('\n')[2]);
+      // const [, file, line] = matches;
+      // const log = debug(`matcha:${file}:${line}`);
+      // log(`DETAILS: ${msg} ${er}`);
       res.status(201);
       res.json({ details: msg });
     } catch (err) {
-      console.log(`DETAILS: $${err}`);
+      // console.log(`DETAILS: $${err}`);
       res.status(201);
       res.json({ details: msg });
     }

@@ -32,7 +32,7 @@ const enhance = compose(
       componentDidMount() {
         reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
         .catch(err => {
-            console.log('zbob', err);
+            // console.log('zbob', err);
         });
         reqMe(this.props.loadUser);
       },

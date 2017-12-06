@@ -37,7 +37,6 @@ const service = {
         sendConfirmEmail(newUser, req.ctx);
         res.json({ details: 'Succesfully register, please check your mail' });
       } catch (err) {
-        console.log(err);
         req.Err('User already register');
       }
     },
@@ -60,7 +59,6 @@ const service = {
       await User.scoring.bind({ db })(user);
       res.json({ details: 'Succesfully update your info', more: Object.keys(info) });
     } catch (err) {
-      console.log(err);
       req.Err('Failed To upload your info');
     }
   },
@@ -142,7 +140,9 @@ const service = {
     try {
       const { password } = req.body;
       const { db } = req.ctx;
-      await schemaLogin.fields.password.validate(password);
+      if (password && !/^(?=.*[a-zA-Z])(?=.*\W)(?=.*[0-9]).{6,25}$/.test(password)) {
+        return req.Err('WROONG FORMAT');
+      }
       const hashedPassword = await bcrypt.hash(password, 10);
       await User.update.bind({ db })({ password: hashedPassword }, req.tokenId);
       res.status = 200;
@@ -160,7 +160,7 @@ const service = {
       mailer(
         user.email,
         'Reset Password - Matcha',
-        `Registration Code: ${urlClient}${resetPassword}?matchaToken=${token}`,
+        `Registration Code: http://localhost:3000/reset?matchaToken=${token}`,
       );
       res.json({ details: 'Email sent thank you' });
     } catch (err) {
@@ -202,7 +202,6 @@ const service = {
       socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { date: new Date(), user_receive: userReceiveLike, user_send: userSendLike, details: detailsLike, type: 'like' }));
       return res.json({ details: booleanLike ? 'like' : 'unlike' });
     } catch (err) {
-      console.log(err);
       req.Err('failed to like the user');
     }
   },
@@ -253,25 +252,28 @@ const service = {
       const { ctx: { db } } = req;
       const { msg, id } = req.body;
       const isMutualLike = await Notif.ifMutualLike.bind({ db })(req.user.id.toString(), id);
-      console.log('body', req.body);
-      console.log('isMutualLike', isMutualLike);
       if (_.isEmpty(msg) || !/^[a-zA-Z0-9 ?!'àèéêá]{1,150}$/i.test(msg)) return req.Err('try to send a bad msg');
       if (!isMutualLike) return req.Err('can\t send it');
       await Chat.add.bind({ db })(Number(req.user.id), Number(id), msg);
+      const { socket_id, login } = await User.load.bind({ db })(Number(id));
+      await Notif.add.bind({ db })(Number(req.user.id), Number(id), `${req.user.login} send you a text`, 'chat');
+      const socketIds = socket_id;
+      socketIds.forEach((socketId) => res.io.to(socketId).emit('notif', { date: new Date(), user_receive: Number(id), user_send: Number(req.user.id), details: `${req.user.login} send you a text`, type: 'chat' }));
       res.json({ details: 'succes !' });
     } catch (err) {
-      console.log(err);
       req.Err('failed to get send message');
     }
   },
   async getAllMessages(req, res) {
     try {
+
       const { ctx: { db } } = req;
       const { id } = req.query;
+       if(!_.isNumber(Number(id)))
+        return req.Err('failed to get message');
       const allConversation = await Chat.getAllConversation.bind({ db })(Number(req.user.id), Number(id));
       res.json({ details: allConversation });
     } catch (err) {
-      console.log(err);
       req.Err('failed to get message');
     }
   },

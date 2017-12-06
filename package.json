@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint src --color",
-    "cleanConsole": "sh ./console.sh",
-    "client": "npm run cleanConsole && NODE_ENV=development webpack-dev-server --client-log-level 'none' --progress --config webpack.config.js",
+    "client": "NODE_ENV=development webpack-dev-server --client-log-level 'none' --progress --config webpack.config.js",
     "server": "NODE_ENV=development DEBUG=matcha* nodemon --watch config/server --watch src/lib --watch src/server --exec \"babel-node src/server\"",
     "resetdb": "NODE_ENV=development RESET_DB=true DEBUG=matcha* babel-node src/server",
     "loadusers": "NODE_ENV=development LOAD_USERS=true DEBUG=matcha* babel-node src/server",

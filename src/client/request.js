@@ -51,7 +51,7 @@ export const reqAddMsg = (data) => axios.post('user/addMsg', {
   if (status === 201)
     throw data;
   return data.details;
-}).catch(err => err);
+});
 
 export const reqGetUnseenNotifs = () => axios({
   method: 'get',

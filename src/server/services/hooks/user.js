@@ -109,7 +109,6 @@ export const checkIfNotBlocked = async (req, res) => {
     if (req.userRequested) return res.json({ details: users[0] });
     res.json({ details: users });
   } catch (err) {
-    console.log(err);
     req.Err(err || 'failed to get user');
   }
 };

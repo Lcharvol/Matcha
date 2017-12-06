@@ -1,15 +1,15 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
-import { createLogger } from 'redux-logger';
+// import { createLogger } from 'redux-logger';
 
 import reducer from './reducers';
 import { CONNECTED_USER } from './actions/users';
 
-const logger = createLogger({
-  collapsed: true,
-  predicate: (getState, action) => action.type !== CONNECTED_USER
-});
+// const logger = createLogger({
+//   collapsed: true,
+//   predicate: (getState, action) => action.type !== CONNECTED_USER
+// });
 
 const asyncDispatchMiddleware = store => next => action => {
   let syncActivityFinished = false;
@@ -42,7 +42,7 @@ const configureStore = (initialState, io) =>
   createStore(
       reducer(io),
       initialState,
-      applyMiddleware(thunk, logger, asyncDispatchMiddleware, SocketIoMiddleware(io)),
+      applyMiddleware(thunk, asyncDispatchMiddleware, SocketIoMiddleware(io)),
     );
 
 export default configureStore;

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import history from '../../history';
-import { reqAuth } from '../../request';
+import { reqAuth, reqGetLikeStatus } from '../../request';
 import Login from '../Login';
 import Register from '../Register';
 import Lost from '../Lost';
@@ -23,7 +23,16 @@ class Auth extends Component {
 
   async componentWillMount() {
     const resp = await reqAuth();
-    const { children, revertCheck, path } = this.props;
+    const { children, revertCheck, path, chat } = this.props;
+    if (chat) {
+     const respMutualLike = await reqGetLikeStatus(Number(window.location.pathname.substr(6)));
+     if(respMutualLike.isMutualLike === false)
+     {
+      history.push(`/user/${window.location.pathname.substr(6)}`);
+      location.reload();
+      return this.setState({ authorized: 2 });
+     }
+    }
     if (resp.status === 201) {
       history.push({
         pathname: path,

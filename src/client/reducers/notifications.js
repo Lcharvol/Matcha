@@ -15,9 +15,6 @@ const reducer = (state = { allNotifs: [], unseenNotifications: 0}, action) => {
       case ADD_NEW_NOTIF: {
         return {...state, unseenNotifications: state.unseenNotifications + 1}
       }
-      case ADD_NEW_NOTIF_D: {
-        return {...state, allNotifs: state.allNotifs.push(action.data)}
-      }
       default:
         return state;
   }

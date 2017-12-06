@@ -5,12 +5,13 @@ import loginErrors from './loginErrors';
 import registerErrors from './registerErrors';
 import notifications from './notifications';
 
-const reducer = combineReducers({
+const reducer = (io) => combineReducers({
     user,
     users,
     notifications,
     loginErrors,
     registerErrors,
+    io: (state = {}, action) => state,
 });
 
 export default reducer;

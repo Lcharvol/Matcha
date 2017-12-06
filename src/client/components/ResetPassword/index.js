@@ -198,7 +198,7 @@ export default compose(
       const matchaToken = getUrlParameter('matchaToken');
       reqResetPassword(({ matchaToken, password })).then((res) => {
         alert('password reset ty');
-        // push('/login');
+        push('/login');
       }).catch(err => {
         alert('NON NON NON oui oui oui il y a encore des alert en 2017');
       })

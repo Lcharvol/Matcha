@@ -16,8 +16,7 @@ const matchaToken = localStorage.getItem('matchaToken');
 const url = 'http://127.0.0.1:3004';
 const io = socketIO.connect(url, { query: matchaToken ? `matchaToken=${matchaToken}` : null });
 
-const initialState = {};
-
+const initialState = { io };
 const store = configureStore(initialState, io);
 
 io.on('notif', (data) => {

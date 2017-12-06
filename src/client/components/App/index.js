@@ -31,9 +31,7 @@ const enhance = compose(
   lifecycle({
       componentDidMount() {
         reqGetAll(this.props.loadUsers, { sort: 'location,desc' })
-        .catch(err => {
-            console.log('zbob', err);
-        });
+        .catch(err => {});
         reqMe(this.props.loadUser);
       },
   }),

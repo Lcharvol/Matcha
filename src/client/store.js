@@ -40,7 +40,7 @@ const SocketIoMiddleware = io => store => next => action => {
 
 const configureStore = (initialState, io) =>
   createStore(
-      reducer,
+      reducer(io),
       initialState,
       applyMiddleware(thunk, logger, asyncDispatchMiddleware, SocketIoMiddleware(io)),
     );

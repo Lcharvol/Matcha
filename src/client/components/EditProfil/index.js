@@ -331,12 +331,10 @@ export default compose(
         lookingFor,
         sexualorientation,
         city,
-        postal_code: zipcode,        
+        postal_code: zipcode,
       })).then((res) => {
         location.assign('/profil');
-      }).catch(err => {
-        console.log(err);
-      })
+      }).catch(err => {})
     },
     validate: validate,
     validateOnBlur: true,
@@ -353,7 +351,7 @@ export default compose(
       lookingFor: user.sexualorientation,
       bio: user.bio || '',
       city: user.city,
-      zipcode: user.postal_code,      
+      zipcode: user.postal_code,
       interest: map(tag => ({ value: tag, label: tag }), tags),
     })
   },

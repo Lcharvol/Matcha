@@ -45,7 +45,6 @@ export const getFilterAndSort = async (req, res, next) => {
     }
     next();
   } catch (err) {
-    console.log('err in GetFilterAndSort', err);
     next();
   }
 };

@@ -98,9 +98,8 @@ class Chat extends React.Component {
     }
 
     render() {
-        const { props: { user = {}, users = [], io } } = this;
+        const { props: { user = {}, users = [] } } = this;
         const { state: { messages, message } } = this;
-        // console.log(this.props);
         return (
             <MainContainer>
                 <Header

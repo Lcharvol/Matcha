@@ -1,6 +1,6 @@
 
 
-<div style="position:relative;margin:auto;"><img src="https://user-images.githubusercontent.com/23408500/35780164-ea433a40-09d7-11e8-8cf3-dfad4f203805.png"/></div>
+<div style="text-align:center"><img src="https://user-images.githubusercontent.com/23408500/35780164-ea433a40-09d7-11e8-8cf3-dfad4f203805.png"/></div>
 
 # Projet MATCHA
 

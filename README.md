@@ -1,3 +1,6 @@
+
+<img src="https://user-images.githubusercontent.com/23408500/35780164-ea433a40-09d7-11e8-8cf3-dfad4f203805.png"/>
+
 # Projet MATCHA
 
 <img src="https://user-images.githubusercontent.com/23408500/35780114-47b6b07c-09d7-11e8-80e7-b8ccedb4c6b9.png"/>
